@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+	 PUBLIC "-//mybatis.org/DTD Config 3.0//EN" 
+	 "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- DB 연결 정보가 저장된 db.properties 파일 정보 설정 -->
+	<properties resource="myBatis/config/db.properties"></properties>
+	
+	<!-- myBatis 기본 설정 -->
+	<settings>
+		<!-- 데이터가 null 로 전달되면 빈칸으로 인지하지 말고 null 로 인식해라 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<!-- 
+	긴 전체 경로를 포함한 클래스명을 대신해서 사용할 별명을 등록한다.
+	형식)
+	<typeAliases>
+		<typeAlias type="패키지명까지 포함된 전체 이름" alias="별명"/>
+	</typeAliases>
+	 -->
+	 
+	 <typeAliases>
+		<typeAlias type="rem.test.vo.TestVO" alias="TestVO"/>
+		<typeAlias type="rem.login.vo.MemberVO" alias="MemberVO"/>		
+		<typeAlias type="rem.wishlist.vo.WishlistVO" alias="WishlistVO"/>		
+	</typeAliases>
+	
+	<!-- DB연결 설정 -->
+	<environments default="oracleDev">
+	
+		<!-- DB에 연결하는 설정 한가지를 구성한다. -->
+		<environment id="oracleDev">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${user}"/>
+				<property name="password" value="${pass}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- DB에서 처리할  SQL문이 작성된 XML문서 등록하기 -->
+	<!-- 
+		형식) <ㅡmapper resource="경로/파일명.xml"/> 
+	-->
+	<mappers>
+		<mapper resource="myBatis/mappers/test-mapper.xml"/>
+		<mapper resource="myBatis/mappers/member-mapper.xml"/>
+		<mapper resource="myBatis/mappers/wishlist-mapper.xml"/>
+	</mappers>
+	
+</configuration>
