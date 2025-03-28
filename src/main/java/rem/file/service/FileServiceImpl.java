@@ -22,5 +22,17 @@ public class FileServiceImpl implements IFileService {
 	public ImgFileVO getProfileImg(int mem_no) {
 		return dao.getProfileImg(mem_no);
 	}
+	@Override
+	public ImgFileVO getProfileNull() {
+		return dao.getProfileNull();
+	}
+	@Override
+	public int countProfileImg(int mem_no) {
+		return dao.countProfileImg(mem_no);
+	}
+	@Override
+	public int deleteProfileImg(int mem_no) {
+		return dao.deleteProfileImg(mem_no);
+	}
 	
 }

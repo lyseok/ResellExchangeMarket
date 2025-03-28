@@ -85,7 +85,7 @@
                             <li data-menu=""><a href="<%= request.getContextPath() %>/admin/noticePage.do" class="gnb_2da">공지시항</a></li>
                             <li data-menu=""><a href="<%= request.getContextPath() %>/admin/qnaPage.do" class="gnb_2da gnb_grp_style gnb_grp_div">문의</a></li>
                             <li data-menu=""><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">FAQ</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da  ">신고</a></li>
+                            <li data-menu=""><a href="<%=request.getContextPath() %>/admin/reportBoardPage.do" class="gnb_2da  ">신고</a></li>
                         </ul>
                     </div>
                 </div>

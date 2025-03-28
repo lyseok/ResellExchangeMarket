@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import rem.login.vo.MemberVO;
 import utill.MyBatisUtil;
 
 public class StoreDaoImpl implements IStoreDao{
@@ -61,6 +62,30 @@ public class StoreDaoImpl implements IStoreDao{
 		catch(Exception e) {e.printStackTrace();}
 		finally {if(session!=null) session.close();}
 		return rec;
+	}
+	@Override
+	public MemberVO getStoreInfoByProd(int prod_no) {
+		SqlSession session = null;
+		MemberVO memberVO = new MemberVO();
+		try {
+			session = MyBatisUtil.getSqlSession();
+			memberVO = session.selectOne("store.getStoreInfoByProd", prod_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return memberVO;
+	}
+	@Override
+	public MemberVO getStoreInfoByMem(int mem_no) {
+		SqlSession session = null;
+		MemberVO memberVO = new MemberVO();
+		try {
+			session = MyBatisUtil.getSqlSession();
+			memberVO = session.selectOne("store.getStoreInfoByMem", mem_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return memberVO;
 	}
 	
 	

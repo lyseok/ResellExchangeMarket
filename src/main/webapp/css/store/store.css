@@ -138,6 +138,27 @@
 .store_info_txt_wrap .edit span.material-symbols-outlined{
 	color:#B65EE4;
 }
+input#kcy_editAlias{
+	width: 290px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 20px;
+    border-radius: 7px;
+}
+textarea{
+	height: 100%;
+    background-color: #8b8b8b1c;
+    resize: none;
+    color: #333;
+    border: none;
+    border-bottom: 2px solid #0000007e;
+    outline: none;
+    font-family: "Arial", sans-serif; /* 원하는 폰트를 지정하세요 */
+    font-size: 8px; /* 폰트 크기 */
+    line-height: 1.4; /* 줄 간격 */
+}
+    
+
 
 
 /* 탲영역 */

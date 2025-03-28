@@ -7,92 +7,100 @@
 <script>
 
 $(function() {
-    $.ajax({
-        url: "<%=request.getContextPath() %>/admin/selectAllNoticeBoard.do",
-        type: "get",
-        success: function(data) {
-            console.log(data);
-            code = '';
-            $.each(data, function(i , v) {
-                code += /* html */`
-                    <tr>
-                        <td class="td_mbid">\${v.notice_no}</td>
-                        <td class="td_mbname">\${v.notice_title}</td>
-                        <td class="td_mbname sv_use">\${v.notice_cnt}</td>
-                        <td class="td_num">\${v.notice_at.substring(0,10)}</td>
-                    </tr>
-                `;
-            });
-            
-            console.log(code);
-            $("#reportList").html(code);
-        },
-        error: function(xhr) {
-            console.log(xhr.status);
-        },
-        dataType: "json"
-    });
+  $.ajax({
+    url: "<%=request.getContextPath() %>/admin/selectAllReportBoard.do",
+    type: "get",
+    success: function(data) {
+      console.log(data);
+      code = '';
+      $.each(data, function(i , v) {
+        if(v.rpt_com_status == 0) {
+          com_status = "답변전";
+        } else {
+          com_status = "답변완료";
+        }
+        code += /* html */`
+          <tr class="reportBoard">
+            <td>\${v.rpt_no}</td>
+            <td>\${v.mem_no}</td>
+            <td>\${v.rpt_type}</td>
+            <td>\${v.rpt_idx_no}</td>
+            <td>\${com_status}</td>
+            <td>\${v.rpt_time}</td>
+            <td><a href="javascript:void(0)">삭제</a></td>
+          </tr>
+        `;
+      });
+        
+      console.log(code);
+      $("#reportList").html(code);
+    },
+    error: function(xhr) {
+      console.log(xhr.status);
+    },
+    dataType: "json"
+  });
 
-})
+  $(document).on("click", ".reportBoard", function() {
+    const rpt_no = $(this).find("td").eq(0).text();
+    location.href = "<%=request.getContextPath() %>/admin/reportViewPage.do?bono=" + rpt_no;
+  });
+});
 
 </script>
-    <div id="wrapper">
+  <div id="wrapper">
 
-        <div id="container" class="">
+    <div id="container" class="">
 
-            <h1 id="container_title">글관리>신고</h1>
-            <div class="container_wr">
-                <section>
-                    
-                    <div class="local_desc local_desc03">
-                        <form action="" class="search_form">
-                            <select name="searchNotice" id="searchNotice">
-                                <option value="no">번호</option>
-                                <option value="title">제목</option>
-                            </select>
-                            <div>
-                                <input type="text">
-                                <span class="material-symbols-outlined" id="searchNoticeBtn">
-                                    search
-                                </span>
-                            </div>
-                        </form>
-                    </div>
+      <h1 id="container_title">글관리>신고</h1>
+      <div class="container_wr">
+        <section>
+            
+          <div class="local_desc local_desc03">
+            <form action="" class="search_form">
+              <select name="searchNotice" id="searchNotice">
+                <option value="no">번호</option>
+                <option value="title">제목</option>
+              </select>
+              <div>
+                <input type="text">
+                <span class="material-symbols-outlined" id="searchNoticeBtn">
+                  search
+                </span>
+              </div>
+            </form>
+          </div>
 
-                            <div class="tbl_head01 tbl_wrap">
-                                <table>
-                                    <colgroup>
-                                        <col width="10%">
-                                        <col width="10%">
-                                        <col width="40%">
-                                        <col width="10%">
-                                        <col width="10%">
-                                        <col width="13%">
-                                        <col width="7%">
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">번호</th>
-                                            <th scope="col">유형</th>
-                                            <th scope="col">제목</th>
-                                            <th scope="col">작성자</th>
-                                            <th scope="col">답변여부</th>
-                                            <th scope="col">작성일</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="reportList">
-                                    </tbody>
-                                </table>
-                            </div>
-
-                </section>
-
-
-            </div>
-        </div>
-
+          <div class="tbl_head01 tbl_wrap">
+            <table>
+              <colgroup>
+                <col width="10%">
+                <col width="10%">
+                <col width="40%">
+                <col width="10%">
+                <col width="10%">
+                <col width="13%">
+                <col width="7%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col">번호</th>
+                  <th scope="col">유형</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">작성자</th>
+                  <th scope="col">답변여부</th>
+                  <th scope="col">작성일</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="reportList">
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
     </div>
+  </div>
 </body>
 
 </html>

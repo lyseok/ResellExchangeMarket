@@ -5,6 +5,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="store">
+	<select id="getStoreInfoByProd" parameterType="Integer" resultType="MemberVO">
+		SELECT * FROM MEMBER INNER JOIN PRODUCT ON(PRODUCT.MEM_NO = MEMBER.MEM_NO) WHERE PRODUCT.PROD_NO = #{prod_no};
+	</select>
+	<select id="getStoreInfoByMem" parameterType="Integer" resultType="MemberVO">
+		SELECT * FROM MEMBER WHERE MEM_NO = #{mem_no}
+	</select>
 	<select id="getProgSell" parameterType="Integer" resultType="Integer">
 		SELECT PROG_SELL FROM MEMBER_PROGRESS WHERE MEM_NO = #{mem_no}
 	</select>

@@ -38,13 +38,15 @@ public class MypageProfileEdit extends HttpServlet {
 		HttpSession session = request.getSession();
 		//1) session객체로부터 로그인 정보 꺼냄
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		int storeId = loginInfo.getMem_no();
+		
 		// 이미지 업로드 경로 설정 (서버 실행 경로 기준)
         String uploadPath = "d:" + File.separator + UPLOAD_DIR;
         System.out.println("Upload Path: " + uploadPath);
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdirs(); // 폴더 없으면 생성
 		
-		System.out.println("MypageAccess->loginInfo : " + loginInfo);
+		///System.out.println("MypageAccess->loginInfo : " + loginInfo);
 		
 		if(loginInfo==null) {
 			request.getRequestDispatcher("/WEB-INF/login/login.jsp").forward(request, response);
@@ -54,37 +56,50 @@ public class MypageProfileEdit extends HttpServlet {
 			//2-2) 변경될 자기소개
 			String editedPrInfo = (String)request.getParameter("editedPrInfo");
 			//2-3) 변경될 이미지■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			ImgFileVO imgVO = new ImgFileVO();
-			try {
-				Part imgPart = request.getPart("editedImage");
-				System.out.println("Received File Name: " + imgPart.getSubmittedFileName());
+			String checkNewImg = (String)request.getParameter("checkNewImg");
+			if(checkNewImg.equals("NEW-IMG")) {
+				ImgFileVO imgVO = new ImgFileVO();
+				try {
+					Part imgPart = request.getPart("editedImage");
+					System.out.println("Received File Name: " + imgPart.getSubmittedFileName());
+					
+					String imgOriginalName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
+		            String imgUUIDName = UUID.randomUUID().toString() + "_" + imgOriginalName;
+	///	            String savingFilePath = "/" + uploadPath.substring(3) + File.separator + imgUUIDName;
+		            String savingFilePath = uploadPath + File.separator + imgUUIDName;
+		            String scriptFilePath = "/" + uploadPath.substring(3) + File.separator + imgUUIDName;
+		            String imgExtension = "";
+		            int index = imgOriginalName.lastIndexOf(".");
+		            if (index > 0) {                        
+		            	imgExtension = imgOriginalName.substring(index + 1);
+		            }
+		            
+		            imgVO.setFile_org_name(imgOriginalName);
+		            imgVO.setFile_save_name(imgUUIDName);
+		            imgVO.setFile_path(scriptFilePath);
+		            imgVO.setFile_size((int)Math.ceil(imgPart.getSize() / 1024.0 / 1024.0)); //<-MG단위로 저장
+		            imgVO.setFile_type(imgExtension);
+		            imgVO.setFile_source(100); //<-mapper에 소스별 메소드 구현할 거라 쓰이진 않는 필드.
+		            imgVO.setFile_no(loginInfo.getMem_no());
+		            imgVO.setFile_total(1);
+		            
+		            
+		            // 파일 저장
+		            imgPart.write(savingFilePath);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+					/* response.getWriter().write("{\"error\": \"파일 업로드 실패\"}"); */
+		        }
+				//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				IFileService fservice = FileServiceImpl.getInstance(); 
+				int recDel  = fservice.deleteProfileImg(storeId);
+				int recFile = fservice.insertProfileImg(imgVO);
+				System.out.println("MypageAccess->rec_file : " + recFile);
 				
-				String imgOriginalName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
-	            String imgUUIDName = UUID.randomUUID().toString() + "_" + imgOriginalName;
-	            String filePath = uploadPath + File.separator + imgOriginalName;
-	            String imgExtension = "";
-	            int index = imgOriginalName.lastIndexOf(".");
-	            if (index > 0) {                        
-	            	imgExtension = imgOriginalName.substring(index + 1);
-	            }
-	            
-	            imgVO.setFile_org_name(imgOriginalName);
-	            imgVO.setFile_save_name(uploadPath);
-	            imgVO.setFile_size((int)Math.ceil(imgPart.getSize()/* / 1024.0*/)); //<-byte단위로 저장
-	            imgVO.setFile_type(imgExtension);
-	            imgVO.setFile_path(filePath);
-	            imgVO.setFile_source(100); //<-mapper에 소스별 메소드 구현할 거라 쓰이진 않는 필드.
-	            imgVO.setFile_no(1);
-	            imgVO.setFile_total(1);
-	            
-	            
-	            // 파일 저장
-	            imgPart.write(filePath);
-	        } catch (Exception e) {
-	        	e.printStackTrace();
-				/* response.getWriter().write("{\"error\": \"파일 업로드 실패\"}"); */
-	        }
-			//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+			}
+			else {}
+			
+			
 
 			
 			
@@ -98,13 +113,11 @@ public class MypageProfileEdit extends HttpServlet {
 			//MypageAccess->rec : 1
 			System.out.println("MypageAccess->rec : " + rec);
 			
-			IFileService fservice = FileServiceImpl.getInstance(); 
-			int recFile = fservice.insertProfileImg(imgVO);
-			System.out.println("MypageAccess->rec_file : " + recFile);
 			
 			
 			
-			if(rec>0 && recFile>0) {//update 성공
+			
+			if(rec>0) {//update 성공
 //				IMemberService mservice = MemberServiceImpl.getInstance(MemberDaoImpl.getInstance());
 //				Map<String, String> loginMap = new HashMap<>();
 //				String memId = loginInfo.getMem_email();

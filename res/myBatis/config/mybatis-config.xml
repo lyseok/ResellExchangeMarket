@@ -29,6 +29,8 @@
 		<typeAlias type="rem.login.vo.MemberVO" alias="MemberVO"/>		
 		<typeAlias type="rem.wishlist.vo.WishlistVO" alias="WishlistVO"/>
 		<typeAlias type="rem.product.vo.ProductVO" alias="ProductVO"/>	
+		<typeAlias type="rem.product.vo.CateMainVO" alias="CateMainVO"/>	
+		<typeAlias type="rem.product.vo.CateSubVO" alias="CateSubVO"/>	
 		<typeAlias type="rem.store.vo.MemberProgressVO" alias="MemberProgressVO"/>	
 		<typeAlias type="rem.file.vo.ImgFileVO" alias="ImgFileVO"/>	
 	</typeAliases>

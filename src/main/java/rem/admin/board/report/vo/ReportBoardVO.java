@@ -7,8 +7,9 @@ public class ReportBoardVO {
 	private int rpt_idx_no;
 	private String rpt_title;
 	private String rpt_text;
-	private String rpt_time;
+	private String rpt_time; 
 	private int rpt_status;
+	private int rpt_com_status;
 	
 	public int getRpt_no() {
 		return rpt_no;
@@ -58,5 +59,12 @@ public class ReportBoardVO {
 	public void setRpt_status(int rpt_status) {
 		this.rpt_status = rpt_status;
 	}
+	public int getRpt_com_status() {
+		return rpt_com_status;
+	}
+	public void setRpt_com_status(int rpt_com_status) {
+		this.rpt_com_status = rpt_com_status;
+	}
+	
 
 }

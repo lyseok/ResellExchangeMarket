@@ -15,11 +15,11 @@ $(function() {
             code = '';
             $.each(data, function(i , v) {
                 code += /* html */`
-                    <tr>
-                        <td class="td_mbid">\${v.notice_no}</td>
-                        <td class="td_mbname">\${v.notice_title}</td>
-                        <td class="td_mbname sv_use">\${v.notice_cnt}</td>
-                        <td class="td_num">\${v.notice_at.substring(0,10)}</td>
+                    <tr class="noticeBoard">
+                        <td>\${v.notice_no}</td>
+                        <td>\${v.notice_title}</td>
+                        <td>\${v.notice_cnt}</td>
+                        <td>\${v.notice_at.substring(0,10)}</td>
                     </tr>
                 `;
             });
@@ -32,6 +32,11 @@ $(function() {
         },
         dataType: "json"
     });
+    
+    $(document).on("click", ".noticeBoard", function() {
+        const bono = $(this).find("td").eq(0).text();
+        location.href = "<%=request.getContextPath() %>/admin/noticeViewPage.do?bono=" + bono;
+      });
 
 })
 

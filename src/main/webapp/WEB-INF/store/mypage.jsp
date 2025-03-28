@@ -1,3 +1,4 @@
+<%@page import="rem.file.vo.ImgFileVO"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -9,13 +10,19 @@
 <%@include file="/WEB-INF/include/category.jsp" %>
 <script src="<%=request.getContextPath() %>/js/store/store.js"></script>
 <%
+	MemberVO storeVO = (MemberVO)request.getAttribute("storeVO");
 	int countAllProducts     = (Integer)request.getAttribute("countAllProducts");
     int countSoldoutProducts = (Integer)request.getAttribute("countSoldoutProducts");
+    ImgFileVO profileImg = (ImgFileVO)request.getAttribute("profileImg");
+    String profileImgSrc = profileImg.getFile_path();
     
-    Timestamp timestamp = Timestamp.valueOf(loginInfo.getMem_join_at());
+    String introductText = storeVO.getPr_info().replaceAll("\\n", "<br>");
+    
+    Timestamp timestamp = Timestamp.valueOf(storeVO.getMem_join_at());
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd");
 	String shopOpenDate = dateFormat.format(timestamp);
 %>
+
 
 	<!-- 상점 상세보기 시작 -->
 	<div id="store" class="inner">	
@@ -26,9 +33,9 @@
 			<!-- 상점정보 - 왼쪽영역 -->
 			<div class="store_info_box">
 				<div class="thumb">
-					<img src="<%=request.getContextPath() %>/images/shop/shop_info_img.png" alt="shop_info_img" id="kcy_previewImg">
+					<img src="<%=profileImgSrc %>" alt="shop_info_img" id="kcy_previewImg">
 				</div>
-				<b>정품수입멀티샵</b>
+				<b><%=storeVO.getMem_alias() %></b>
 				<img src="<%=request.getContextPath() %>/images/shop/ico_point{$point_count}.png" alt="{$point_count}점">
 				<p class="prod_cnt">상품 <span class="cnt"><%=countAllProducts %></span></p>
 			</div>
@@ -38,12 +45,12 @@
 			<div class="store_info_txt_wrap">
 				<div class="info_txt_tit">
 					<!-- 타이틀 -->
-					<h6 id="kcy_storename"><%=loginInfo.getMem_alias() %></h6>
+					<h6 id="kcy_storename"><%=storeVO.getMem_alias() %></h6>
 					<!-- // 타이틀 end  -->
 					
 					<!-- 본인인증 -->
 					<div class="mem_ck">
-						<% if(loginInfo.getMem_tel() != null){ %>
+						<% if(storeVO.getMem_tel() != null){ %>
 						<span class="material-symbols-outlined">check_circle</span>
 						<p>본인인증 완료</p>
 						<%} else { }%>
@@ -67,32 +74,37 @@
 				<!-- // 아이콘영역 end  -->
 				
 				<div class="store_info_txt_box">
-					<p id="kcy_storeintroduct"><%= loginInfo.getPr_info() %></p>
+					<p id="kcy_storeintroduct"><%=introductText %></p>
 				</div>
-				
-				<!-- <div class="siren">
-					<span class="material-symbols-outlined">siren</span>
-					<span>신고하기</span>
-				</div> -->
+
+<%if(loginInfo.getMem_no() == storeVO.getMem_no()){ %>
 				<div class="edit">
 					<span class="material-symbols-outlined">edit</span>
 					<span>수정하기</span>
 				</div>
+<%} else { %>
+				<div class="siren">
+					<span class="material-symbols-outlined">siren</span>
+					<span>신고하기</span>
+				</div>
+<%} %>
 				<script>
 				$(".edit *").on("click", function(){
 					editProfileForm();
 				});
 				$(document).on("click", ".completeEdit", function(){
 					editedAlias  = $("#kcy_editAlias").val();
-					editedPrInfo = $("#kcy_editPrInfo").val();
+					editedPrInfo = $("#kcy_editPrInfo").val().replaceAll(/<br>/g, "\\n");;
+					
+					checkNewImg = "NEW-IMG";
 					
 					const fileInput = document.getElementById("kcy_imageInput");
 	                const file = fileInput.files[0];
 	                if (!file) {
-	                    alert("먼저 이미지를 선택하세요!");
-	                    return;
+	                    checkNewImg = "NO";
 	                }
 	                const formData = new FormData();
+	                formData.append("checkNewImg", checkNewImg);
 	                formData.append("editedImage", file);
 					formData.append("editedAlias", editedAlias);
 					formData.append("editedPrInfo", editedPrInfo);
@@ -100,7 +112,7 @@
 					console.log(editedAlias +" "+ editedPrInfo);
 					
 					$.ajax({
-						url: "<%=request.getContextPath()%>/store/mypageProfileEdit.do",
+						url: "<%=request.getContextPath()%>/store/mypageProfileEdit.do?",
 						type: "POST",
 //						data: {editedAlias: editedAlias, editedPrInfo: editedPrInfo},
 						dataType:"json",
@@ -119,12 +131,11 @@
 							//data :  {"result":"success"}
 							console.log("data : ",data);
 							
-							
 							if(data.result=="success"){
-								location.href="/REMProject/store/storePage.do";//주소를 재요청
+								location.href= '/REMProject/store/storePage.do?param=mem_no&value=<%=loginInfo!=null ? loginInfo.getMem_no() : "" %>';//주소를 재요청
 							}else{//실패
-								
-							 }
+								alert("에러 발생^0^: 수정사항이 저장되지 않았습니다. 관리자에게 문의해주세요.");
+							}
 							
 						},
 						error: function(xhr){
@@ -142,6 +153,10 @@
 				        // 단순히 이미지 엘리먼트를 활성화
 				        previewImage.style.display = "block";
 				        previewImage.src = URL.createObjectURL(file);
+				        
+				      /*   //<!-- 확대블러처리된 썸네일박스 -->
+						backgroundThumbnail();
+						//<!-- // 썸네일박스 동적 처리 end --> */
 
 				        // 메모리 누수 방지
 				        input.addEventListener("blur", () => URL.revokeObjectURL(previewImage.src));
@@ -165,22 +180,52 @@
 		
 			<!-- 상품설명 영역 -->
 			<ul class="store_tab_box">
-				<li class="on">
+				<li class="on" data-tab="tabProd">
 					<a href="javascript:void(0)">상품</a>
 				</li>
-				<li>
+				<li data-tab="tabReview">
 					<a href="javascript:void(0)">상점후기</a>
 				</li>
-				<li>
+				<li data-tab="tabSoldout">
 					<a href="javascript:void(0)">판매상품</a>
 				</li>
+<%if(loginInfo.getMem_no() == storeVO.getMem_no()){ %>
+				<li data-tab="tabWishlist">
+					<a href="javascript:void(0)">찜목록</a>
+				</li>
+<%} %>
 			</ul>			
 			<!-- // 판매자 정보 end -->
 		</div>
 		<!-- // 탭영역 -->
 		
-		
-		<!-- 상품리스트 -->
+<script>
+$(document).ready(function () {
+    $(".store_tab_box li").on("click", function () {
+        // 모든 탭에서 클래스 제거
+        $(".store_tab_box li").removeClass("on");
+
+        // 클릭된 탭에 클래스 추가
+        $(this).addClass("on");
+
+        // 데이터 속성으로부터 탭 이름 가져오기
+        const tabName = $(this).data("tab");
+
+        // 관련된 JSP 파일 로드 (예: tabProd.jsp, tabReview.jsp 등)
+        let url = `/WEB-INF/include/store${tabName}.jsp`; // 서버의 파일 경로에 맞게 수정
+        $("#tabContent").load(url, function (response, status, xhr) {
+            if (status === "error") {
+                console.error("탭 내용을 불러오는 중 오류 발생:", xhr.status, xhr.statusText);
+                $("#tabContent").html("<p>콘텐츠를 불러올 수 없습니다.</p>");
+            }
+        });
+        
+    });
+});
+
+
+</script>
+		<!-- '상품'탭 리스트 -->
 		<div class="store_product_list_wrap">
 			<h6 class="store_list_cnt">상품 <span>N</span></h6>
 			<div class="store_list_filter">
@@ -191,11 +236,11 @@
 				</ul>
 			</div>
 		
-			<%@include file="/WEB-INF/include/prodList.jsp" %>
-		
+			<div id="tabContent">
+			
+			</div>
 		</div>
-		<!-- // 상품리스트 end -->
-		
+		<!-- // '상품'탭 리스트 end -->
 		
 	</div>
 	<!-- // 상점 상세보기 end -->

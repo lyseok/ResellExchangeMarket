@@ -13,4 +13,6 @@
 			#{prod_price}, sysdate, sysdate, 0, #{price_offer}, 0, #{prod_tr_approch}, 0
 			)
 	</insert>
+	
+	
 </mapper>

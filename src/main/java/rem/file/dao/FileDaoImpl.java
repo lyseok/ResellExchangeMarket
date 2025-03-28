@@ -31,11 +31,48 @@ public class FileDaoImpl implements IFileDao {
 		ImgFileVO imgVO = new ImgFileVO();
 		try {
 			session = MyBatisUtil.getSqlSession();
-			imgVO = session.selectOne("imgfile.insertProfileImg", mem_no);
+			imgVO = session.selectOne("imgfile.getProfileImg", mem_no);
 		}
 		catch(Exception e) {e.printStackTrace();}
 		finally {if(session!=null) session.close();}
 		return imgVO;
+	}
+	@Override
+	public ImgFileVO getProfileNull() {
+		SqlSession session = null;
+		ImgFileVO imgVO = new ImgFileVO();
+		try {
+			session = MyBatisUtil.getSqlSession();
+			imgVO = session.selectOne("imgfile.getProfileNull");
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return imgVO;
+	}
+	@Override
+	public int countProfileImg(int mem_no) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rec = session.selectOne("imgfile.countProfileImg", mem_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rec;
+	}
+	@Override
+	public int deleteProfileImg(int mem_no) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rec = session.delete("imgfile.deleteProfileImg", mem_no);
+			if(rec>0) session.commit();
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rec;
 	}
 	
 }

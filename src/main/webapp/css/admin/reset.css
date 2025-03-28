@@ -96,7 +96,8 @@ a.btn_submit{background:#ff4081;color:#fff}
 .btn_list02 a:focus {background:#555}
 
 .btn_list03 {text-align:right}
-.btn_list03 a {display:inline-block;padding:0 15px;height:28px;background:#ad49e1;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
+.btn_list03 a,
+.btn_list03 button {display:inline-block;padding:0 15px;height:28px;background:#ad49e1;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
 .btn_list03 a:focus {background:#555}
 
 .btn_add {margin:10px 0 } /* 목록용 추가 */

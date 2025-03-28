@@ -120,7 +120,7 @@ $(function () {
 						<span>거래관리</span>
 					</a>
 					
-					<a href="<%= request.getContextPath() %>/store/storePage.do" class="mypage material-symbols-outlined ">
+					<a href="<%= request.getContextPath() %>/store/storePage.do?param=mem_no&value=<%=loginInfo!=null ? loginInfo.getMem_no() : "" %>" class="mypage material-symbols-outlined ">
 					<span class="material-symbols-outlined">person</span>
 						<span>마이페이지</span>
 					</a>

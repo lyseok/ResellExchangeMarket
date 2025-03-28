@@ -2,6 +2,7 @@ package rem.store.service;
 
 import java.util.Map;
 
+import rem.login.vo.MemberVO;
 import rem.store.dao.IStoreDao;
 import rem.store.dao.StoreDaoImpl;
 
@@ -30,6 +31,14 @@ public class StoreServiceImpl implements IStoreService {
 	@Override
 	public int updateMypageProfile(Map<String, Object> editedMap) {
 		return dao.updateMypageProfile(editedMap);
+	}
+	@Override
+	public MemberVO getStoreInfoByProd(int prod_no) {
+		return dao.getStoreInfoByProd(prod_no);
+	}
+	@Override
+	public MemberVO getStoreInfoByMem(int mem_no) {
+		return dao.getStoreInfoByMem(mem_no);
 	}
 	
 	

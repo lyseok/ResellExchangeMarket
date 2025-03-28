@@ -38,4 +38,6 @@ public class ReportBoardServiceImpl implements IReportBoardService {
 		return dao.deleteReportBoard(no);
 	}
 
+
+
 }

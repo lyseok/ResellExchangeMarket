@@ -3,6 +3,7 @@
     
 
 <%@include file="/WEB-INF/include/header.jsp" %>
+<%@include file="/WEB-INF/include/category.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/access.css">
 
 <div class="inner accss_chk_wrap">

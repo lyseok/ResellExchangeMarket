@@ -1,6 +1,7 @@
 package rem.transaction.service;
 
 import java.util.List;
+import java.util.Map;
 
 import rem.product.vo.ProductVO;
 import rem.transaction.dao.ITransactionDao;
@@ -25,7 +26,15 @@ public class TransactionServiceImpl implements ITransactionService{
 	}
 
 	@Override
-	public List<ProductVO> getProd() {
-		return dao.getProd();
+	public List<ProductVO> getProd(int memberId) {
+		return dao.getProd(memberId);
 	}
+
+	@Override
+	public int deleteProd(ProductVO prodVo) {
+		
+		return dao.deleteProd(prodVo);
+	}
+	
+	
 }

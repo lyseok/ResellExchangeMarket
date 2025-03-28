@@ -1,4 +1,4 @@
-package rem.admin.board.notice;
+package rem.admin.board;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

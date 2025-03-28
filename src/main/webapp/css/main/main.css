@@ -7,8 +7,8 @@
 }	
 .cate_wrap, .main_slide, .list_cont{
 	border:1px solid #ccc;
-	text-align:center; 
 	display:flex;
+	text-align : center;
 	align-items:center;
 	justify-content: center;
 	flex-direction: column;

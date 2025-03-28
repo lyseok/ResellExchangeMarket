@@ -4,12 +4,19 @@
 	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="trans">
-	<select id = "getProd" resultType = "ProductVO">
-
-	select prod_tr_status, prod_name, prod_price, prod_content, prod_at, prod_newing
+<mapper namespace="trans" >
+	<select id = "getProd" parameterType = "int" resultType = "ProductVO">
+		select * from product
+			where mem_no = #{mem_no}
+	</select>
 	
-	from product
-
-</select>
+	
+	<update id="deleteProd" parameterType="ProductVO">
+		update product 
+   		 set prod_deleted = 1
+   		 where mem_no = #{mem_no}
+   		 and prod_no = #{prod_no}
+	</update>
+	
+	
 </mapper>

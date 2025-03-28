@@ -83,6 +83,7 @@ public class ReportBoardDaoImpl implements IReportBoardDao {
 				
 		return res;
 	}
+	
 
 }
 
