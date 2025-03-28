@@ -23,9 +23,11 @@
 	 -->
 	 
 	 <typeAliases>
-		<typeAlias type="rem.test.vo.TestVO" alias="TestVO"/>
 		<typeAlias type="rem.login.vo.MemberVO" alias="MemberVO"/>		
-		<typeAlias type="rem.wishlist.vo.WishlistVO" alias="WishlistVO"/>		
+		<typeAlias type="rem.wishlist.vo.WishlistVO" alias="WishlistVO"/>
+		<typeAlias type="rem.product.vo.ProductVO" alias="ProductVO"/>	
+		<typeAlias type="rem.store.vo.MemberProgressVO" alias="MemberProgressVO"/>	
+		<typeAlias type="rem.admin.board.notice.vo.NoticeBoardVO" alias="NoticeBoardVO"/>	
 	</typeAliases>
 	
 	<!-- DB연결 설정 -->
@@ -48,9 +50,11 @@
 		형식) <ㅡmapper resource="경로/파일명.xml"/> 
 	-->
 	<mappers>
-		<mapper resource="myBatis/mappers/test-mapper.xml"/>
 		<mapper resource="myBatis/mappers/member-mapper.xml"/>
 		<mapper resource="myBatis/mappers/wishlist-mapper.xml"/>
+		<mapper resource="myBatis/mappers/product-mapper.xml"/>
+		<mapper resource="myBatis/mappers/store-mapper.xml"/>
+		<mapper resource="myBatis/mappers/noticeBoard-mapper.xml"/>
 	</mappers>
 	
 </configuration>

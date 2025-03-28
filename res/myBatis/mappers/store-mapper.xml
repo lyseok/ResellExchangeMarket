@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="store">
+	<select id="getProgSell" parameterType="Integer" resultType="Integer">
+		SELECT PROG_SELL FROM MEMBER_PROGRESS WHERE MEM_NO = #{mem_no}
+	</select>
+	
+	<select id="getCountAllProducts" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM PRODUCT WHERE MEM_NO = #{mem_no}
+	</select>
+	
+	<select id="getCountSoldoutProducts" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM PRODUCT WHERE MEM_NO = #{mem_no} AND PROD_TR_STATUS = 1
+	</select>
+	
+	<update id="updateMypageProfile" parameterType="Map">
+		UPDATE MEMBER SET MEM_ALIAS = #{mem_alias}, PR_INFO = #{pr_info} WHERE MEM_NO = #{mem_no}
+	</update>
+</mapper>

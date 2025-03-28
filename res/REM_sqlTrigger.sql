@@ -101,15 +101,16 @@ BEGIN
 END;
 
 
-/* 상품 등록 시 회원활동내역 업데이트 */
-CREATE OR REPLACE TRIGGER trg_product_insert
-    AFTER INSERT ON PRODUCT
-    FOR EACH ROW
-BEGIN
-    UPDATE MEMBER_PROGRESS
-       SET PROG_SELL = PROG_SELL + 1
-     WHERE MEM_NO = :NEW.MEM_NO;
-END;
+--/* 상품 등록 시 회원활동내역 업데이트 */
+--CREATE OR REPLACE TRIGGER trg_product_insert
+--    AFTER INSERT ON PRODUCT
+--    FOR EACH ROW
+--BEGIN
+--    UPDATE MEMBER_PROGRESS
+--       SET PROG_SELL = PROG_SELL + 1
+--     WHERE MEM_NO = :NEW.MEM_NO;
+--END;
+--+>: PROG_SELL 컬럼은 내 상품이 판매 완료됐을 때 cnt하기로 변경할게요.
 
 /* 리뷰 등록 시 회원활동내역 업데이트 */
 CREATE OR REPLACE TRIGGER trg_review_insert
@@ -177,4 +178,14 @@ BEGIN
            SET PROG_REPORTED = PROG_REPORTED + 1
          WHERE MEM_NO = :NEW.RPT_IDX_NO;
     END IF;
+END;
+
+/* 상품 등록 시 회원활동내역 업데이트 */
+CREATE OR REPLACE TRIGGER trg_product_insert
+    AFTER INSERT ON PRODUCT
+    FOR EACH ROW
+BEGIN
+    UPDATE MEMBER_PROGRESS
+       SET PROG_SELL = PROG_SELL + 1
+     WHERE MEM_NO = :NEW.MEM_NO;
 END;

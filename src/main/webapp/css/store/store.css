@@ -55,6 +55,10 @@
 .store_info_box .prod_cnt .cnt{
 	color:#fff;
 }
+.store_info_box span.material-symbols-outlined{
+	color: #FAE100;
+	font-size: 1.5em;
+}
 .store_info_txt_wrap{
 	flex-basis:calc(100% - 340px);
 	flex-grow:1;	
@@ -124,6 +128,15 @@
 }
 .store_info_txt_wrap .siren span.material-symbols-outlined{
 	color:#EA3323;
+}
+.store_info_txt_wrap .edit{
+	display:flex;
+	align-items:center;
+	gap:5px;
+	margin-top:30px;
+}
+.store_info_txt_wrap .edit span.material-symbols-outlined{
+	color:#B65EE4;
 }
 
 

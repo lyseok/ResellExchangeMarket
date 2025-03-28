@@ -1,5 +1,9 @@
 package rem.login.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,10 +14,6 @@ import rem.login.dao.MemberDaoImpl;
 import rem.login.service.IMemberService;
 import rem.login.service.MemberServiceImpl;
 import rem.login.vo.MemberVO;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet("/loginProcess.do")
 public class LoginProcess extends HttpServlet {
@@ -37,30 +37,26 @@ public class LoginProcess extends HttpServlet {
 		
 		IMemberService service = MemberServiceImpl.getInstance(MemberDaoImpl.getInstance());
 		
-		MemberVO vo = service.login(map);
+		MemberVO  vo = service.login(map);
 		
 		HttpSession hSession = request.getSession();
+		String page = request.getContextPath(); // 조건에 따른 페이지 경로
 		
 		if(vo != null) { // 로그인에 성공한 경우
 			hSession.setAttribute("loginInfo", vo);
 			hSession.setAttribute("login", "true");
 			
 			if(vo.getMem_lv() == 0) { // 회원의 권한이 일반회원인 경우
-				request
-					.getRequestDispatcher("/WEB-INF/main/main.jsp")
-					.forward(request, response);
+				page += "/mainPage.do";
 			} else { // 회원의 권한이 관리자인 경우
-				request
-					.getRequestDispatcher("/WEB-INF/admin/main.jsp")
-					.forward(request, response);
-				
+				page += "/admin/adminMainPage.do";
 			}
 		} else { // 로그인에 실패한 경우
 			hSession.setAttribute("login", "false");
-			request
-				.getRequestDispatcher("/WEB-INF/login/login.jsp")
-				.forward(request, response);
+			page += "/loginPage.do";
 		}
+		
+		response.sendRedirect(page);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -70,9 +66,7 @@ public class LoginProcess extends HttpServlet {
 			System.out.println("logout");
 			hSession.removeAttribute("loginInfo");
 			hSession.removeAttribute("login");
-			request
-				.getRequestDispatcher("/WEB-INF/main/main.jsp")
-				.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/mainPage.do");
 		}
 	}
 

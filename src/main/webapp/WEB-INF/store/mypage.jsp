@@ -8,6 +8,16 @@
 <%@include file="/WEB-INF/include/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/store/store.css">
 <%@include file="/WEB-INF/include/category.jsp" %>
+<script src="<%=request.getContextPath() %>/js/store/store.js"></script>
+<%
+	int countAllProducts     = (Integer)request.getAttribute("countAllProducts");
+    int countSoldoutProducts = (Integer)request.getAttribute("countSoldoutProducts");
+    
+    Timestamp timestamp = Timestamp.valueOf(loginInfo.getMem_join_at());
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd");
+	String shopOpenDate = dateFormat.format(timestamp);
+%>
+
 	<!-- 상점 상세보기 시작 -->
 	<div id="store" class="inner">	
 	
@@ -17,11 +27,11 @@
 			<!-- 상점정보 - 왼쪽영역 -->
 			<div class="store_info_box">
 				<div class="thumb">
-					<img src="<%=request.getContextPath() %>/images/shop/shop_info_img.png" alt="shop_info_img">
+					<img src="<%=request.getContextPath() %>/images/shop/shop_info_img.png" alt="shop_info_img" id="kcy_previewImg">
 				</div>
 				<b>정품수입멀티샵</b>
 				<img src="<%=request.getContextPath() %>/images/shop/ico_point{$point_count}.png" alt="{$point_count}점">
-				<p class="prod_cnt">상품 <span class="cnt">N</span></p>
+				<p class="prod_cnt">상품 <span class="cnt"><%=countAllProducts %></span></p>
 			</div>
 			<!-- // 상점정보 - 왼쪽영역 end -->
 			
@@ -29,7 +39,7 @@
 			<div class="store_info_txt_wrap">
 				<div class="info_txt_tit">
 					<!-- 타이틀 -->
-					<h6>정품수입멀티샵</h6>
+					<h6 id="kcy_storename"><%=loginInfo.getMem_alias() %></h6>
 					<!-- // 타이틀 end  -->
 					
 					<!-- 본인인증 -->
@@ -38,7 +48,6 @@
 						<span class="material-symbols-outlined">check_circle</span>
 						<p>본인인증 완료</p>
 						<%} else { }%>
-						
 					</div>
 					<!-- // 본인인증 end -->
 				</div>
@@ -47,40 +56,89 @@
 				<div class="store_info_icon_box">
 					<ul>
 						<li class="shop_open">
-							<% Timestamp timestamp = Timestamp.valueOf(loginInfo.getMem_join_at());
-							   SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd");
-        					   String shopOpenDate = dateFormat.format(timestamp);
-							%>
-							
 							<span class="material-symbols-outlined">storefront</span>
 							<div>상점오픈일 <span><%=shopOpenDate %></span></div>
 						</li>
 						<li class="shop_cart">
 							<span class="material-symbols-outlined">shopping_cart</span>
-							<div>상품판매 <span>4회</span></div>
+							<div>상품판매 <span><%=countSoldoutProducts %></span></div>
 						</li>
 					</ul>
 				</div>				
 				<!-- // 아이콘영역 end  -->
 				
 				<div class="store_info_txt_box">
-					<%= loginInfo.getPr_info() %>
-					<p>
-						100%정품🇱🇷해외직구 상품만 취급합니다!<br>
-						정품 스토어🎁  택배 전국당일배송🚚<br>
-						CJ 택배 당일 배송 (평균 배송 1일)<br>
-						재고 있을시 사이즈 교환 ok 환불 no
-					</p>
-					<p>
-						구매시 결제하시고 색상,사이즈 대화창에 말씀해주시면됩니다<br>
-						프로상점은 안전결제로만 가능하십니다!!^^
-					</p>
+					<p id="kcy_storeintroduct"><%= loginInfo.getPr_info() %></p>
 				</div>
 				
-				<div class="siren">
+				<!-- <div class="siren">
 					<span class="material-symbols-outlined">siren</span>
 					<span>신고하기</span>
+				</div> -->
+				<div class="edit">
+					<span class="material-symbols-outlined">edit</span>
+					<span>수정하기</span>
 				</div>
+				<script>
+				$(".edit *").on("click", function(){
+					editProfileForm();
+				});
+				$(document).on("click", ".completeEdit", function(){
+					editedAlias  = $("#kcy_editAlias").val();
+					editedPrInfo = $("#kcy_editPrInfo").val();
+					
+					console.log(editedAlias +" "+ editedPrInfo);
+					
+					$.ajax({
+						url: "<%=request.getContextPath()%>/store/mypageProfileEdit.do",
+						type: "POST",
+						data: {editedAlias: editedAlias, editedPrInfo: editedPrInfo},
+						dataType:"json",
+						success: function(data){
+							console.log("success!");
+							let result = '<%= request.getAttribute("editProcess") != null ? request.getAttribute("editProcess").toString().replace("'", "\\'") : "" %>';
+							
+							//1) 이렇게 JSON String으로 넘어옴
+							//String json = gson.toJson("success");
+							//map.put("result", "success");
+							
+							//2) J/S에서는 이렇게 받아야해요
+							//data :  {"result":"success"}
+							console.log("data : ",data);
+							
+							if(data.result=="success"){
+								location.href="/REMProject/store/mypage.do";//주소를 재요청
+							}else{//실패
+								
+							}
+							
+						},
+						error: function(xhr){
+							console.log("상태: " + xhr.status);
+						}
+						
+					});
+				});
+				$(document).on("change", "#kcy_imageInput", function () {
+				    const input = this;
+				    const previewImage = $("#kcy_previewImg")[0];
+				    const file = input.files[0];
+
+				    if (file) {
+				        // 단순히 이미지 엘리먼트를 활성화
+				        previewImage.style.display = "block";
+				        previewImage.src = URL.createObjectURL(file);
+
+				        // 메모리 누수 방지
+				        input.addEventListener("blur", () => URL.revokeObjectURL(previewImage.src));
+				    } else {
+				        previewImage.style.display = "none";
+				    }
+				});
+				
+				</script>
+				
+				
 			</div>
 			<!-- //상점정보 -오른쪽영역 end -->
 			

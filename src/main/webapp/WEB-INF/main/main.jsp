@@ -26,6 +26,7 @@
 				<p>상품 리스트 삽입</p>
 				<a href="<%= request.getContextPath() %>/detail.do">[ 클릭 시 상품상세 이동 ]</a>
 				<a href="<%= request.getContextPath() %>/storeView.do">[ 클릭 시 상점 상세 페이지로 이동 ]</a>
+				<a href="<%= request.getContextPath() %>/accessChk.do">[ 권한확인 페이지 ]</a>
 			</div>
 		</div>
 		<!-- // 상품리스트 end -->

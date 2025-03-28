@@ -7,12 +7,19 @@
 <head>
 <meta charset="UTF-8">
 <title>상품상세</title>
+
 <link rel="icon" href="<%=request.getContextPath() %>/images/favicon.png">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/reset.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/header.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/category.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css//common/prodList.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/footer.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/common.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/main/main.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/detail/detail.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/store/store.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/login/login.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/modal/modal.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.7.1.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/category/category.js"></script>
@@ -20,28 +27,20 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/header/header.js" defer></script>
 
 
+
 <%
 
 	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 	String login = (String)session.getAttribute("login");
 
-	Gson gson = new Gson();
-	String jsonMemInfo = gson.toJson(loginInfo);
-	request.setAttribute("jsonMemInfo", jsonMemInfo);
-
 %>
 <script>
 
 $(function () {
-	let memberInfo = <%= request.getAttribute("jsonMemInfo") %>
-
 	// 찜한 상품 개수 가져오기
 	$.ajax({
 		url: "<%= request.getContextPath() %>/wishlist/countWishlist.do",
 		type: "post",
-		data: {
-			mem_no: memberInfo.mem_no
-		},
 		success: function(data) {
 			$('#countWishlist').text(data);
 		},
@@ -71,7 +70,7 @@ $(function () {
 					<a href="javascript:void(0)">공지사항</a>
 				</div>
 				<div class="util_user">
-					<a href="<%= request.getContextPath() %>/login.do">로그인</a>
+					<a href="<%= request.getContextPath() %>/loginPage.do">로그인</a>
 				</div>
 					<%
 				} else { // 로그인
@@ -101,7 +100,7 @@ $(function () {
 			<div class="inner">
 				<div class="logo_box">
 					<h1>
-						<a href="<%=request.getContextPath() %>/main.do">
+						<a href="<%=request.getContextPath() %>/mainPage.do">
 							<img src="<%=request.getContextPath() %>/images/favicon.png" alt="로고">
 							<span>띹장터</span>
 						</a>
@@ -112,16 +111,17 @@ $(function () {
 					<span class="search_icon material-symbols-outlined">search</span>
 				</div>
 				<div class="user_box">
-					<a href="javascript:void(0)" class="sell material-symbols-outlined">
+					<a href="<%=request.getContextPath() %>/product/insertProduct.do" class="sell material-symbols-outlined">
 						<span class="material-symbols-outlined">add_shopping_cart</span>
 						<span>판매하기</span>
 					</a>
-					<a href="javascript:void(0)" class="sell material-symbols-outlined">
+					<a href="<%=request.getContextPath() %>/transManagement/management.do" class="sell material-symbols-outlined">
 						<span class="material-symbols-outlined">sync_alt</span>
 						<span>거래관리</span>
 					</a>
-					<a href="<%= request.getContextPath() %>/login.do" class="mypage material-symbols-outlined ">
-						<span class="material-symbols-outlined">person</span>
+					
+					<a href="<%= request.getContextPath() %>/store/storePage.do" class="mypage material-symbols-outlined ">
+					<span class="material-symbols-outlined">person</span>
 						<span>마이페이지</span>
 					</a>
 					<a href="javascript:void(0)" class="chat material-symbols-outlined tooltip">
