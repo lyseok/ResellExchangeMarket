@@ -16,6 +16,7 @@ public class NoticeBoardDaoImpl implements INoticeBoardDao {
 		if(instance == null) instance = new NoticeBoardDaoImpl();
 		return instance;
 	}
+	
 	@Override
 	public List<NoticeBoardVO> selectAllNoticeBoard() {
 		SqlSession session = null;
@@ -30,6 +31,80 @@ public class NoticeBoardDaoImpl implements INoticeBoardDao {
 			if(session != null) session.close();
 		}
 		return list;
+	}
+
+	@Override
+	public NoticeBoardVO selectNoticeBoard(int no) {
+		SqlSession session = null;
+		NoticeBoardVO vo = null;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			vo = session.selectOne("noticeBoard.selectNoticeBoard", no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		
+		return vo;
+	}
+
+	@Override
+	public int insertNoticeBoard(NoticeBoardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			res = session.insert("noticeBoard.insertNoticeBoard", vo);
+			
+			if(res > 0) session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int updateNoticeBoard(NoticeBoardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			res = session.update("noticeBoard.updateNoticeBoard", vo);
+			
+			if(res > 0) session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int deleteNoticeBoard(int no) {
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			res = session.delete("noticeBoard.deleteNoticeBoard", no);
+			
+			if(res > 0) session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		
+		return res;
 	}
 
 }

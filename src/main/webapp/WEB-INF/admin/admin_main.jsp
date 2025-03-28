@@ -9,7 +9,7 @@
             <div class="container_wr">
                 <section>
                     
-                    <div class="local_desc02 local_desc">
+                    <div class="local_desc">
                     	<p class="color_bk">신규가입회원 <span>5</span>건 목록</p>
                     	<p>총회원수 <span>4,196</span>명 중 제제 <span>4</span>명 탈퇴 <span> 42</span>건</p>
                          

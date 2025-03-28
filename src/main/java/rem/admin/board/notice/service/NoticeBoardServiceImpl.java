@@ -22,4 +22,24 @@ public class NoticeBoardServiceImpl implements INoticeBoardService {
 		return dao.selectAllNoticeBoard();
 	}
 
+	@Override
+	public NoticeBoardVO selectNoticeBoard(int no) {
+		return dao.selectNoticeBoard(no);
+	}
+
+	@Override
+	public int insertNoticeBoard(NoticeBoardVO vo) {
+		return dao.insertNoticeBoard(vo);
+	}
+
+	@Override
+	public int updateNoticeBoard(NoticeBoardVO vo) {
+		return dao.updateNoticeBoard(vo);
+	}
+
+	@Override
+	public int deleteNoticeBoard(int no) {
+		return dao.deleteNoticeBoard(no);
+	}
+
 }

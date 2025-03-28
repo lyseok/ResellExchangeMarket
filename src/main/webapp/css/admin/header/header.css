@@ -33,7 +33,7 @@
 #gnb .gnb_oparea h3{margin-bottom:10px;line-height:18px;font-size:1.17em}
 #gnb .gnb_oparea li{line-height:28px}
 #gnb .gnb_oparea li a{position:relative; color:#fff; padding-left:25px;}
-#gnb .gnb_oparea li a:after{content:''; position:absolute; top:50%; left:0; transform:translateY(-50%); background:url("/images/admin/menu_2dep_arrow_fff.png") no-repeat center center / cover; width:24px; height:24px;}
+#gnb .gnb_oparea li a:after{content:''; position:absolute; top:50%; left:0; transform:translateY(-50%); background:url("../../../images/admin/menu_2dep_arrow_fff.png") no-repeat center center / cover; width:24px; height:24px;}
 /* #gnb .gnb_oparea li a:hover,#gnb .gnb_oparea li .on{color:#435ffe;} */
 #gnb.gnb_small .gnb_oparea{display:none;}
 .gnb_small .gnb_ul{display:block;}

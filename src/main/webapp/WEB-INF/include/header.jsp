@@ -85,7 +85,7 @@ $(function () {
 					<a href="javascript:void(0)">페이</a>
 					<!-- ↓ 회원정보 수정페이지로 링크 연결 -->
 					<a href="<%=request.getContextPath() %>/member/modify.jsp" class="user_name"><%=loginInfo.getMem_name() %></a>
-					<a href="<%= request.getContextPath() %>/loginProcess.do">로그아웃</a>
+					<a href="<%= request.getContextPath() %>/logoutProcess.do">로그아웃</a>
 				</div>
 					<%
 				}

@@ -24,17 +24,17 @@
 	String jsonMemInfo = gson.toJson(adminInfo);
 	request.setAttribute("jsonMemInfo", jsonMemInfo);
 	
-	System.out.println(login);
+
+	System.out.println("loginSession :" + login);
+	if(login == null) {
+		response.sendRedirect(request.getContextPath() + "/accessCheck.do");
+	}
 
 %>
 
 <script>
+	const adminPath = "<%=request.getContextPath() %>";
 	const loginCk = "<%= login %>";
-	console.log(loginCk);
-	if(!loginCk || loginCk == "null") {
-		location.href = "<%= request.getContextPath() %>/accessChk.do";
-	}
-
 </script>
 
 <body>
@@ -45,9 +45,15 @@
 
         <div id="tnb">
             <ul>
+            <%
+            	if(adminInfo != null){
+            		%>
 				<li class="tnb_li">관리자 <%=adminInfo.getMem_name() %>님</li>
+            		<%
+            	}
+            %>
 				<li class="tnb_li"id="tnb_logout">
-					<a href="<%= request.getContextPath() %>/loginProcess.do">로그아웃</a>
+					<a href="<%= request.getContextPath() %>/logoutProcess.do">로그아웃</a>
 				</li>
             </ul>
         </div>
@@ -77,7 +83,7 @@
                         <ul>
                             <li data-menu=""><a href="" class="gnb_2da">상품 게시판</a></li>
                             <li data-menu=""><a href="<%= request.getContextPath() %>/admin/noticePage.do" class="gnb_2da">공지시항</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">문의</a></li>
+                            <li data-menu=""><a href="<%= request.getContextPath() %>/admin/qnaPage.do" class="gnb_2da gnb_grp_style gnb_grp_div">문의</a></li>
                             <li data-menu=""><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">FAQ</a></li>
                             <li data-menu=""><a href="" class="gnb_2da  ">신고</a></li>
                         </ul>

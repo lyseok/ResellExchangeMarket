@@ -4,7 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    
 <%@include file="/WEB-INF/include/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/store/store.css">
 <%@include file="/WEB-INF/include/category.jsp" %>
@@ -87,13 +86,27 @@
 					editedAlias  = $("#kcy_editAlias").val();
 					editedPrInfo = $("#kcy_editPrInfo").val();
 					
+					const fileInput = document.getElementById("kcy_imageInput");
+	                const file = fileInput.files[0];
+	                if (!file) {
+	                    alert("먼저 이미지를 선택하세요!");
+	                    return;
+	                }
+	                const formData = new FormData();
+	                formData.append("editedImage", file);
+					formData.append("editedAlias", editedAlias);
+					formData.append("editedPrInfo", editedPrInfo);
+	                
 					console.log(editedAlias +" "+ editedPrInfo);
 					
 					$.ajax({
 						url: "<%=request.getContextPath()%>/store/mypageProfileEdit.do",
 						type: "POST",
-						data: {editedAlias: editedAlias, editedPrInfo: editedPrInfo},
+//						data: {editedAlias: editedAlias, editedPrInfo: editedPrInfo},
 						dataType:"json",
+						data: formData,
+						contentType: false,
+						processData: false,
 						success: function(data){
 							console.log("success!");
 							let result = '<%= request.getAttribute("editProcess") != null ? request.getAttribute("editProcess").toString().replace("'", "\\'") : "" %>';
@@ -106,11 +119,12 @@
 							//data :  {"result":"success"}
 							console.log("data : ",data);
 							
+							
 							if(data.result=="success"){
-								location.href="/REMProject/store/mypage.do";//주소를 재요청
+								location.href="/REMProject/store/storePage.do";//주소를 재요청
 							}else{//실패
 								
-							}
+							 }
 							
 						},
 						error: function(xhr){

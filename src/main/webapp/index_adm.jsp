@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="<%=request.getContextPath() %>/admin.do">관리자 바로가기</a>
+	<a href="<%=request.getContextPath() %>/admin/adminMainPage.do">관리자 바로가기</a>
 </body>
 </html>

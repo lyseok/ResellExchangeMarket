@@ -6,27 +6,43 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import rem.file.service.FileServiceImpl;
+import rem.file.service.IFileService;
+import rem.file.vo.ImgFileVO;
 import rem.login.vo.MemberVO;
 import rem.store.service.IStoreService;
 import rem.store.service.StoreServiceImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
 @WebServlet("/store/mypageProfileEdit.do")
 public class MypageProfileEdit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String UPLOAD_DIR = "filetest"; // 업로드 디렉터리 설정
        
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		//1) session객체로부터 로그인 정보 꺼냄
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		// 이미지 업로드 경로 설정 (서버 실행 경로 기준)
+        String uploadPath = "d:" + File.separator + UPLOAD_DIR;
+        System.out.println("Upload Path: " + uploadPath);
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) uploadDir.mkdirs(); // 폴더 없으면 생성
 		
 		System.out.println("MypageAccess->loginInfo : " + loginInfo);
 		
@@ -37,6 +53,40 @@ public class MypageProfileEdit extends HttpServlet {
 			String editedAlias = (String)request.getParameter("editedAlias");
 			//2-2) 변경될 자기소개
 			String editedPrInfo = (String)request.getParameter("editedPrInfo");
+			//2-3) 변경될 이미지■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+			ImgFileVO imgVO = new ImgFileVO();
+			try {
+				Part imgPart = request.getPart("editedImage");
+				System.out.println("Received File Name: " + imgPart.getSubmittedFileName());
+				
+				String imgOriginalName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
+	            String imgUUIDName = UUID.randomUUID().toString() + "_" + imgOriginalName;
+	            String filePath = uploadPath + File.separator + imgOriginalName;
+	            String imgExtension = "";
+	            int index = imgOriginalName.lastIndexOf(".");
+	            if (index > 0) {                        
+	            	imgExtension = imgOriginalName.substring(index + 1);
+	            }
+	            
+	            imgVO.setFile_org_name(imgOriginalName);
+	            imgVO.setFile_save_name(uploadPath);
+	            imgVO.setFile_size((int)Math.ceil(imgPart.getSize()/* / 1024.0*/)); //<-byte단위로 저장
+	            imgVO.setFile_type(imgExtension);
+	            imgVO.setFile_path(filePath);
+	            imgVO.setFile_source(100); //<-mapper에 소스별 메소드 구현할 거라 쓰이진 않는 필드.
+	            imgVO.setFile_no(1);
+	            imgVO.setFile_total(1);
+	            
+	            
+	            // 파일 저장
+	            imgPart.write(filePath);
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+				/* response.getWriter().write("{\"error\": \"파일 업로드 실패\"}"); */
+	        }
+			//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+			
 			
 			Map<String, Object> editedMap = new HashMap<>();
 			editedMap.put("mem_no", loginInfo.getMem_no());//불변(기본키)
@@ -48,7 +98,13 @@ public class MypageProfileEdit extends HttpServlet {
 			//MypageAccess->rec : 1
 			System.out.println("MypageAccess->rec : " + rec);
 			
-			if(rec>0) {//update 성공
+			IFileService fservice = FileServiceImpl.getInstance(); 
+			int recFile = fservice.insertProfileImg(imgVO);
+			System.out.println("MypageAccess->rec_file : " + recFile);
+			
+			
+			
+			if(rec>0 && recFile>0) {//update 성공
 //				IMemberService mservice = MemberServiceImpl.getInstance(MemberDaoImpl.getInstance());
 //				Map<String, String> loginMap = new HashMap<>();
 //				String memId = loginInfo.getMem_email();
@@ -94,6 +150,40 @@ public class MypageProfileEdit extends HttpServlet {
 		
 		}
 		
+	}
+	
+	/**	
+	- Part 구조
+	1) 파일이 아닌 일반 데이터일 경우
+	--------------------------------------sldfjwroiu23409sadf ==>각 Part를 구분하는 구분선
+	content-disposition: form-data; name="username"		  ==>파라미터명
+															  ==> 빈 줄
+	hong gil dong											  ==>파라미터값
+	
+	*/
+	
+	/**
+	2) 파일일 경우
+	--------------------------------------sldfjwroiu23409sadf ==>각 Part를 구분하는 구분선
+	content-disposition: name="upFile1"; filename="test.txt"  ==> 파일 정보
+	content-type: text/plain								  ==> 파일의 종류
+															  ==> 빈 줄
+	abcde1234안녕											  ==> 파일 내용
+	*/
+	
+	///■ Part 구조 안에서 '파일명'을 찾는 메서드
+	private String extractFileName(Part part) {
+		String fileName = "";		//<-찾은 파일명이 저장도리 변수(반환값)
+		
+		String dispositionValue = part.getHeader("content-disposition");
+		String[] items = dispositionValue.split(";");
+		for(String item: items) {	//<-배열 개수만큼 반복
+			if(item.trim().startsWith("filename")) {
+				fileName = item.substring(item.indexOf("=") + 2, item.length()-1);
+			}
+		}
+		
+		return fileName;
 	}
 
 }

@@ -3,13 +3,13 @@
     
 
 <%@include file="/WEB-INF/include/header.jsp" %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/accss.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/access.css">
 
 <div class="inner accss_chk_wrap">
 	<h6>이 페이지에 접근 권한이 없습니다.</h6>
 	<div id="user_btn_wrap">
-		<a href="<%=request.getContextPath()%>/login.do" id="conFirm">로그인</a>
-		<a href="<%=request.getContextPath()%>/main.do" id="grayBtn">메인으로</a>
+		<a href="<%=request.getContextPath()%>/loginPage.do" id="conFirm">로그인</a>
+		<a href="<%=request.getContextPath()%>/mainPage.do" id="grayBtn">메인으로</a>
 	</div>
 </div>
 

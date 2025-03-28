@@ -23,11 +23,14 @@
 	 -->
 	 
 	 <typeAliases>
+		<typeAlias type="rem.admin.board.notice.vo.NoticeBoardVO" alias="NoticeBoardVO"/>	
+		<typeAlias type="rem.admin.board.report.vo.ReportBoardVO" alias="ReportBoardVO"/>	
+		<typeAlias type="rem.admin.board.qna.vo.QnaBoardVO" alias="QnaBoardVO"/>
 		<typeAlias type="rem.login.vo.MemberVO" alias="MemberVO"/>		
 		<typeAlias type="rem.wishlist.vo.WishlistVO" alias="WishlistVO"/>
 		<typeAlias type="rem.product.vo.ProductVO" alias="ProductVO"/>	
 		<typeAlias type="rem.store.vo.MemberProgressVO" alias="MemberProgressVO"/>	
-		<typeAlias type="rem.admin.board.notice.vo.NoticeBoardVO" alias="NoticeBoardVO"/>	
+		<typeAlias type="rem.file.vo.ImgFileVO" alias="ImgFileVO"/>	
 	</typeAliases>
 	
 	<!-- DB연결 설정 -->
@@ -50,11 +53,15 @@
 		형식) <ㅡmapper resource="경로/파일명.xml"/> 
 	-->
 	<mappers>
+		<mapper resource="myBatis/mappers/noticeBoard-mapper.xml"/>
+		<mapper resource="myBatis/mappers/reportBoard-mapper.xml"/>
 		<mapper resource="myBatis/mappers/member-mapper.xml"/>
 		<mapper resource="myBatis/mappers/wishlist-mapper.xml"/>
 		<mapper resource="myBatis/mappers/product-mapper.xml"/>
 		<mapper resource="myBatis/mappers/store-mapper.xml"/>
-		<mapper resource="myBatis/mappers/noticeBoard-mapper.xml"/>
+		<mapper resource="myBatis/mappers/imgfile-mapper.xml"/>
+		<mapper resource="myBatis/mappers/transaction-mapper.xml"/>
+		<mapper resource="myBatis/mappers/qna-mapper.xml"/>
 	</mappers>
 	
 </configuration>
