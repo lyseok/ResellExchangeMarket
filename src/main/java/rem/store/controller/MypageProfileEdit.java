@@ -52,9 +52,14 @@ public class MypageProfileEdit extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/login/login.jsp").forward(request, response);
 		} else {
 			//2-1) 변경될 별명
-			String editedAlias = (String)request.getParameter("editedAlias");
+			String editedAlias = request.getParameter("editedAlias");
+			if(editedAlias==null)
+				editedAlias = "상점" + loginInfo.getMem_no(); 
 			//2-2) 변경될 자기소개
-			String editedPrInfo = (String)request.getParameter("editedPrInfo");
+			String editedPrInfo = request.getParameter("editedPrInfo");
+			if(editedPrInfo==null)
+				editedPrInfo = "자기소개 기본값입니다...^0^";
+			
 			//2-3) 변경될 이미지■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			String checkNewImg = (String)request.getParameter("checkNewImg");
 			if(checkNewImg.equals("NEW-IMG")) {

@@ -37,11 +37,6 @@
 				
 			})
 		})
-		$(function(){
-			$("#searchNoticeBtn").on("click", function(){
-				let input = $("#search").val();
-			})
-		})
 	</script>
     <div id="wrapper">
 

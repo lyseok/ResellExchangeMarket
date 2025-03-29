@@ -1,6 +1,7 @@
 package rem.admin.board.notice.service;
 
 import java.util.List;
+import java.util.Map;
 
 import rem.admin.board.notice.dao.INoticeBoardDao;
 import rem.admin.board.notice.vo.NoticeBoardVO;
@@ -24,6 +25,8 @@ public class NoticeBoardServiceImpl implements INoticeBoardService {
 
 	@Override
 	public NoticeBoardVO selectNoticeBoard(int no) {
+		int res = updateNoticeCnt(no);
+		if(res == 0) return null;
 		return dao.selectNoticeBoard(no);
 	}
 
@@ -40,6 +43,16 @@ public class NoticeBoardServiceImpl implements INoticeBoardService {
 	@Override
 	public int deleteNoticeBoard(int no) {
 		return dao.deleteNoticeBoard(no);
+	}
+
+	@Override
+	public int updateNoticeCnt(int no) {
+		return dao.updateNoticeCnt(no);
+	}
+
+	@Override
+	public List<NoticeBoardVO> searchNoticeBoard(Map<String, String> map) {
+		return dao.searchNoticeBoard(map);
 	}
 
 }

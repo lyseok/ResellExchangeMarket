@@ -69,6 +69,7 @@ public class StorePage extends HttpServlet {
 		request.setAttribute("countSoldoutProducts", countSoldoutProducts);
 		request.setAttribute("profileImg", profileImg);
 		request.setAttribute("storeVO", storeVO);
+		request.setAttribute("storeId", storeId);
 		request.getRequestDispatcher("/WEB-INF/store/mypage.jsp").forward(request, response);
 		
 	}

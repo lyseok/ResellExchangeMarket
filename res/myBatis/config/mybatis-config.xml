@@ -32,7 +32,9 @@
 		<typeAlias type="rem.product.vo.CateMainVO" alias="CateMainVO"/>	
 		<typeAlias type="rem.product.vo.CateSubVO" alias="CateSubVO"/>	
 		<typeAlias type="rem.store.vo.MemberProgressVO" alias="MemberProgressVO"/>	
-		<typeAlias type="rem.file.vo.ImgFileVO" alias="ImgFileVO"/>	
+		<typeAlias type="rem.file.vo.ImgFileVO" alias="ImgFileVO"/>		
+		<typeAlias type="rem.chat.vo.MessageVO" alias="MessageVO"/>	
+		<typeAlias type="rem.review.vo.ReviewVO" alias="ReviewVO"/>	
 	</typeAliases>
 	
 	<!-- DB연결 설정 -->
@@ -64,6 +66,7 @@
 		<mapper resource="myBatis/mappers/imgfile-mapper.xml"/>
 		<mapper resource="myBatis/mappers/transaction-mapper.xml"/>
 		<mapper resource="myBatis/mappers/qna-mapper.xml"/>
+		<mapper resource="myBatis/mappers/message-mapper.xml"/>
 	</mappers>
 	
 </configuration>

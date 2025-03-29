@@ -26,4 +26,17 @@
 	<update id="updateMypageProfile" parameterType="Map">
 		UPDATE MEMBER SET MEM_ALIAS = #{mem_alias}, PR_INFO = #{pr_info} WHERE MEM_NO = #{mem_no}
 	</update>
+	
+	<select id="getStoreProdList" parameterType="Integer" resultType="ProductVO">
+		SELECT * FROM PRODUCT WHERE MEM_NO = #{storeId} ORDER BY PROD_NEWING
+	</select>
+	<select id="getStoreReviewList" parameterType="Integer" resultType="ReviewVO">
+		SELECT * FROM REVIEW WHERE MEM_NO = #{stroeId} ORDER BY REVIEW_TIMESTAMP
+	</select>
+	<select id="getStoreSoldoutList" parameterType="Integer" resultType="ProductVO">
+		SELECT * FROM PRODUCT WHERE MEM_NO = #{storeId} AND PROD_TR_STATUS = 1 ORDER BY PROD_NEWING
+	</select>
+	<select id="getStoreWishlist" parameterType="Integer" resultType="ProductVO">
+		SELECT * FROM WISHLIST WHERE MEM_NO = #{storeId} ORDER BY WISH_CREATE_AT
+	</select>
 </mapper>

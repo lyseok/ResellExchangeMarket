@@ -59,3 +59,8 @@
     align-items: center;
     cursor: pointer;
 }
+
+#notice_cont,
+#noticeCont {
+    min-height: 400px;
+}

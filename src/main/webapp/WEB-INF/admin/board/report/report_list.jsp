@@ -1,46 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<%@ include file="/WEB-INF/admin/include/header_admin.jsp" %>
+<%@ include file="/WEB-INF/admin/include/header_admin.jsp" %>
 
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/board/notice.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/board/notice.css">
+<script src="<%=request.getContextPath() %>/js/admin/board/report.js"></script>
 
 <script>
-
+mypath = '<%=request.getContextPath() %>';
 $(function() {
-  $.ajax({
-    url: "<%=request.getContextPath() %>/admin/selectAllReportBoard.do",
-    type: "get",
-    success: function(data) {
-      console.log(data);
-      code = '';
-      $.each(data, function(i , v) {
-        if(v.rpt_com_status == 0) {
-          com_status = "답변전";
-        } else {
-          com_status = "답변완료";
-        }
-        code += /* html */`
-          <tr class="reportBoard">
-            <td>\${v.rpt_no}</td>
-            <td>\${v.mem_no}</td>
-            <td>\${v.rpt_type}</td>
-            <td>\${v.rpt_idx_no}</td>
-            <td>\${com_status}</td>
-            <td>\${v.rpt_time}</td>
-            <td><a href="javascript:void(0)">삭제</a></td>
-          </tr>
-        `;
-      });
-        
-      console.log(code);
-      $("#reportList").html(code);
-    },
-    error: function(xhr) {
-      console.log(xhr.status);
-    },
-    dataType: "json"
-  });
+  // 신고 게시글 목록 불러오기
+  allReportBoard();
 
+  // 게시글 클릭시 상세 페이지로 이동
   $(document).on("click", ".reportBoard", function() {
     const rpt_no = $(this).find("td").eq(0).text();
     location.href = "<%=request.getContextPath() %>/admin/reportViewPage.do?bono=" + rpt_no;

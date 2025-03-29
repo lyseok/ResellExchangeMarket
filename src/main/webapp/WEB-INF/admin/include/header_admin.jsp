@@ -9,6 +9,7 @@
 <title>띹장터 관리자 페이지</title>
 <link rel="icon" href="<%=request.getContextPath() %>/images/favicon.png">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/reset.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/common.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/header/header.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.7.1.js"></script>
@@ -130,7 +131,7 @@
                     <div class="gnb_oparea">
                         <ul>
                             <li data-menu=""><a href="" class="gnb_2da  ">채팅방관리</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da  ">메세지 관리</a></li>
+                            <li data-menu=""><a href="<%=request.getContextPath() %>/admin/messageList.do" class="gnb_2da  ">메세지 관리</a></li>
                         </ul>
                     </div>
                 </div>

@@ -14,5 +14,12 @@
 			)
 	</insert>
 	
+	<select id="getCateMain" resultType="CateMainVO">
+		select * from category_main
+	</select>
 	
+	<select id="getCateSub" parameterType="int" resultType="CateSubVO">
+		select * from category_sub
+		where cate_main_id=#{cate_main_id}
+	</select>
 </mapper>

@@ -11,6 +11,7 @@
 <script src="<%=request.getContextPath() %>/js/store/store.js"></script>
 <%
 	MemberVO storeVO = (MemberVO)request.getAttribute("storeVO");
+	int storeId = (Integer)request.getAttribute("storeId");
 	int countAllProducts     = (Integer)request.getAttribute("countAllProducts");
     int countSoldoutProducts = (Integer)request.getAttribute("countSoldoutProducts");
     ImgFileVO profileImg = (ImgFileVO)request.getAttribute("profileImg");
@@ -22,8 +23,11 @@
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd");
 	String shopOpenDate = dateFormat.format(timestamp);
 %>
-
-
+<script>
+	//변수 확인용 스크립트
+	var ss = <%=storeId%>;
+	console.log(ss);
+</script>
 	<!-- 상점 상세보기 시작 -->
 	<div id="store" class="inner">	
 	
@@ -199,32 +203,7 @@
 		</div>
 		<!-- // 탭영역 -->
 		
-<script>
-$(document).ready(function () {
-    $(".store_tab_box li").on("click", function () {
-        // 모든 탭에서 클래스 제거
-        $(".store_tab_box li").removeClass("on");
-
-        // 클릭된 탭에 클래스 추가
-        $(this).addClass("on");
-
-        // 데이터 속성으로부터 탭 이름 가져오기
-        const tabName = $(this).data("tab");
-
-        // 관련된 JSP 파일 로드 (예: tabProd.jsp, tabReview.jsp 등)
-        let url = `/WEB-INF/include/store${tabName}.jsp`; // 서버의 파일 경로에 맞게 수정
-        $("#tabContent").load(url, function (response, status, xhr) {
-            if (status === "error") {
-                console.error("탭 내용을 불러오는 중 오류 발생:", xhr.status, xhr.statusText);
-                $("#tabContent").html("<p>콘텐츠를 불러올 수 없습니다.</p>");
-            }
-        });
-        
-    });
-});
-
-
-</script>
+		
 		<!-- '상품'탭 리스트 -->
 		<div class="store_product_list_wrap">
 			<h6 class="store_list_cnt">상품 <span>N</span></h6>
@@ -235,9 +214,67 @@ $(document).ready(function () {
 					<li><a href="javascript:void(0)">저가순</a></li>
 				</ul>
 			</div>
-		
+
 			<div id="tabContent">
+				<%-- <%@include file="/WEB-INF/store/tabContent.jsp" %> --%>
+							
+			<script>
+			$(document).ready(function () {
+			    $(".store_tab_box li").on("click", function () {
+			        // 모든 탭에서 클래스 제거
+			        $(".store_tab_box li").removeClass("on");
 			
+			        // 클릭된 탭에 클래스 추가
+			        $(this).addClass("on");
+			
+			        // 데이터 속성으로부터 탭 이름 가져오기
+			        const tabName = $(this).data("tab");
+					
+			        const formData = new FormData();
+			        var storeId = <%=storeId%>;
+			        formData.append("storeId", storeId);
+			        
+					$.ajax({
+						url: "<%=request.getContextPath()%>/store/tabContent.do",
+						type: "POST",
+						data: formData,
+						dataType: "json",
+						contentType: false,
+						processData: false,
+						success: function(data){
+							console.log("■■■■■"+data);
+						},
+						error: function(xhr){}
+					});
+			    });
+			});
+			</script>
+				<div id="prod_list">
+					<ul>
+						<li>
+							<a href="javascript:void(0)">
+								<span class="img_box">
+									<img src="<%=request.getContextPath() %>/images/shop/product1.png" alt="prod_img1" />
+								</span>
+								<span class="txt_box">
+									<span>[빈티지 구제] 체크 겨울남방</span>
+									<b>15,000원</b>
+								</span>
+							</a>
+						</li>
+						<li class="sold_out">
+							<a href="javascript:void(0)">
+								<span class="img_box">
+									<img src="<%=request.getContextPath() %>/images/shop/product2.png" alt="prod_img2" />
+								</span>
+								<span class="txt_box">
+									<span>[빈티지 구제] 체크 겨울남방</span>
+									<b>15,000원</b>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<!-- // '상품'탭 리스트 end -->
@@ -246,4 +283,10 @@ $(document).ready(function () {
 	<!-- // 상점 상세보기 end -->
 
 <%@include file="/WEB-INF/include/footer.jsp" %>
+		
+
+
+
+
+
 	

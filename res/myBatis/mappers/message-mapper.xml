@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+
+<mapper namespace="message">
+	<select id="selectMessageList" resultType="MessageVO">
+		SELECT MSG_NO,
+		       CHAT_ROOM_NO,
+		       MEM_NO,
+		       MSG_CONT,
+		       MSG_CREATE_AT,
+		       MSG_IMGCK 
+		  FROM MESSAGE
+	</select>
+	
+	
+	<select id="searchMessageNo" resultType="MessageVO" parameterType="int">
+		SELECT *
+		  FROM MESSAGE
+		 where mem_no=#{mem_no}
+	</select>
+
+	<select id="searchMessageCont" resultType="MessageVO" parameterType="String">
+		SELECT *
+		  FROM MESSAGE
+		 where msg_cont=#{msg_cont}
+	</select>
+	
+	
+</mapper>

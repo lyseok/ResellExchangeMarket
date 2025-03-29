@@ -1,6 +1,9 @@
 package rem.wishlist.service;
 
+import java.util.List;
+
 import rem.wishlist.dao.IWishlistDao;
+import rem.wishlist.vo.WishlistVO;
 
 public class WishlistServiceImpl implements IWishlistService {
 	private static IWishlistService instance;
@@ -18,6 +21,11 @@ public class WishlistServiceImpl implements IWishlistService {
 	@Override
 	public int countWishlist(int mem_no) {
 		return dao.countWishlist(mem_no);
+	}
+
+	@Override
+	public List<WishlistVO> getStoreReviewList(int storeId) {
+		return dao.getStoreReviewList(storeId);
 	}
 
 }

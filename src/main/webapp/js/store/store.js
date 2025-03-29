@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 const backgroundThumbnail = () => {
     $('#kcy_imageInput').on('change', function (event) {
         const file = event.target.files[0];

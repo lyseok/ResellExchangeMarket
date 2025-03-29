@@ -1,6 +1,7 @@
 package rem.admin.board.notice.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -105,6 +106,41 @@ public class NoticeBoardDaoImpl implements INoticeBoardDao {
 		}
 		
 		return res;
+	}
+
+	@Override
+	public int updateNoticeCnt(int no) {
+		SqlSession session = null;
+		int res = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			res = session.update("noticeBoard.updateNoticeCnt", no);
+
+			if(res > 0) session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public List<NoticeBoardVO> searchNoticeBoard(Map<String, String> map) {
+		SqlSession session = null;
+		List<NoticeBoardVO> list = null;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("noticeBoard.searchNoticeBoard", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		
+		return list;
 	}
 
 }
