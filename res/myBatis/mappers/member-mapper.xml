@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<select id="login" parameterType="map" resultType="MemberVO">
+		select mem_no,
+		       mem_name,
+		       mem_email,
+		       mem_alias,
+		       mem_tel,
+		       mem_join_at,
+		       mem_status,
+		       mem_bal,
+		       mem_lv,
+		       pr_info,
+		       pr_rating_avg
+		  from member
+		 where mem_email = #{mem_email}
+		   and mem_pw = #{mem_pw}
+	</select>
+	
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(*)
+		  from member
+		 where mem_email = #{mem_email}
+	</select>
+	
+	<insert id="insertMember" parameterType="MemberVO">
+	 	insert into member(MEM_NO, MEM_NAME, MEM_EMAIL, MEM_ALIAS, MEM_PW, MEM_JOIN_AT)
+ 		       values(seq_member.nextval,
+ 		              #{mem_name},
+ 		              #{mem_email},
+ 		              #{mem_name}||'님 상점'||seq_member.currval,
+ 		              '123123',
+ 		              sysdate)
+	</insert>
+	
+	<select id="pwCheck" parameterType="map" resultType="int">
+		select count(*)
+		  from member
+		 where mem_email = #{email}
+		   and mem_pw = #{pw}
+	</select>
+</mapper>

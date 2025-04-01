@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+	
+	<insert id="insertProduct" parameterType="ProductVO">
+		<selectKey resultType="int" keyProperty="prod_no" order="BEFORE">
+			select MAX(prod_no)+1 from product
+		</selectKey>
+		insert into product
+		values(
+			#{prod_no}, #{mem_no}, #{cate_sub_id}, #{prod_name}, #{prod_condition}, #{prod_content},
+			#{prod_price}, sysdate, sysdate, 0, #{price_offer}, 0, #{prod_tr_approch}, 0
+			)
+	</insert>
+	
+	<select id="getProductDetail" resultType="ProductVO" parameterType="int">
+		select * from product
+		where prod_no = #{prod_no}
+	</select>
+	
+	<select id="getCountAllReview" parameterType="Integer" resultType="Integer">
+		SELECT count(*)
+		  FROM REVIEW R
+		 INNER JOIN TRANSACTION T ON(R.TXN_NO = T.TXN_NO)
+		 INNER JOIN IMG_FILE F ON(T.MEM_NO = F.FILE_NO)
+		 INNER JOIN PRODUCT P ON(T.PROD_NO = P.PROD_NO)
+		 WHERE P.MEM_NO = #{storeId}
+		   AND R.REVIEW_STATUS = 0
+	</select>
+	
+	<select id="getCateMain" resultType="CateMainVO">
+		select * from category_main
+	</select>
+	
+	<select id="getCateSub" parameterType="int" resultType="CateSubVO">
+		select * from category_sub
+		where cate_main_id=#{cate_main_id}
+	</select>
+</mapper>

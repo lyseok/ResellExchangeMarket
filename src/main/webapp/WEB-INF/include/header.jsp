@@ -1,0 +1,171 @@
+<%@page import="com.google.gson.Gson"%>
+<%@page import="rem.login.vo.MemberVO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>상품상세</title>
+
+<link rel="icon" href="<%=request.getContextPath() %>/images/favicon.png">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/reset.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/header.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/category.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css//common/prodList.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/footer.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/common.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/main/main.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/detail/detail.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/store/store.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/login/login.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/modal/modal.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.7.1.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/category/category.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/modal/modal.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/header/header.js" defer></script>
+
+
+
+<%
+
+	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+	String login = (String)session.getAttribute("login");
+
+%>
+<script>
+mypath = '<%=request.getContextPath() %>';
+
+$(function () {
+	// 찜한 상품 개수 가져오기
+	$.ajax({
+		url: `\${mypath}/wishlist/countWishlist.do`,
+		type: "post",
+		success: function(data) {
+			$('#countWishlist').text(data);
+		},
+		error: xhr => {
+			console.log(xhr.status);
+		},
+		dataType: "json"
+	})
+
+	$('#searchBtn').on('click', function() {
+		let searchKeyword = $('.search_box input').val();
+		if(searchKeyword == "") {
+			alert("검색어를 입력하세요.");
+			return false;
+		} else {
+			location.href = `\${mypath}/searchPage.do?searchText=\${searchKeyword}`;
+		}
+	})
+})
+
+</script>
+
+</head>
+<body>
+    
+	<!-- 전체 헤더 시작 -->
+	<header class="hd_warp">
+	
+		<!-- 유틸리티 시작 (최상단 헤더) -->
+		<div class="util">
+			<div class="inner">
+			<%
+				if(login == null || "false".equals(login)){ // 로그아웃된 경우
+					%>
+					
+				<div class="util_link">
+					<a href="javascript:void(0)">공지사항</a>
+				</div>
+				<div class="util_user">
+					<a href="<%= request.getContextPath() %>/loginPage.do">로그인</a>
+				</div>
+					<%
+				} else { // 로그인
+					%>
+					
+				<div class="util_link">
+					<a href="javascript:void(0)">공지사항</a>
+					<a href="javascript:void(0)">1:1문의</a>
+				</div>
+				<div class="util_user">
+					<a href="javascript:void(0)">알림</a>
+					<a href="javascript:void(0)">페이</a>
+					<!-- ↓ 회원정보 수정페이지로 링크 연결 -->
+					<a href="<%=request.getContextPath() %>/passwordCheckPage.do" class="user_name"><%=loginInfo.getMem_name() %></a>
+					<a href="<%= request.getContextPath() %>/logoutProcess.do">로그아웃</a>
+				</div>
+					<%
+				}
+			%>
+			</div>
+		</div>
+		<!-- // 유틸리티 end -->
+		
+		
+		<!-- 헤더 시작 -->
+		<div class="hd_cont">
+			<div class="inner">
+				<div class="logo_box">
+					<h1>
+						<a href="<%=request.getContextPath() %>/mainPage.do">
+							<img src="<%=request.getContextPath() %>/images/favicon.png" alt="로고">
+							<span>띹장터</span>
+						</a>
+					</h1>
+				</div>
+				<div class="search_box">
+					<input type="text" placeholder="상품명, 상점명 입력" />
+					<span class="search_icon material-symbols-outlined" id="searchBtn">search</span>
+				</div>
+				<div class="user_box">
+					<a href="<%=request.getContextPath() %>/product/insertProduct.do" class="sell material-symbols-outlined">
+						<span class="material-symbols-outlined">add_shopping_cart</span>
+						<span>판매하기</span>
+					</a>
+					<a href="<%=request.getContextPath() %>/transManagement/management.do" class="sell material-symbols-outlined">
+						<span class="material-symbols-outlined">sync_alt</span>
+						<span>거래관리</span>
+					</a>
+					
+					<a href="<%= request.getContextPath() %>/store/storePage.do?param=mem_no&value=<%=loginInfo!=null ? loginInfo.getMem_no() : "" %>" class="mypage material-symbols-outlined ">
+					<span class="material-symbols-outlined">person</span>
+						<span>마이페이지</span>
+					</a>
+					<a href="javascript:void(0)" class="chat material-symbols-outlined tooltip">
+						<span class="material-symbols-outlined">tooltip</span>
+						<span>띹톡</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- // 헤더 end -->
+		
+		
+		
+		<!-- 퀵메뉴 시작 -->
+		<div id="quick_wrap">
+			<div class="wish">
+				<h6>찜한상품</h6>
+				<a href="javascript:void(0)">
+					<span class="material-symbols-outlined">favorite</span>
+					<span id="countWishlist"></span>
+				</a>
+			</div>
+			<div class="recent_view">
+				<h6>최근본상품</h6>
+				<div class="recent_box">
+					<span class="material-symbols-outlined">visibility</span>
+					<p>최근 본 상품이 존재하지 않습니다.</p>
+				</div>
+			</div>
+			<div id="top_btn">
+				<a href="" class="top_btn">TOP</a>
+			</div>
+		</div>
+		<!-- // 퀵메뉴 끝 -->
+	</header>
+	<!-- // 전체 헤더 end -->

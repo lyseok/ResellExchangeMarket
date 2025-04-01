@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+
+/* 임시코드 */
+*{
+	color:#a7a7a7;
+}	
+.cate_wrap, .main_slide, .list_cont{
+	border:1px solid #ccc;
+	display:flex;
+	text-align : center;
+	align-items:center;
+	justify-content: center;
+	flex-direction: column;
+	gap:15px;
+}
+
+
+.cate_wrap{
+	height:30px;
+	justify-content: flex-start;
+	margin:10px auto;
+}
+.main_slide{
+	height:400px;
+	background:#ccc;
+}
+.list_wrap h1{
+	margin:30px 0;
+}
+.list_cont{
+	height:500px;	
+}

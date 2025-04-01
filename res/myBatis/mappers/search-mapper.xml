@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="search">
+	<select id="selectSearchProduct" parameterType="String" resultType="SearchVO">
+		select a.PROD_NO, a.MEM_NO, a.CATE_SUB_ID, a.PROD_NAME, a.PROD_PRICE, a.PROD_NEWING
+		  from product a, member b
+		 where a.mem_no = b.mem_no
+		   and a.prod_name like '%'||#{searchText}||'%'
+		    or a.mem_no = b.mem_no
+		   and b.mem_alias like '%'||#{searchText}||'%'
+	</select>
+</mapper>

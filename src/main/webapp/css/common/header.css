@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+
+
+.hd_cont{
+	border-top:1px solid #ccc;	
+	padding:40px 0;
+}
+.hd_cont .inner{
+	text-align:center; 
+	display:flex;
+	align-items:center;
+	justify-content: center;
+	gap:50px;
+}
+.util .inner{
+	display:flex;
+	justify-content: space-between
+}
+.util .inner a{
+	display:inline-block;
+	padding:10px 20px;
+	font-size:14px;
+	color:#a7a7a7;
+}
+.util .inner a:last-child{
+	padding-right:0;
+}
+.util_user{
+	display:flex;
+}
+.util_user a.user_name{
+	color:#AD49E1;
+}
+.util .util_link a:first-child{
+	padding-left:0;
+}
+.util .inner div a:first{
+	padding-right:0;
+}
+
+.logo_box{
+	flex-basis: 145px;	
+	flex-grow:0;
+	text-align:left;
+}
+.logo_box a{
+	display:flex;
+	align-items:center;	
+	gap:5px;
+}
+.logo_box img{
+	width:36px;
+	border:2px solid #333;
+	border-radius:5px;
+}
+.logo_box span{
+	font-size:40px;
+	color:#333;
+	font-weight:800;
+}
+.search_box{
+	position:relative;
+	flex-basis: 400px;
+	flex-grow:1;	
+	
+}
+.search_box input{
+	border:3px solid #AD49E1;
+	width:100%;
+	padding:8px 20px;
+}
+.search_box span {
+	cursor: pointer;	
+}
+
+.search_icon{
+	position:absolute;
+	right:10px;
+	top:50%;
+	transform:translate(0,-50%);
+	height:22px;
+	color:#AD49E1;
+}
+.user_box{
+	display:flex;
+	gap:20px;
+	justify-content: flex-end;
+	flex-basis: 370px;
+	flex-grow:0;
+}
+.user_box a{
+	display:flex;
+	align-items: center;
+	font-size:16px;
+	gap:5px;
+}
+.user_box a span{
+	font-size:16px;
+}
+.user_box a.sell span.material-symbols-outlined{
+	font-size:20px;	
+}
+.user_box a.mypage span.material-symbols-outlined{
+	font-size:24px;
+}
+.user_box a.chat span.material-symbols-outlined{
+	font-size:19px;	
+	height:16px;
+}
+
+
+
+#quick_wrap{
+	position:fixed;
+	right: 90px;
+    top: 50%;
+    z-index: 99;
+    transform: translateY(-50%);
+    text-align:center;
+    display:flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#quick_wrap > div{
+	width:86px;
+	border:1px solid #ccc;
+	background:#fff;
+	padding:8px;
+}
+
+#quick_wrap > div h6{
+	font-size:14px;
+	margin-bottom:5px;
+	color:#666;
+}
+
+#quick_wrap .wish a{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+#quick_wrap .wish a span{
+	font-size:13px;
+	color:#ff1d25;
+}
+#quick_wrap .wish a span:last-child{
+	font-size:11px;
+}
+#quick_wrap .recent_box{
+	font-size:12px;
+}
+#quick_wrap .recent_box span{
+	font-size:17px;
+	color:#ccc;
+}
+#quick_wrap .recent_box p{
+	color:#ccc;
+	font-size:11px;
+	word-break:keep-all;
+	line-height:1.3;
+	margin-top:-4px;
+}
+#quick_wrap #top_btn a{
+	color:#666;
+}
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="trans" >
+	<select id = "getProd" parameterType = "int" resultType = "ProductVO">
+		select * from product
+			where mem_no = #{mem_no}
+			order by prod_newing desc
+	</select>
+	
+	
+	<update id="deleteProd" parameterType="ProductVO">
+		update product 
+   		 set prod_deleted = 1
+   		 where mem_no = #{mem_no} and prod_no = #{prod_no}
+	</update>
+	
+	
+	<update id="updateNewing" parameterType="ProductVO">
+		update product
+			set prod_newing = systimestamp
+			where mem_no = #{mem_no} and prod_no = #{prod_no}
+	</update>
+	
+	
+	<select id = "getBuyProd" parameterType = "int" resultType = "TransVO">
+		select t.txn_no, t.prod_no, t.mem_no, t.txn_status, t.txn_create_at,
+           	p.prod_name, p.prod_price, p.prod_tr_status, p.prod_tr_approch
+   		 	from transaction t
+    		join product p on t.prod_no = p.prod_no
+    		where t.mem_no = #{mem_no}
+		
+	</select>
+	
+	
+	<select id = "getSellProd" parameterType = "int" resultType = "TransVO">
+		select t.txn_no, t.prod_no, t.mem_no, t.txn_status, t.txn_create_at, t.track_completed,
+	      	 p.prod_name, p.prod_price, p.prod_tr_status, p.prod_tr_approch
+			 from transaction t
+			 join product p on t.prod_no = p.prod_no  
+			 where p.mem_no = #{mem_no}
+	</select>
+	
+	
+</mapper>
