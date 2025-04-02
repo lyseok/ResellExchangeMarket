@@ -27,12 +27,16 @@
 		<typeAlias type="rem.admin.board.report.vo.ReportBoardVO" alias="ReportBoardVO"/>
 		<typeAlias type="rem.admin.board.report.vo.ReportCommentsVO" alias="ReportCommentsVO"/>	
 		<typeAlias type="rem.admin.board.qna.vo.QnaBoardVO" alias="QnaBoardVO"/>
+		<typeAlias type="rem.admin.board.faq.vo.FAQBoardVO" alias="FAQBoardVO"/>
 		<typeAlias type="rem.admin.badge.vo.AchievementsVO" alias="AchievementsVO"/>
 		<typeAlias type="rem.login.vo.MemberVO" alias="MemberVO"/>		
+		<typeAlias type="rem.login.vo.UpdateMemberVO" alias="UpdateMemberVO"/>		
 		<typeAlias type="rem.wishlist.vo.WishlistVO" alias="WishlistVO"/>
 		<typeAlias type="rem.product.vo.ProductVO" alias="ProductVO"/>	
 		<typeAlias type="rem.product.vo.CateMainVO" alias="CateMainVO"/>	
 		<typeAlias type="rem.product.vo.CateSubVO" alias="CateSubVO"/>	
+		<typeAlias type="rem.product.vo.CateNameVO" alias="CateNameVO"/>	
+		<typeAlias type="rem.product.vo.ViewCountVO" alias="ViewCountVO"/>	
 		<typeAlias type="rem.store.vo.MemberProgressVO" alias="MemberProgressVO"/>	
 		<typeAlias type="rem.file.vo.ImgFileVO" alias="ImgFileVO"/>		
 		<typeAlias type="rem.chat.vo.MessageVO" alias="MessageVO"/>	
@@ -43,6 +47,11 @@
 		<typeAlias type="rem.transaction.vo.ShippingVO" alias="ShippingVO"/>
 		<typeAlias type="rem.product.vo.ProdImgVO" alias="ProdImgVO"/>
 		<typeAlias type="rem.review.vo.ReviewImgVO" alias="ReviewImgVO"/>
+		<typeAlias type="rem.transaction.vo.ReviewTransactionVO" alias="ReviewTransVO"/>
+		<typeAlias type="rem.admin.product.wishlist.vo.WishlistAllVO" alias="WishlistAllVO"/>
+		
+		
+		
 	</typeAliases>
 	
 	<!-- DB연결 설정 -->
@@ -79,6 +88,10 @@
 		<mapper resource="myBatis/mappers/message-mapper.xml"/>
 		<mapper resource="myBatis/mappers/search-mapper.xml"/>
 		<mapper resource="myBatis/mappers/qnaComments-mapper.xml"/>
+		<mapper resource="myBatis/mappers/adminReview-mapper.xml"/>
+		<mapper resource="myBatis/mappers/wishlistAll-mapper.xml"/>
+		<mapper resource="myBatis/mappers/view-mapper.xml"/>
+		<mapper resource="myBatis/mappers/faq-mapper.xml"/>
 		
 	</mappers>
 	

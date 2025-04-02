@@ -82,11 +82,11 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li data-menu=""><a href="" class="gnb_2da">상품 게시판</a></li>
-                            <li data-menu=""><a href="<%= request.getContextPath() %>/admin/noticePage.do" class="gnb_2da">공지시항</a></li>
-                            <li data-menu=""><a href="<%= request.getContextPath() %>/admin/qnaPage.do" class="gnb_2da gnb_grp_style gnb_grp_div">문의</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">FAQ</a></li>
-                            <li data-menu=""><a href="<%=request.getContextPath() %>/admin/reportBoardPage.do" class="gnb_2da  ">신고</a></li>
+                            <li><a href="" class="gnb_2da">상품 게시판</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/noticePage.do" class="gnb_2da">공지시항</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/qnaPage.do" class="gnb_2da gnb_grp_style gnb_grp_div">문의</a></li>
+                            <li><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">FAQ</a></li>
+                            <li><a href="<%=request.getContextPath() %>/admin/reportBoardPage.do" class="gnb_2da  ">신고</a></li>
                         </ul>
                     </div>
                 </div>
@@ -99,10 +99,10 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li data-menu=""><a href="" class="gnb_2da  ">카테고리 수정</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">후기 내역</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">찜내역</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da  ">조회내역</a></li>
+                            <li><a href="" class="gnb_2da  ">카테고리 수정</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/reviewList.do" class="gnb_2da gnb_grp_style gnb_grp_div">후기 내역</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/wishlistPage.do" class="gnb_2da gnb_grp_style gnb_grp_div">찜내역</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/viewList.do" class="gnb_2da">조회내역</a></li>
                         </ul>
                     </div>
                 </div>
@@ -115,9 +115,9 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li data-menu=""><a href="" class="gnb_2da  ">거래관리</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da  ">안심 거래 관리</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">페이관리</a></li>
+                            <li><a href="" class="gnb_2da  ">거래관리</a></li>
+                            <li><a href="" class="gnb_2da  ">안심 거래 관리</a></li>
+                            <li><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">페이관리</a></li>
                         </ul>
                     </div>
                 </div>
@@ -130,8 +130,8 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li data-menu=""><a href="" class="gnb_2da  ">채팅방관리</a></li>
-                            <li data-menu=""><a href="<%=request.getContextPath() %>/admin/messageList.do" class="gnb_2da  ">메세지 관리</a></li>
+                            <li><a href="" class="gnb_2da  ">채팅방관리</a></li>
+                            <li><a href="<%=request.getContextPath() %>/admin/messageList.do" class="gnb_2da  ">메세지 관리</a></li>
                         </ul>
                     </div>
                 </div>
@@ -144,8 +144,8 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li data-menu=""><a href="<%=request.getContextPath() %>/admin/achievementsPage.do" class="gnb_2da  ">뱃지관리</a></li>
-                            <li data-menu=""><a href="" class="gnb_2da  ">획득 뱃지 관리</a></li>
+                            <li><a href="<%=request.getContextPath() %>/admin/achievementsPage.do" class="gnb_2da  ">뱃지관리</a></li>
+                            <li><a href="" class="gnb_2da  ">획득 뱃지 관리</a></li>
                         </ul>
                     </div>
                 </div>

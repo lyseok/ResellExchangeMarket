@@ -6,7 +6,9 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import rem.product.vo.CateMainVO;
+import rem.product.vo.CateNameVO;
 import rem.product.vo.CateSubVO;
+import rem.product.vo.ProdImgVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.apache.ibatis.session.SqlSession;
 
 
 import rem.product.vo.ProductVO;
+import rem.product.vo.ViewCountVO;
 import utill.MyBatisUtil;
 
 public class ProductDaoImpl implements IProductDao {
@@ -111,6 +114,67 @@ public int getCountAllReview(int mem_no) {
 		if(session!=null) session.close();
 	}
 	return cnt;
+}
+
+@Override
+public CateNameVO getCateName(int prod_no) {
+	SqlSession session = null;
+	CateNameVO nvo = null;
+	
+	try {
+		session = MyBatisUtil.getSqlSession();
+		nvo = session.selectOne("product.getCateName", prod_no);
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		if(session!=null) session.close();
+	}
+	return nvo;
+}
+
+@Override
+public int updateProductView(int prod_no) {
+	 SqlSession session = null;
+     int rec = 0;
+     try {
+        session = MyBatisUtil.getSqlSession();
+        rec = session.update("product.updateProductView", prod_no);
+        if(rec>0) session.commit();
+     }
+     catch(Exception e) {e.printStackTrace();}
+     finally {if(session!=null) session.close();}
+     return rec;
+}
+
+@Override
+public int insertViewCount(ViewCountVO vo) {
+	 SqlSession session = null;
+     int rec = 0;
+     try {
+        session = MyBatisUtil.getSqlSession();
+        rec = session.insert("product.insertViewCount", vo);
+        if(rec>0) session.commit();
+     }
+     catch(Exception e) {e.printStackTrace();}
+     finally {if(session!=null) session.close();}
+     return rec;
+}
+
+@Override
+public List<ProdImgVO> selectAllMainPageProd() {
+	SqlSession session = null;
+	List<ProdImgVO> list = null;
+	
+	try {
+		session = MyBatisUtil.getSqlSession();
+		list = session.selectList("product.selectAllMainPageProd");
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		if(session != null) session.close();
+	}
+	return list;
 }
 
 }

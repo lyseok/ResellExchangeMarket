@@ -10,9 +10,6 @@ import rem.admin.board.qna.service.QnaServiceImpl;
 import rem.admin.board.qna.vo.QnaBoardVO;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import com.google.gson.Gson;
 
 
 @WebServlet("/admin/qnaViewPage.do")
@@ -31,26 +28,6 @@ public class QnaViewPage extends HttpServlet {
 		request.setAttribute("qnaVo", vo);
 		
 		request.getRequestDispatcher("/WEB-INF/admin/board/qna/qnaView.jsp").forward(request, response);
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		 * response.setCharacterEncoding("utf-8");
-		 * response.setContentType("application/json;charset=utf-8");
-		
-		// 서비스 객체 생성
-		IQnaService service = QnaServiceImpl.getInstance();
-		QnaVO vo = service.seletQnaView(0);
-		
-		Gson gson = new Gson();
-		String res = gson.toJson(vo);
-		request.setAttribute("res", res);
-		
-		PrintWriter out = response.getWriter();
-		out.print(res);
-		out.flush();		
-		 */
 	}
 
 }

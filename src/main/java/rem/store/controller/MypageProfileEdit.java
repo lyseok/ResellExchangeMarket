@@ -31,7 +31,7 @@ import com.google.gson.JsonObject;
 @WebServlet("/store/mypageProfileEdit.do")
 public class MypageProfileEdit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String UPLOAD_DIR = "filetest"; // 업로드 디렉터리 설정
+	private static final String UPLOAD_DIR = "remImg"; // 업로드 디렉터리 설정
        
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

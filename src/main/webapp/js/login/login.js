@@ -15,6 +15,17 @@ signInButton.addEventListener('click', () => {
 });
 
 $('#loginBtn').on('click', function() {
+	login();
+});
+
+$('#inPassword').on('keydown', function(e){
+	if(e.keyCode == 13){
+		login();
+	}
+});
+
+
+const login = () => {
 	let email = $('#inEmail').val();
 	let password = $('#inPassword').val();
 
@@ -49,5 +60,4 @@ $('#loginBtn').on('click', function() {
 			console.log(xhr.status);
 		}
 	});
-
-});
+}

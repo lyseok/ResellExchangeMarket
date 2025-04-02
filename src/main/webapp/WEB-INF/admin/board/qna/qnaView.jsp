@@ -17,32 +17,120 @@
 			    data: {"qnaNo": <%= vo.getQna_no() %>},
 				dataType: "json",
 				success: res => {
-					html = "";
-					html += `
-                    	<div class="admin_cont ai_fe" id="status_ck">
-							<div class="admin_status">답변 완료</div>
-						</div>
-
-                    	<div class="admin_cont">
-                    		
-	                    	<div class="admin_bd_view_cont">
-	                    		\${res.cmt_cont}
-	                    	</div>
-	                    	<b>\${res.cmt_at}</b>
-                    	</div>`;
-                    $("#qna_cmt_result").html(html);
-                    console.log(res.cmt_cont);
-                    console.log(res.cmt_at);
+					console.log(res);
+					if(res != null){
+						html = "";
+						html += `
+	                    	<div class="admin_cont ai_fe" id="status_ck">
+								<div class="admin_status">답변 완료</div>
+							</div>
+	
+	                    	<div id="commentsArea" class="admin_cont">
+	                    		
+		                    	<div class="admin_bd_view_cont">\${res.cmt_cont}</div>
+		                    	<div class="admin_cmt_box_rt">
+		                    		<b>\${res.cmt_at}</b>
+		                    		<b class="updateComments">수정</b>
+		                    	</div>
+	                    	</div>`;
+	                    $("#qna_cmt_result").html(html);
+	                    console.log(res.cmt_cont);
+	                    console.log(res.cmt_at);
+					}
 				},
 				error: xhr =>{
 					alert("오류: " + xhr.status);
 				}
 			})
+			
+			
+			// 답변하기 버튼 클릭 시 동작
+			$("#addComments").on("click", function(){
+				qnaNo = <%= vo.getQna_no() %>;
+				console.log(qnaNo);
+				code = "";
+				code += 
+					`
+					<form action="${mypath}/admin/insertQnaComments.do" id="qna_comments" method="post" >
+				    	<input type="hidden" name="mem_no" id="qna_no" value="\${qnaNo}">
+				        <div id="qna_comments_form" class="admin_comments_form">
+<textarea name="commentsText" class="commentsText" cols="120" rows="7"></textarea>
+							<button type="button" id="insertQnaCommentsBtn">등록하기</button>
+				      </div>						
+					</form>
+					`;
+			  // 댓글 입력 폼을 댓글 영역에 삽입
+			  $('#commentsArea').html(code);
+			})
+			
+			// 답변하기 클릭 후 폼에 입력 한 뒤 등록하기 클릭 시 
+			$(document).on("click", "#insertQnaCommentsBtn", function(){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/admin/insertQnaComments.do",
+					type:"post",
+					data: {
+						qna_no: $("#qna_no").val(),
+// 						commentsText: $(".commentsText").val().replaceAll(/\n/g, "<br>") // 줄바꿈 처리
+						commentsText: $(".commentsText").val() // 줄바꿈 처리
+					},
+					success: res =>{
+						console.log(res);
+					}, 
+					error: xhr =>{
+						alert("오류: " + xhr.status);
+					},
+					dataType:"json"
+				})
+			})
+			
+			
+			// 수정버튼 클릭 시 동작
+			$(document).on("click", ".updateComments", function(){
+				text = $("#commentsArea > .admin_bd_view_cont").html().replaceAll("<br>", "\n");
+				qnaNo = <%= vo.getQna_no() %>; 
+				console.log(qnaNo);
+				code = "";
+				code += 
+					`<form action="${mypath}/admin/updateQnaComments.do" id="qna_comments" method="post" >
+				    	<input type="hidden" name="mem_no" id="qna_no" value="\${qnaNo}">
+				        <div id="qna_comments_form" class="admin_comments_form">
+<textarea name="commentsText" class="commentsText" cols="120" rows="7">\${text}</textarea>
+					        <button type="button" id="updateQnaCommentsBtn">등록하기</button>
+				      </div>						
+					</form>
+					`;
+			  // 댓글 입력 폼을 댓글 영역에 삽입
+			  $('.admin_cont:last-child').html(code);
+			})
+			
+			// 수정내용 입력 후 수정완료 버튼 클릭 시
+			$(document).on("click", "#updateQnaCommentsBtn", function(){
+				$.ajax({
+					url: "<%=request.getContextPath() %>/admin/updateQnaComments.do",
+					type: "post",
+					data: {
+						qna_no: $("#qna_no").val(),
+						commentsText: $(".commentsText").val().replaceAll(/\n/g, "<br>")
+					},
+					success: res => {
+						console.log(res);
+						code = "";
+						code += 
+						`<div class="admin_bd_view_cont commentsText">\${res.cmt_cont}</div>
+					        <div class="admin_cmt_box_rt">
+					          <b>\${res.cmt_at}</b>
+					          <b class="updateComments">수정</b>
+					        </div>`;
+					      $("#commentsArea").html(code);
+					},
+					error: xhr => {
+						alert("오류: " + xhr.status);
+					}
+				})
+			})
+			
 		})
 	</script>
-	<%
-		QnaCommentsVO qnaCmtvo = (QnaCommentsVO)request.getAttribute("qnaCmt");
-	%>
     <div id="wrapper">
 
         <div id="container">
@@ -64,21 +152,19 @@
 	                    		<div>
 	                    			<span>유형</span>
 	                    			<b>
-		                    			<%
+		                    			<%-- <%
 		                    				if(vo.getQna_type()== 0){
 		                    					System.out.println("상품문의");
 		                    				}
 		                    				 
-		                    			%>
+		                    			%> --%>
 		                    			여기 값 어떻게 바꿔?
 	                    			</b>
 	                    		</div>
 	                    		<div><span>작성자</span><b><%= vo.getMem_no() %></b></div>
 	                    	</div>
 	                    	
-	                    	<div class="admin_bd_view_cont">
-	                    		<%=vo.getQna_cont() %>
-	                    	</div>
+	                    	<div class="admin_bd_view_cont"><%=vo.getQna_cont() %></div>
                     	</div>
                     	
                     	<%
@@ -91,6 +177,7 @@
 						      <button id="addComments">답변하기</button>
 						    </div>
 						</div>
+						<div id="commentsArea"></div>
                     	<%
                     		} else {
                     	%>

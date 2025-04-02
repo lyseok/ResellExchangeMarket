@@ -8,6 +8,14 @@
 <meta charset="UTF-8">
 <title>상품상세</title>
 
+<%
+	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+	String login = (String)session.getAttribute("login");
+%>
+<script>
+mypath = '<%=request.getContextPath() %>';
+</script>
+
 <link rel="icon" href="<%=request.getContextPath() %>/images/favicon.png">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/reset.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/header.css">
@@ -24,45 +32,10 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.7.1.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/category/category.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/modal/modal.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/header/header.js" defer></script>
+<script defer type="text/javascript" src="<%=request.getContextPath() %>/js/header/header.js"></script>
 
 
 
-<%
-
-	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-	String login = (String)session.getAttribute("login");
-
-%>
-<script>
-mypath = '<%=request.getContextPath() %>';
-
-$(function () {
-	// 찜한 상품 개수 가져오기
-	$.ajax({
-		url: `\${mypath}/wishlist/countWishlist.do`,
-		type: "post",
-		success: function(data) {
-			$('#countWishlist').text(data);
-		},
-		error: xhr => {
-			console.log(xhr.status);
-		},
-		dataType: "json"
-	})
-
-	$('#searchBtn').on('click', function() {
-		let searchKeyword = $('.search_box input').val();
-		if(searchKeyword == "") {
-			alert("검색어를 입력하세요.");
-			return false;
-		} else {
-			location.href = `\${mypath}/searchPage.do?searchText=\${searchKeyword}`;
-		}
-	})
-})
-
-</script>
 
 </head>
 <body>
@@ -78,7 +51,7 @@ $(function () {
 					%>
 					
 				<div class="util_link">
-					<a href="javascript:void(0)">공지사항</a>
+					<a href="<%=request.getContextPath()%>/main/notice.do">공지사항</a>
 				</div>
 				<div class="util_user">
 					<a href="<%= request.getContextPath() %>/loginPage.do">로그인</a>
@@ -88,7 +61,7 @@ $(function () {
 					%>
 					
 				<div class="util_link">
-					<a href="javascript:void(0)">공지사항</a>
+					<a href="<%=request.getContextPath()%>/main/notice.do">공지사항</a>
 					<a href="javascript:void(0)">1:1문의</a>
 				</div>
 				<div class="util_user">
@@ -118,7 +91,7 @@ $(function () {
 					</h1>
 				</div>
 				<div class="search_box">
-					<input type="text" placeholder="상품명, 상점명 입력" />
+					<input type="text" id="searchText" placeholder="상품명, 상점명 입력" />
 					<span class="search_icon material-symbols-outlined" id="searchBtn">search</span>
 				</div>
 				<div class="user_box">

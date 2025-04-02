@@ -17,6 +17,19 @@
 			)
 	</insert>
 	
+	<insert id="insertViewCount" parameterType="ViewCountVO">
+		insert into viewcount
+		values (
+			seq_viewcount.nextval, #{mem_no}, #{prod_no}, sysdate
+		)
+		
+	</insert>
+	
+	<update id="updateProductView" parameterType ="int">
+		update product set prod_view = prod_view+1
+		where prod_no = #{prod_no}
+	</update>
+	
 	<select id="getProductDetail" resultType="ProductVO" parameterType="int">
 		select * from product
 		where prod_no = #{prod_no}
@@ -39,5 +52,23 @@
 	<select id="getCateSub" parameterType="int" resultType="CateSubVO">
 		select * from category_sub
 		where cate_main_id=#{cate_main_id}
+	</select>
+	
+	<select id="getCateName" parameterType="int" resultType="CateNameVO">
+		select b.cate_sub_name, c.cate_main_name
+		  from product a, category_sub b, category_main c
+		 where a.cate_sub_id = b.cate_sub_id
+		   and b.cate_main_id = c.cate_main_id
+		   and a.prod_no = #{prod_no}
+	</select>
+	
+	<select id="selectAllMainPageProd" resultType="ProdImgVO">
+		select *
+		  from product a, img_file b
+		 where a.prod_no = b.file_no
+		 and b.file_source = 200
+		 and b.file_total = 1
+		 and a.prod_tr_status = 0
+		 order by prod_newing desc
 	</select>
 </mapper>

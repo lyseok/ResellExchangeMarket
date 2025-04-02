@@ -4,11 +4,14 @@ package rem.product.dao;
 import java.util.List;
 
 import rem.product.vo.CateMainVO;
+import rem.product.vo.CateNameVO;
 import rem.product.vo.CateSubVO;
+import rem.product.vo.ProdImgVO;
 
 import java.util.List;
 
 import rem.product.vo.ProductVO;
+import rem.product.vo.ViewCountVO;
 
 public interface IProductDao {
    
@@ -22,4 +25,12 @@ public interface IProductDao {
    public ProductVO getProductDetail(int prod_no);
    
    public int getCountAllReview(int mem_no);
+   
+   public CateNameVO getCateName(int prod_no);
+   
+   public int updateProductView(int prod_no);
+   
+   public int insertViewCount(ViewCountVO vo);
+   
+   public List<ProdImgVO> selectAllMainPageProd();
 }

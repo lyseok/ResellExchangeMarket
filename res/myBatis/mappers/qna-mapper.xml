@@ -35,4 +35,31 @@
 		delete QNA_BOARD
 		 where qna_no=#{qna_no}
 	</delete>
+	
+	
+	<sql id="dynamicsearch">
+		<where>
+			<if test="select=='mem_no'">
+				${select} = #{value}
+			</if>
+			<if test="select=='qna_title'">
+				${select} like '%'||#{value}||'%'
+			</if>
+		</where>
+	</sql>
+	<select id="searchQna" parameterType="map" resultType="QnaBoardVO">
+		select QNA_NO,
+		       MEM_NO,
+		       QNA_TITLE,
+		       QNA_TYPE,
+		       TO_CHAR(QNA_AT, 'YYYY-MM-DD HH24:MI') as QNA_AT,
+		       QNA_CONT,
+		       QNA_STATUS,
+		       QNA_COM_STATUS
+		  from QNA_BOARD
+		 <include refid="dynamicsearch" />
+  		 order by 1 desc
+	</select>
+	
+	
 </mapper>

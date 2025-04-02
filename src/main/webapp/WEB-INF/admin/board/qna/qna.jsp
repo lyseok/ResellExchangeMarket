@@ -31,12 +31,12 @@
 	                    <td><a href="\${adminPath}/admin/qnaViewPage.do?qnaNo=\${v.qna_no}">\${v.qna_title}</a></td>
 	                    <td>\${v.mem_no}</td>
 	                    <td>`;
-	                    
-		                    if(v.qna_status == 0){
-		                    	html += "답변전";
-		                    } else if(v.qna_status == 1){
-		                    	html += "답변완료";
-		                    }
+
+				             if(v.qna_com_status == 0 ){
+				            	 html += "답변 전";
+				             } else if(v.qna_com_status == 1){
+				            	 html += "답변완료";					            	 
+				             }
 		                    
 	                    html +=  
 	                    	`</td>
@@ -54,12 +54,67 @@
 			
 			$("#tBody").on("click", "#deleteBtn", function(){
 				const qnaNo = $(this).data("qnano");
+				if(confirm("삭제하시겠습니까?")){
+					$.ajax({
+						url: "<%=request.getContextPath()%>/admin/qnaDelete.do",
+						data : "qnaNo=" + qnaNo,
+						type: "get",
+						success: res =>{
+							location.reload();
+						},
+						error: xhr => {
+							alert("오류: " + xhr.status);		
+						}
+					})
+					alert("정상적으로 삭제되었습니다.");
+				}else{
+					alert("삭제실패");
+				}
+
+			})
+			
+			$("#searchNoticeBtn").on("click", function(){
+				const searchText = $("#searchText").val();
+				const searchSelect = $("#searchSelect").val();
 				$.ajax({
-					url: "<%=request.getContextPath()%>/admin/qnaDelete.do",
-					data : "qnaNo=" + qnaNo,
-					type: "get",
+					url: "<%=request.getContextPath()%>/admin/qnaSearch.do",
+					data : {
+						searchText : searchText,
+						searchSelect : searchSelect
+					},
+				    type: "post",
 					success: res =>{
-						location.reload();
+						console.log(res);
+						code = "";
+						$.each(res, function(i,v){
+							code += 
+								`<tr class="noticeBoard">
+					              <td>\${v.qna_no}</td>
+					              <td>
+					             `;
+					             if(v.qna_type == 0 ){
+					            	 code += "상품문의";
+					             } else if(v.qna_type == 1){
+					            	 code += "1:1문의";					            	 
+					             }
+					        code +=  
+					        	`</td>
+					              <td>\${v.qna_title}</td>
+					              <td>\${v.mem_no}</td>
+					              <td>
+						             `;
+					              
+					             if(v.qna_com_status == 0 ){
+					            	 code += "답변 전";
+					             } else if(v.qna_com_status == 1){
+					            	 code += "답변완료";					            	 
+					             }
+					        code +=`</td>					              
+					              <td>\${v.qna_at}</td>
+					              <td><button type="button" data-qnano='\${v.qna_no}' id="deleteBtn" class="adm_del_btn">삭제</button></td>
+					            </tr>`;
+						})
+						$("#tBody").html(code);
 					},
 					error: xhr => {
 						alert("오류: " + xhr.status);		
@@ -82,9 +137,9 @@
                     
                     <div class="local_desc local_desc03 jc_fe ">
                     	<form action="" class="search_form mt0">
-			              <select name="searchNotice" id="searchNotice">
-			                <option value="notice_no">번호</option>
-			                <option value="notice_title">제목</option>
+			              <select name="searchNotice" id="searchSelect">
+			                <option value="mem_no">작성자번호</option>
+			                <option value="qna_title">제목</option>
 			              </select>
 			              <div>
 			                <input type="text" id="searchText" placeholder="검색어를 입력하세요.">

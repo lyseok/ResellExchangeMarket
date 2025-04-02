@@ -2,10 +2,20 @@
     pageEncoding="UTF-8"%>
     
 
+
 <%@include file="/WEB-INF/include/header.jsp" %>
 <%@include file="/WEB-INF/include/category.jsp" %>
+
+<%
+	System.out.println("loginSession :" + login);
+	if(login == null) {
+		response.sendRedirect(request.getContextPath() + "/accessCheck.do");
+	}
+
+%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/common/access.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/login/pw_chk.css">
+
 <script>
 	$(function() {
 		$("#conFirm").click(function() {
@@ -21,7 +31,7 @@
 					success: function(data) {
 						if (data == 1) {
 							alert("비밀번호가 확인되었습니다.");
-							
+							location.href = "<%=request.getContextPath()%>/updateMemberPage.do";
 						} else {
 							alert("비밀번호가 틀립니다.");
 							$("#pw").val("");

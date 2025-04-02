@@ -32,4 +32,46 @@ public class QnaCommentsDaoImpl implements IQnaCommentsDao{
 		return vo;
 	}
 
+	@Override
+	public int insertQnaComments(QnaCommentsVO qnaVO) {
+		SqlSession session = null;
+		int cnt = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			cnt = session.insert("qnacmt.insertQnaComments", qnaVO);
+			
+			if(cnt > 0) {
+				session.commit();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int updateQnaComments(QnaCommentsVO qnaVO) {
+		SqlSession session = null;
+		int cnt = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			cnt = session.update("qnacmt.updateQnaComments", qnaVO);
+			
+			if(cnt > 0) {
+				session.commit();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		return cnt;
+	}
+
 }

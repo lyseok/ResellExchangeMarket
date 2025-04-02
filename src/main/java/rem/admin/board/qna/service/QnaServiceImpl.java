@@ -1,6 +1,7 @@
 package rem.admin.board.qna.service;
 
 import java.util.List;
+import java.util.Map;
 
 import rem.admin.board.qna.dao.IQnaDao;
 import rem.admin.board.qna.dao.QnaDaoImpl;
@@ -51,6 +52,16 @@ public class QnaServiceImpl implements IQnaService {
 	@Override
 	public int deleteQna(int qna_no) {
 		return dao.deleteQna(qna_no);
+	}
+
+	/**
+	 *	게시글 검색 
+	 *	parameter: 게시글 번호
+	 *	return: 0ㅣ 삭제 실패, 1: 삭제 성공 
+	 */
+	@Override
+	public List<QnaBoardVO> searchQna(Map<String, String> map) {
+		return dao.searchQna(map);
 	}
 
 }

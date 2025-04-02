@@ -16,6 +16,10 @@ public class ReviewImgVO {
 	private int file_no;
 	private int file_total;
 	private String prod_name;
+	private String mem_name;
+	private int prod_price;
+	private String mem_alias;
+	private int prod_no;
 	public int getTxn_no() {
 		return txn_no;
 	}
@@ -105,6 +109,30 @@ public class ReviewImgVO {
 	}
 	public void setProd_name(String prod_name) {
 		this.prod_name = prod_name;
+	}
+	public String getMem_name() {
+		return mem_name;
+	}
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
+	public int getProd_price() {
+		return prod_price;
+	}
+	public void setProd_price(int prod_price) {
+		this.prod_price = prod_price;
+	}
+	public String getMem_alias() {
+		return mem_alias;
+	}
+	public void setMem_alias(String mem_alias) {
+		this.mem_alias = mem_alias;
+	}
+	public int getProd_no() {
+		return prod_no;
+	}
+	public void setProd_no(int prod_no) {
+		this.prod_no = prod_no;
 	}
 	
 	

@@ -128,13 +128,14 @@ $(function(){
 				</div>		
 			</div>
 			
-			<div class="innerCont">
+			
+	</div>
+</div>
+	<div class="innerGray">
 				<div class="innerCont button">
 					<div class="insert">
 						<input type="button" value="등록하기" id="insert">
 					</div> 
 				</div>		
 			</div>
-	</div>
-</div>
 <%@include file="/WEB-INF/include/footer.jsp" %>

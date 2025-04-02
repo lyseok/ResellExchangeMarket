@@ -11,6 +11,13 @@
 			order by prod_newing desc
 	</select>
 	
+	<insert id="insertTransaction" parameterType="TransVO">
+		<selectKey resultType="int" keyProperty="txn_no" order="BEFORE">
+			select MAX(txn_no)+1 from transaction
+		</selectKey>
+		insert into transaction
+		values(txn_no, #{prod_no}, #{mem_no}, 0, sysdate, null)
+	</insert>
 	
 	<update id="deleteProd" parameterType="ProductVO">
 		update product 
@@ -43,6 +50,79 @@
 			 join product p on t.prod_no = p.prod_no  
 			 where p.mem_no = #{mem_no}
 	</select>
+	
+	
+	<insert id = "insertTrackInfo" parameterType = "ShippingVO">
+		insert into shipping(ship_id, txn_no, ship_porv, track_num)
+			values(seq_shipping.nextval, #{txn_no}, #{ship_porv}, #{track_num})
+	</insert>
+	
+	<select id = "getSellProdReview" parameterType = "int" resultType = "ReviewTransVO">
+		select 
+        p.prod_name, 
+        p.prod_price, 
+        m.mem_name, 
+        r.review_rating, 
+        r.review_cont
+   			 from transaction t
+    		 join product p on t.prod_no = p.prod_no
+   			 join member m on t.mem_no = m.mem_no
+    		 left join review r on t.txn_no = r.txn_no
+    		 where t.txn_no = #{txn_no}
+	
+	</select>
+	
+	
+	<select id ="getTrackInfo" parameterType = "int" resultType = "ShippingVO">
+		select * from shipping
+			where txn_no = #{txn_no}
+	</select>
+	
+	
+	
+	<update id="updateConfrimProd" parameterType = "int">
+		update transaction
+			set txn_status = 2
+			where txn_no = #{txn_no}
+	</update>
+	
+	
+	
+	
+	
+	<select id = "getStatusBuyProd" parameterType = "int" resultType = "TransVO">
+		select t.txn_no, t.prod_no, t.mem_no, t.txn_status, t.txn_create_at,
+           	p.prod_name, p.prod_price, p.prod_tr_status, p.prod_tr_approch
+   		 	from transaction t
+    		join product p on t.prod_no = p.prod_no
+   		where t.mem_no = #{mem_no} and t.txn_status = #{txn_status}
+	
+	</select>
+	
+	
+	<select id="getStatusSellProd" parameterType = "int"  resultType = "TransVO">
+		select t.txn_no, t.prod_no, t.mem_no, t.txn_status, t.txn_create_at, t.track_completed,
+	      	 p.prod_name, p.prod_price, p.prod_tr_status, p.prod_tr_approch
+			 from transaction t
+			 join product p on t.prod_no = p.prod_no  
+			 where p.mem_no = #{mem_no} and t.txn_status = #{txn_status}
+	</select>
+	
+	
+	
+	<insert id="insertReview" parameterType="ReviewVO">
+		insert into review (
+		    txn_no, review_rating, review_cont, review_timestamp, review_status
+		) values (
+		    #{txn_no}, #{review_rating}, #{review_cont}, systimestamp, 0
+		)
+	
+	</insert>
+	
+	
+	
+	
+
 	
 	
 </mapper>

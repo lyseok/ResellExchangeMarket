@@ -20,8 +20,15 @@ public class QnaCommentsServiceImpl implements IQnaCommentsService {
 
 	@Override
 	public QnaCommentsVO selectQnaCmt(int qna_no) {
-		// TODO Auto-generated method stub
 		return dao.selectQnaCmt(qna_no);
+	}
+	@Override
+	public int insertQnaComments(QnaCommentsVO qnaVO) {
+		return dao.insertQnaComments(qnaVO);
+	}
+	@Override
+	public int updateQnaComments(QnaCommentsVO qnaVO) {
+		return dao.updateQnaComments(qnaVO);
 	}
 
 }

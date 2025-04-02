@@ -5,6 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import rem.file.service.FileServiceImpl;
+import rem.file.service.IFileService;
+import rem.file.vo.ImgFileVO;
 import rem.login.vo.MemberVO;
 import rem.product.vo.ProductVO;
 import rem.transaction.service.ITransactionService;
@@ -13,9 +16,11 @@ import rem.transaction.vo.ProdTransactionVO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
 @WebServlet("/getTransactionData.do")
@@ -44,14 +49,39 @@ public class GetTransactionData extends HttpServlet {
 	    ITransactionService service = TransactionServiceImpl.getInstance();
 	    List<ProductVO> prodList = null;
 	    List<ProdTransactionVO> prodTransList = null;
+	    
+	    
+	   
+	    
+	    IFileService fileService = FileServiceImpl.getInstance();
+	    List<ImgFileVO> imgList = new ArrayList<ImgFileVO>();
+	    List<ImgFileVO> productImgList =  new ArrayList<ImgFileVO>();
 	    Gson gson = new Gson();
+	    JsonObject resObject = new JsonObject();
+	    
 	    String result = null;
+	    int prodNo = 0;
 	    
 	
 	    if (category.equals("상품관리")) {
 			prodList = service.getProd(memberNo);
 			 System.out.println("Product List: " + prodList);
-			 result = gson.toJson(prodList); 
+			 
+			for (ProductVO pVO : prodList) {
+				imgList = fileService.getProductfileImg(prodNo);
+				productImgList.addAll(imgList);
+			}
+			 
+			 //result = gson.toJson(prodList); 
+			
+			resObject.add("prodList", gson.toJsonTree(prodList));
+			resObject.add("imgList", gson.toJsonTree(imgList));
+			
+			
+			for (ImgFileVO list : imgList) {
+				System.out.println("이미지 리스틑" + list);
+			}
+			
 			 
 		}
 	    else if (category.equals("구매관리")) {
@@ -72,12 +102,14 @@ public class GetTransactionData extends HttpServlet {
 	   
 	    
 	    response.setContentType("application/json;charset=UTF-8");
-	    PrintWriter out = response.getWriter();
-	    out.print(result); 
-	    out.flush();
-			  
+		/*
+		 * PrintWriter out = response.getWriter(); 
+		 * out.print(result);
+		 *  out.flush();
+		 */
 	
-		
+	    
+		response.getWriter().write(resObject.toString());
 	    
 	    
 	    

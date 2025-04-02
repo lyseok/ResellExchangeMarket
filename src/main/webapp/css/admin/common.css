@@ -120,5 +120,48 @@ button.adm_del_btn{
 	line-height:40px;
 	padding:0 45px;
 	font-size:14px;
+}
+
+/* 답변완료 시 수정	버튼 style */
+.admin_cont .admin_cmt_box_rt{
+	display:flex;
+	flex-direction:column;
+	row-gap:20px;
+	flex-basis:163px;
+	align-items:flex-end;
 	
 }
+.admin_cont .admin_cmt_box_rt b{	
+    color: #bababa;
+    font-size: 16px;
+    font-weight:300;
+}
+.admin_cont .admin_cmt_box_rt .updateComments{
+	display: inline-block;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    padding: 0 15px;
+    line-height: 30px;
+    color: #a7a7a7;
+    cursor:pointer;
+}
+
+
+/* 관리자 - 게시글 보기 답글 */
+.admin_cont form{
+	width:100%;
+}
+.admin_comments_form{
+	display:flex;
+	gap:10px;
+}
+.admin_comments_form textarea{
+	width:calc(100% - 100px);
+}
+.admin_comments_form button{
+	width:100px;
+	border:none;
+	
+}
+

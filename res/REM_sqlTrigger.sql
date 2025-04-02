@@ -189,3 +189,29 @@ BEGIN
        SET PROG_SELL = PROG_SELL + 1
      WHERE MEM_NO = :NEW.MEM_NO;
 END;
+
+/* 리뷰 등록 시 판매자의 리뷰 평점 업데이트 */
+CREATE OR REPLACE TRIGGER trg_review_insert
+    AFTER INSERT ON REVIEW
+    FOR EACH ROW
+BEGIN
+    DECLARE
+        v_rating_avg NUMBER(2,0);
+        v_member_no NUMBER(5,0);
+    BEGIN
+        SELECT MEM_NO
+          INTO v_member_no
+          FROM TRANSACTION
+         WHERE TXN_NO = :NEW.TXN_NO;
+        
+        SELECT AVG(R.REVIEW_RATING)
+          INTO v_rating_avg
+          FROM REVIEW R
+         INNER JOIN TRANSACTION T ON(R.TXN_NO = T.TXN_NO)
+         WHERE T.MEM_NO = v_member_no;
+         
+        UPDATE MEMBER
+           SET PR_RATING_AVG = v_rating_avg
+         WHERE MEM_NO = v_member_no;
+    END;
+END;

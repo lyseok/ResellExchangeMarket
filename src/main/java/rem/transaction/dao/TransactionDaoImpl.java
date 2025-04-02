@@ -5,8 +5,14 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.ibatis.sqlmap.engine.mapping.sql.Sql;
+
 import rem.product.vo.ProductVO;
+import rem.review.vo.ReviewVO;
 import rem.transaction.vo.ProdTransactionVO;
+import rem.transaction.vo.ReviewTransactionVO;
+import rem.transaction.vo.ShippingVO;
+import rem.transaction.vo.TransactionVO;
 import utill.MyBatisUtil;
 
 public class TransactionDaoImpl implements ITransactionDao {
@@ -131,9 +137,138 @@ public class TransactionDaoImpl implements ITransactionDao {
 		}
 		return list;
 	}
+
+
+	@Override
+	public int insertTrackInfo(ShippingVO shipVo) {
+		SqlSession session = null;
+		int count = 0;
+		
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			count = session.insert("trans.insertTrackInfo", shipVo);
+			if(count > 0 ) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return count;
+	}
+
+
+	@Override
+	public ReviewTransactionVO getSellProdReview(int txnNo) {
+		SqlSession session = null;
+		ReviewTransactionVO rvo = null;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rvo = session.selectOne("trans.getSellProdReview", txnNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return rvo;
+	}
+
+
+	@Override
+	public ShippingVO getTrackInfo(int txnNo) {
+		SqlSession session = null;
+		ShippingVO svo = null;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			svo = session.selectOne("trans.getTrackInfo", txnNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return svo;
+	}
+
+
+	@Override
+	public int updateConfrimProd(int txnNo) {
+		SqlSession session = null;
+		int count = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			count = session.update("trans.updateConfrimProd", txnNo);
+			
+			
+			if (count > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return count;
+	}
+
+
+	@Override
+	public int insertReview(ReviewVO reviewVo) {
+		SqlSession session = null;
+		int count = 0;
+		
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			count = session.insert("trans.insertReview", reviewVo);
+			if(count > 0 ) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return count;
+	}
+
+
+	@Override
+	public int insertTransaction(TransactionVO vo) {
+		SqlSession session = null;
+		int count = 0;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			count = session.insert("trans.insertTransaction", vo);
+			if(count >0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		return count;
+	}
 	
-	
-	
+
 	
 
 }

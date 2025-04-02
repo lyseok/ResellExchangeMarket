@@ -15,7 +15,6 @@
 <script defer src="<%=request.getContextPath() %>/js/login/login.js"></script>
 <script defer src="<%=request.getContextPath() %>/js/login/signup.js"></script>
 
-
 <%
 
 String login = (String)session.getAttribute("login");	
@@ -38,14 +37,14 @@ mypath = '<%=request.getContextPath() %>';
           <input type="email" id="email" placeholder="Email" name="email" required />
           <button type="button" id="idck_btn" class="pwck_btn">확인</button>
         </label>
-          <label for="password" id="password-label">
+        <label for="password" id="password-label">
           <input type="password" id="password" placeholder="password" name="password" required />
         </label>
-          <label for="password_ck" id="password-ck-label">
+        <label for="password_ck" id="password-ck-label">
           <input type="password" id="password_ck" placeholder="password" name="password_ck" required />
           <button type="button" id="pwck_btn" class="pwck_btn">확인</button>
         </label>
-          <label for="name" id="name-label">
+        <label for="name" id="name-label">
           <input type="text" id="name" placeholder="Name" name="name" required />
         </label>
         <button type="button" id="singupBtn">확인</button>

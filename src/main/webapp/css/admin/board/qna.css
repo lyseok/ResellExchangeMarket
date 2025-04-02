@@ -70,13 +70,6 @@
 	margin:0;	
 }
 
-.admin_cont .admin_bd_view_cont ~ b{
-	flex-basis:100px;	
-    color: #bababa;
-    font-size: 16px;
-    font-weight:300;
-}
-
 .listBtn{
 	text-align:center;
 	margin-top:30px;

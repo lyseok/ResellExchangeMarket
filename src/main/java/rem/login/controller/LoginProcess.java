@@ -21,7 +21,6 @@ public class LoginProcess extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String email = request.getParameter("inEmail");
 		String password = request.getParameter("inPassword");
 		System.out.println(email);

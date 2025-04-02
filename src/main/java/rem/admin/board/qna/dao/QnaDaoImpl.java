@@ -1,6 +1,7 @@
 package rem.admin.board.qna.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -72,6 +73,22 @@ public class QnaDaoImpl implements IQnaDao {
 			if(session!=null) session.close();
 		}
 		return cnt;
+	}
+
+	@Override
+	public List<QnaBoardVO> searchQna(Map<String, String> map) {
+		SqlSession session = null;
+		List<QnaBoardVO> qnaList = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			qnaList = session.selectList("qna.searchQna", map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		return qnaList;
 	}
 
 }

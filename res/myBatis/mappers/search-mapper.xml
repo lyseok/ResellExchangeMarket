@@ -13,4 +13,11 @@
 		    or a.mem_no = b.mem_no
 		   and b.mem_alias like '%'||#{searchText}||'%'
 	</select>
+	<select id="searchNoticeBoard" parameterType="String" resultType="NoticeBoardVO">
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONT, TO_CHAR(NOTICE_AT, 'yyyy-mm-dd') as NOTICE_AT, NOTICE_CNT
+		  FROM NOTICE_BOARD
+		 WHERE NOTICE_TITLE LIKE '%'||#{searchText}||'%' 
+		    OR NOTICE_CONT LIKE '%'||#{searchText}||'%'
+		 ORDER BY NOTICE_NO DESC
+	</select>
 </mapper>

@@ -93,50 +93,51 @@ public class StoreDaoImpl implements IStoreDao{
 	}
 	@Override
 	public List<ProdImgVO> getStoreProdList(int storeId) {
-	SqlSession session = null;
-	List<ProdImgVO> list = new ArrayList<>();
-	try{
-		session = MyBatisUtil.getSqlSession();
-		list = session.selectList("store.getStoreProdList", storeId);
-	}
-	catch(Exception e) {e.printStackTrace();}
-	finally {if(session!=null) session.close();}
-	return list;
+		SqlSession session = null;
+		List<ProdImgVO> list = new ArrayList<>();
+		try{
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("store.getStoreProdList", storeId);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return list;
 	}
 	@Override
 	public List<ProdImgVO> getStoreSoldoutList(int storeId) {
-	SqlSession session = null;
-	List<ProdImgVO> list = new ArrayList<>();
-	try{
-		session = MyBatisUtil.getSqlSession();
-		list = session.selectList("store.getStoreSoldoutList", storeId);
+		SqlSession session = null;
+		List<ProdImgVO> list = new ArrayList<>();
+		try{
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("store.getStoreSoldoutList", storeId);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return list;
 	}
-	catch(Exception e) {e.printStackTrace();}
-	finally {if(session!=null) session.close();}
-	return list;
-	}@Override
+	@Override
 	public List<ProdImgVO> getStoreWishlist(int storeId) {
-	SqlSession session = null;
-	List<ProdImgVO> list = new ArrayList<>();
-	try{
-		session = MyBatisUtil.getSqlSession();
-		list = session.selectList("store.getStoreWishlist", storeId);
-	}
-	catch(Exception e) {e.printStackTrace();}
-	finally {if(session!=null) session.close();}
-	return list;
+		SqlSession session = null;
+		List<ProdImgVO> list = new ArrayList<>();
+		try{
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("store.getStoreWishlist", storeId);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return list;
 	}
 	@Override
 	public List<ReviewImgVO> getStoreReviewList(int storeId) {
-	SqlSession session = null;
-	List<ReviewImgVO> list = new ArrayList<>();
-	try{
-		session = MyBatisUtil.getSqlSession();
-		list = session.selectList("store.getStoreReviewList", storeId);
-	}
-	catch(Exception e) {e.printStackTrace();}
-	finally {if(session!=null) session.close();}
-	return list;
+		SqlSession session = null;
+		List<ReviewImgVO> list = new ArrayList<>();
+		try{
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("store.getStoreReviewList", storeId);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return list;
 	}
 	
 	

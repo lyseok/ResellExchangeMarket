@@ -6,7 +6,9 @@ import java.util.List;
 import rem.product.dao.IProductDao;
 import rem.product.dao.ProductDaoImpl;
 import rem.product.vo.CateMainVO;
+import rem.product.vo.CateNameVO;
 import rem.product.vo.CateSubVO;
+import rem.product.vo.ProdImgVO;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import rem.product.dao.IProductDao;
 import rem.product.dao.ProductDaoImpl;
 
 import rem.product.vo.ProductVO;
+import rem.product.vo.ViewCountVO;
 
 public class ProductServiceImpl implements IProductService {
    private IProductDao dao;
@@ -58,6 +61,30 @@ public ProductVO getProductDetail(int prod_no) {
 public int getCountAllReview(int mem_no) {
 	// TODO Auto-generated method stub
 	return dao.getCountAllReview(mem_no);
+}
+
+@Override
+public CateNameVO getCateName(int prod_no) {
+	// TODO Auto-generated method stub
+	return dao.getCateName(prod_no);
+}
+
+@Override
+public int updateProductView(int prod_no) {
+	// TODO Auto-generated method stub
+	return dao.updateProductView(prod_no);
+}
+
+@Override
+public int insertViewCount(ViewCountVO vo) {
+	// TODO Auto-generated method stub
+	return dao.insertViewCount(vo);
+}
+
+@Override
+public List<ProdImgVO> selectAllMainPageProd() {
+	// TODO Auto-generated method stub
+	return dao.selectAllMainPageProd();
 }
 
 }

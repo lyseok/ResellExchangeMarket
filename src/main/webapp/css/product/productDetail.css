@@ -26,7 +26,131 @@ hr{
 
 .innerCont{
 	display : flex;
-	margin-bottom : 20px;
 	position : relative;
+}
+.item{
+	display : flex;
+	flex-direction : column;
+	margin-left : 10px;
+	padding-bottom : 20px;
+}
+.photo{
+	border : 1px solid #ccc;
+	width : 350px;
+	height : 350px;
 	
+}
+#prod_img{
+	width : 350px;
+	height : 350px;
+}
+#name, #price{
+	font-size : 1.5em;
+}
+.view{
+	display : flex;
+	flex-direction : row;
+	width : 700px;
+}
+.material-symbols-outlined{
+	margin-right : 10px;
+}
+.siren{
+	position: absolute;
+	right : 0;
+}
+
+.stat{
+	margin-top : 20px;
+	margin-left : 20px;
+	font-size : 12px;
+	color : #C0C0C0;
+}
+.stat2 {
+	margin-left : 20px;
+}
+.button{
+	display : flex;
+	flex-direction : row;
+}
+.btn{
+	margin : 10px;
+	width : 200px;
+	height : 50px;
+	border : none;
+	cursor : pointer;
+}
+#wish{
+	background-color : #ccc;
+}
+#chat{
+	background-color : #FFB74D;
+}
+#modal-open{
+	background-color : #9B59B6;
+	margin-left : 5px;
+	color : white;
+	margin : 10px;
+	width : 200px;
+	height : 50px;
+	border : none;
+	cursor : pointer;
+	font-size : 1.3em;
+	font-family : 'Pretendard-Regular';
+}
+#bbtn{
+	font-size : 1.3em;
+	cursor : pointer;
+}
+.material-symbols-outlined.but{
+	color : white;
+	
+}
+.btnText{
+	margin-left : 5px;
+	color : white;
+}
+.content{
+	display : flex;
+	flex-direction : column;
+}
+.innerCont h2{
+	font-size : 1.5em;
+	margin-bottom : 20px;
+}
+.innerCont h3{
+	font-size : 1.5em;
+	margin-bottom : 10px;
+}
+.text2{
+	width : 700px;
+	display : flex;
+	flex-direction : column;
+}
+.content{
+	height: 250px;
+}
+.material-symbols-outlined.cate{
+	margin-bottom : 10px;
+}
+.item2{
+	display : flex;
+	flex-direction : column;
+}
+#profileImg{
+	width : 70px;
+	height : 70px;
+}
+.store{
+	display: flex;
+	flex-direction : row;
+}
+#alias{
+	font-size : 1.4em;
+}
+.profile{
+	display : flex;
+	flex-direction : column;
+	margin-bottom : 10px;
+	margin-left : 10px;
 }

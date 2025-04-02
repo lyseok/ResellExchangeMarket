@@ -29,7 +29,7 @@ import com.google.gson.Gson;
 @WebServlet("/product/insertProduct.do")
 public class InsertProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String UPLOAD_DIR = "images";
+	private static final String UPLOAD_DIR = "remImg";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/product/insertProduct.jsp").forward(request, response);
@@ -44,7 +44,7 @@ public class InsertProduct extends HttpServlet {
 		int memId = loginInfo.getMem_no();
 		List<ImgFileVO> list = new ArrayList<ImgFileVO>();
 		
-		String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
+		String uploadPath = "d:" + File.separator + UPLOAD_DIR;
 		System.out.println(uploadPath);
 		File uploadDir = new File(uploadPath);
 		if(!uploadDir.exists()) uploadDir.mkdir();
@@ -74,6 +74,7 @@ public class InsertProduct extends HttpServlet {
 			IProductService service = ProductServiceImpl.getInstance();
 			
 			int cnt = service.insertProduct(pvo);
+			int file_total = 0;
 			
 			int prod_no = pvo.getProd_no();
 			
@@ -88,7 +89,7 @@ public class InsertProduct extends HttpServlet {
 					String checkImg = request.getParameter("checkImg");
 					if(checkImg.equals("NEW-IMG")) {
 						ImgFileVO imgVO = new ImgFileVO();
-						int max = 0;
+						file_total++;
 						try {
 							System.out.println(imgPart.getSubmittedFileName());
 		
@@ -107,6 +108,7 @@ public class InsertProduct extends HttpServlet {
 							imgVO.setFile_size((int)Math.ceil(imgPart.getSize() / 1024.0 / 1024.0));
 							imgVO.setFile_type(imgExtension);
 							imgVO.setFile_no(prod_no);
+							imgVO.setFile_total(file_total);
 							
 							imgPart.write(savingFilePath);
 						} catch (Exception e) {

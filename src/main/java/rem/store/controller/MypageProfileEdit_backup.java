@@ -1,7 +1,6 @@
 package rem.store.controller;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,22 +17,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 
 //@WebServlet("/store/mypageProfileEdit.do")
 public class MypageProfileEdit_backup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String UPLOAD_DIR = "filetest"; // 업로드 디렉터리 설정
+	////■□■□■□■□■□(((1)))
+	private static final String UPLOAD_DIR = "remImg"; // 업로드 디렉터리 설정
        
 
+	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		//1) session객체로부터 로그인 정보 꺼냄
@@ -41,6 +39,7 @@ public class MypageProfileEdit_backup extends HttpServlet {
 		int storeId = loginInfo.getMem_no();
 		
 		// 이미지 업로드 경로 설정 (서버 실행 경로 기준)
+		////■□■□■□■□■□(((2)))
         String uploadPath = "d:" + File.separator + UPLOAD_DIR;
         System.out.println("Upload Path: " + uploadPath);
         File uploadDir = new File(uploadPath);
@@ -63,9 +62,9 @@ public class MypageProfileEdit_backup extends HttpServlet {
 					Part imgPart = request.getPart("editedImage");
 					System.out.println("Received File Name: " + imgPart.getSubmittedFileName());
 					
+					////■□■□■□■□■□(((3)))
 					String imgOriginalName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
 		            String imgUUIDName = UUID.randomUUID().toString() + "_" + imgOriginalName;
-	///	            String savingFilePath = "/" + uploadPath.substring(3) + File.separator + imgUUIDName;
 		            String savingFilePath = uploadPath + File.separator + imgUUIDName;
 		            String scriptFilePath = "/" + uploadPath.substring(3) + File.separator + imgUUIDName;
 		            String imgExtension = "";
@@ -77,7 +76,7 @@ public class MypageProfileEdit_backup extends HttpServlet {
 		            imgVO.setFile_org_name(imgOriginalName);
 		            imgVO.setFile_save_name(imgUUIDName);
 		            imgVO.setFile_path(scriptFilePath);
-		            imgVO.setFile_size((int)Math.ceil(imgPart.getSize() / 1024.0 / 1024.0)); //<-MG단위로 저장
+		            imgVO.setFile_size((int)Math.ceil(imgPart.getSize() / 1024.0 )); //<-MG단위로 저장
 		            imgVO.setFile_type(imgExtension);
 		            imgVO.setFile_source(100); //<-mapper에 소스별 메소드 구현할 거라 쓰이진 않는 필드.
 		            imgVO.setFile_no(loginInfo.getMem_no());
@@ -185,6 +184,7 @@ public class MypageProfileEdit_backup extends HttpServlet {
 	*/
 	
 	///■ Part 구조 안에서 '파일명'을 찾는 메서드
+	@SuppressWarnings("unused")
 	private String extractFileName(Part part) {
 		String fileName = "";		//<-찾은 파일명이 저장도리 변수(반환값)
 		

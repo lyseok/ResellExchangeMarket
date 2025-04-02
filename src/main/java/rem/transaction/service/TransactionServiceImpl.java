@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import rem.product.vo.ProductVO;
+import rem.review.vo.ReviewVO;
 import rem.transaction.dao.ITransactionDao;
 import rem.transaction.dao.TransactionDaoImpl;
 import rem.transaction.vo.ProdTransactionVO;
+import rem.transaction.vo.ReviewTransactionVO;
+import rem.transaction.vo.ShippingVO;
+import rem.transaction.vo.TransactionVO;
 
 public class TransactionServiceImpl implements ITransactionService{
 	
@@ -50,6 +54,37 @@ public class TransactionServiceImpl implements ITransactionService{
 	@Override
 	public List<ProdTransactionVO> getSellProd(int memberId) {
 		return dao.getSellProd(memberId);
+	}
+
+	@Override
+	public int insertTrackInfo(ShippingVO shipVo) {
+		return dao.insertTrackInfo(shipVo);
+	}
+
+	@Override
+	public ReviewTransactionVO getSellProdReview(int txnNo) {
+		return dao.getSellProdReview(txnNo);
+	}
+
+	@Override
+	public ShippingVO getTrackInfo(int txnNo) {
+		return dao.getTrackInfo(txnNo);
+	}
+
+	@Override
+	public int updateConfrimProd(int txnNo) {
+		return dao.updateConfrimProd(txnNo);
+	}
+
+	@Override
+	public int insertReview(ReviewVO reviewVo) {
+		return dao.insertReview(reviewVo);
+	}
+
+	@Override
+	public int insertTransaction(TransactionVO vo) {
+		// TODO Auto-generated method stub
+		return dao.insertTransaction(vo);
 	}
 	
 	

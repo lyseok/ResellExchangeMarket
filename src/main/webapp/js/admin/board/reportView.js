@@ -37,8 +37,8 @@ if(noticeVO.rpt_com_status == 0){ // 아직 답변 전인 경우
       // 조회된 댓글 내용 표시용 HTML 구성
       code = /* html */`
         <div class="admin_bd_view_cont commentsText">${data.cmt_cont}</div>
-        <div class="row_align">
-          <b>${data.cmt_at}</b><br>
+        <div class="admin_cmt_box_rt">
+          <b>${data.cmt_at}</b>
           <b class="updateComments">수정</b>
         </div>
       `;
@@ -86,8 +86,8 @@ $(document).on('click', '#insertReportCommentsBtn', function(){
       <div class="admin_bd_view_cont">
           ${data.cmt_cont}
         </div>
-        <div class="row_align">
-          <b >${data.cmt_at}</b><br>
+        <div class="admin_cmt_box_rt">
+          <b >${data.cmt_at}</b>
           <b class="updateComments">수정</b>
         </div>
       `;
@@ -136,8 +136,8 @@ $(document).on('click', '#updateReportCommentsBtn', function(){
       // 등록된 댓글 내용을 출력할 HTML 구성
       code = /* html */`
       <div class="admin_bd_view_cont commentsText">${data.cmt_cont}</div>
-        <div class="row_align">
-          <b >${data.cmt_at}</b><br>
+        <div class="admin_cmt_box_rt">
+          <b >${data.cmt_at}</b>
           <b class="updateComments">수정</b>
         </div>
       `;

@@ -2,6 +2,7 @@ package rem.search.service;
 
 import java.util.List;
 
+import rem.admin.board.notice.vo.NoticeBoardVO;
 import rem.search.dao.ISearchDao;
 import rem.search.vo.SearchVO;
 
@@ -21,6 +22,11 @@ public class SearchServiceImpl implements ISearchService {
 	@Override
 	public List<SearchVO> selectSearchProduct(String searchText) {
 		return dao.selectSearchProduct(searchText);
+	}
+
+	@Override
+	public List<NoticeBoardVO> searchNoticeBoard(String searchText) {
+		return dao.searchNoticeBoard(searchText);
 	}
 
 }

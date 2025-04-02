@@ -4,6 +4,7 @@ import java.util.Map;
 
 import rem.login.dao.IMemberDao;
 import rem.login.vo.MemberVO;
+import rem.login.vo.UpdateMemberVO;
 
 public class MemberServiceImpl implements IMemberService {
 	private static IMemberService instance;
@@ -37,5 +38,29 @@ public class MemberServiceImpl implements IMemberService {
 	public int pwCheck(Map<String, String> map) {
 		return dao.pwCheck(map);
 	}
+
+	@Override
+	public UpdateMemberVO selectUpdateMember(int no) {
+		return dao.selectUpdateMember(no);
+	}
+
+	@Override
+	public int updateMember(UpdateMemberVO vo) {
+		if(dao.updateMember(vo) == 0) return 0;
+		return updateAddress(vo);
+	}
+
+	@Override
+	public int updateAddress(UpdateMemberVO vo) {
+		return dao.updateAddress(vo);
+	}
+
+	@Override
+	public MemberVO getMemInfo(int mem_no) {
+		// TODO Auto-generated method stub
+		return dao.getMemInfo(mem_no);
+	}
+
+	
 
 }

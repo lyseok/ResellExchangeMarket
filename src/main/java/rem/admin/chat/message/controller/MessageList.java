@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import oracle.jdbc.driver.Message;
 import rem.admin.chat.message.service.IMessageService;
 import rem.admin.chat.message.service.MessageServiceImpl;
 import rem.chat.vo.MessageVO;
