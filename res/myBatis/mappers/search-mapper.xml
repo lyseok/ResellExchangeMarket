@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="search">
+	<select id="selectSearchProduct" parameterType="String" resultType="SearchVO">
+		select a.PROD_NO, a.MEM_NO, a.CATE_SUB_ID, a.PROD_NAME, a.PROD_PRICE, a.PROD_NEWING
+		  from product a, member b
+		 where a.mem_no = b.mem_no
+		   and a.prod_name like '%'||#{searchText}||'%'
+		    or a.mem_no = b.mem_no
+		   and b.mem_alias like '%'||#{searchText}||'%'
+	</select>
+	<select id="searchNoticeBoard" parameterType="String" resultType="NoticeBoardVO">
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONT, TO_CHAR(NOTICE_AT, 'yyyy-mm-dd') as NOTICE_AT, NOTICE_CNT
+		  FROM NOTICE_BOARD
+		 WHERE NOTICE_TITLE LIKE '%'||#{searchText}||'%' 
+		    OR NOTICE_CONT LIKE '%'||#{searchText}||'%'
+		 ORDER BY NOTICE_NO DESC
+	</select>
+	<select id="searchQnaBoard" parameterType="String" resultType="QnaBoardVO">
+		SELECT QNA_NO, MEM_NO, QNA_TITLE, QNA_TYPE, TO_CHAR(QNA_AT, 'yyyy-mm-dd') as QNA_AT, QNA_CONT, QNA_STATUS, QNA_COM_STATUS
+		  FROM QNA_BOARD
+		 WHERE QNA_TITLE LIKE '%'||#{searchText}||'%'
+		    OR QNA_CONT LIKE '%'||#{searchText}||'%'
+		 ORDER BY QNA_NO DESC
+	</select>
+	<select id="getQnaBoardList" resultType="QnaBoardVO">
+		SELECT QNA_NO, MEM_NO, QNA_TITLE, QNA_TYPE, TO_CHAR(QNA_AT, 'yyyy-mm-dd') as QNA_AT, QNA_CONT, QNA_STATUS, QNA_COM_STATUS
+		  FROM QNA_BOARD
+		 ORDER BY QNA_NO DESC
+	</select>
+	<select id="getQnaBoardOne" parameterType="Integer" resultType="QnaSetVO">
+		SELECT QNA_NO, MEM_NO, QNA_TITLE, QNA_TYPE, TO_CHAR(QNA_AT, 'yyyy-mm-dd') as QNA_AT, QNA_CONT, QNA_STATUS, QNA_COM_STATUS
+		  FROM QNA_BOARD
+		 WHERE QNA_NO = #{qna_no}
+	</select>
+</mapper>

@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+.kcy_board{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	flex-shrink: 0;
+	padding: 0px 20px;
+}
+.kcy_boardHeader{
+	font-size: 20px;
+	font-weight: bold;
+	padding-bottom: 20px;
+	flex-shrink: 0;
+}
+.kcy_boardHeader .bHeader_normal{
+	color: #575757;
+}
+.kcy_boardHeader .bHeader_highlight{
+	color: #7a1cac;
+}
+
+.kcy_boardSearch {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: row-reverse;
+}
+.kcy_serch_box {
+	border: 2px solid #ccc;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 5px 10px 5px 15px;
+}
+.kcy_boardList{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	line-height:1.4; 
+}
+.kcy_boardList li{
+    display: inline-flex;
+    border-bottom: 1px solid #cecece;
+    padding: 10px 20px 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+.kcy_boardList li #articleTitle{
+	font-size: 18px;
+	font-weight: bold;
+	color: #555555;
+}
+.kcy_boardList li #articleAt{
+	font-size: 15px;
+	
+}
+.kcy_boardView .kcy_viewHeader{
+	display: inline-block;
+	padding: 20px 20px 10px 20px;
+	width: 100%;
+}
+.kcy_boardView .kcy_viewHeader #viewTitle{
+	color: #333;
+	float: left;
+	font-size: 22px;
+	font-weight: bold;
+}
+.kcy_boardView .kcy_viewHeader .viewExtra{
+	float: right;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.kcy_boardView .kcy_viewContent{
+	padding: 10px 20px;
+}
+.kcy_boardView .kcy_viewContent p{
+	line-height: 1.4;
+	text-overflow: ellipsis;
+	white-space: wrap;
+	overflow: auto;
+	color: #676767;
+	font-size: 18px;
+}
+.kcy_boardBackToList{
+	display: flex;
+	justify-content: center;
+}
+.kcy_boardBackToList #listButton{
+	width: 100px;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 16px;
+}
+.kcy_boardBackToList #listButton:active{
+	width: 100px;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #e3e3e3;
+}
+
+.kcy_boardTable{
+	width: 100%;
+}
+.kcy_boardTable tr,td{
+	vertical-align: middle;
+}

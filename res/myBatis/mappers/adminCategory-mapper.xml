@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<mapper namespace="admcate">
+	<select id="selectMainCate" resultType="CateMainVO">
+		select *
+		  from CATEGORY_MAIN
+	</select>
+	<select id="selectsubCate" resultType="CateSubVO">
+		select *
+	      from CATEGORY_SUB
+	     where CATE_MAIN_ID = #{cate_main_id}
+	</select>
+</mapper>
