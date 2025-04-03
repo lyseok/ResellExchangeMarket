@@ -4,16 +4,9 @@
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/include/header.jsp" %>
 <%@include file="/WEB-INF/include/category.jsp" %>
+<%@ page isELIgnored="false" %>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainBoard/mainBoard.css">
-<script>
-	noticeList = <%=new Gson().toJson(request.getAttribute("searchedList")) %>;
-	console.log(noticeList);
-	noticeSearchText = "<%=request.getAttribute("searchText") %>";
-	noticeView = "<%=request.getContextPath()%>/main/notice/view.do?noticeNo=";
-</script>
-<!-- 2)_ 비동기/ 공지글 리스트 by.검색어 -->
-<script defer src="<%=request.getContextPath() %>/js/mainBoard/mainBoardNoticeDefer.js"></script>
-
+<script defer src="<%=request.getContextPath() %>/js/mainBoard/mainNewBoardNoticeList.js"></script>
 
 <!-- ■■■■■■■■■■■■■■■■■■■■ -->
 <div class="inner kcy_board">
@@ -28,8 +21,8 @@
 	
 	<div class="kcy_boardSearch">
 		<div class="kcy_serch_box">
-			<input type="text" id="searchNoticeText" placeholder="제목/내용으로 검색" style="border:none; width:240px;"/>
-			<span class="material-symbols-outlined" id="searchNoticeBtn" style="font-size:27px;cursor:pointer;">search</span>
+			<input type="text" id="searchingWord" placeholder="제목/내용으로 검색" style="border:none; width:240px;"/>
+			<span class="material-symbols-outlined" id="searchingBtn" style="font-size:27px;cursor:pointer;">search</span>
 		</div>
 	</div>
 	<br><br><hr style="color:#cecece;">
@@ -38,18 +31,30 @@
 
 		</ul>
 	</div>
+	<div class="buttons">
+	</div>
 </div>
 <!-- ■■■■■■■■■■■■■■■■■■■■ -->
 
 <script>
+const board = "<%=request.getAttribute("board")%>";
+articleList = <%=new Gson().toJson(request.getAttribute("searchedList")) %>;
+console.log(articleList);
+articleSearchText = "<%=request.getAttribute("searchText") %>";
+urlView = `<%=request.getContextPath()%>/main/${board}/view.do?${board}No=`;
+
+/**/
+$("#searchingBtn").val(articleSearchText);
+
+
 /* 1)_ 검색기능 */
-$("#searchNoticeBtn").on("click", function(){
-	const search_text = $('#searchNoticeText').val();
+$("#searchingBtn").on("click", function(){
+	const search_text = $('#searchingWord').val();
 	if (search_text == "") {
-		$("#searchNoticeText").attr("placeholder", "검색어를 입력하세요..!");
+		$("#searchingWord").attr("placeholder", "검색어를 입력하세요..!");
 		return false;
 	} else {
-		location.href = "<%=request.getContextPath()%>/main/notice/search.do?sch="+search_text;
+		location.href = `/REMProject/main/${board}/search.do?sch=\${search_text}`;
 	}
 });
 </script>

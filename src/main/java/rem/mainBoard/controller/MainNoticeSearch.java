@@ -29,7 +29,7 @@ public class MainNoticeSearch extends HttpServlet {
 			System.out.println(noticeTitle+"■■■■");
 		}
 		
-		
+		request.setAttribute("board", "notice");
 		request.setAttribute("searchedList", list);
 		System.out.println(list);
 		request.setAttribute("searchText", searchText);

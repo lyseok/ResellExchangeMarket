@@ -1,53 +1,34 @@
-
-
-let prodList; // 전체 상품 리스트
-const maxContent = 15; // 한페이지에 보여줄 상품 갯수
+/**
+ * 
+ */
+const maxContent = 10; // 한페이지에 보여줄 상품 갯수
 const maxButton = 5; // 한번에 보여질 페이지 버튼 갯수
 let numOfContent; // 전체 상품 갯수
 let maxPage; // 전체 페이지 수
 const buttonsEl = $(".buttons");
-const contentsEl = $('#prod_list ul'); // 글 목록을 담기 위한 리스트 요소
+const contentsEl = $('.kcy_boardList'); // 글 목록을 담기 위한 리스트 요소
 
-$(function(){
-	
-	
-});
+numOfContent = articleList.length; // 전체 상품 갯수 저장
+maxPage = Math.ceil(numOfContent / maxContent); // 페이지 수 계산
+let page = 1; // 시작 페이지
 
 // 페이지 로드시 전체 상품 리스트를 가져오는 코드
-$.ajax({
-  url: `${mypath}/selectAllMainPageProd.do`,
-  type: 'get',
-  success: function(data) {
-    prodList = data; // DB에서 받아온 리스트 저장
-    numOfContent = prodList.length; // 전체 상품 갯수 저장
-    maxPage = Math.ceil(numOfContent / maxContent); // 페이지 수 계산
-    let page = 1; // 시작 페이지
 
-    renderContent(page); // 시작페이지에 해당하는 상품 리스트 띄우기
-    renderButton(page);
-  },
-  error: function(xhr){
-    console.log(xhr.status)
-  },
-  dataType: 'json'
-});
+
 
 // 데이터로 만들 코드
 const makeContent = data => {
-  return /* html */`
+
+    return /*html*/ `
       <li>
-        <a href="${mypath}/product/productDetail.do?prod_no=${data.prod_no}">
-          <span class="img_box">
-            <img src="${data.file_path}" alt="${data.file_org_name}" />
-          </span>
-          <span class="txt_box">
-            <span>${data.prod_name}</span>
-            <div class="dp_f jc_sb">
-              <b>${data.prod_price.toLocaleString('ko-KR')}원</b>
-              <span>${timeAgo(data.prod_newing)}</span>
-            </div>
-          </span>
-        </a>
+        <span id="articleTitle" style="float:left;">
+		  <a href="${urlView}${data.notice_no}">
+            ${data.notice_title}
+		  </a>
+		</span>
+		<span id="articleAt" style="float:right;max-height:fit-content;">
+		  ${data.notice_at}
+        </span>
       </li>
     `;
 }
@@ -57,7 +38,7 @@ const renderContent = page => {
   code = '';
   // 글의 최대 개수를 넘지 않는 선에서, 화면에 최대 20개의 글 생성
   for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
-    code += makeContent(prodList[id-1]);
+    code += makeContent(articleList[id-1]);
   }
   contentsEl.html(code);
 };
@@ -104,4 +85,11 @@ $(document).on("click", ".button", function () {
 
   renderContent(page);
   renderButton(page);
+});
+
+
+$(function(){
+
+	renderContent(page); // 시작페이지에 해당하는 상품 리스트 띄우기
+	renderButton(page);
 });

@@ -6,8 +6,10 @@ import rem.admin.board.faq.vo.FAQBoardVO;
 
 public interface IFaqBoardDao {
 
-	public List<FAQBoardVO> selectBoardList();
+	public List<FAQBoardVO> selectFaqBoardList();
 	
+	public List<FAQBoardVO> selectByType(String faq_type);
+
 	public FAQBoardVO selectFaqView(int faq_no);
 	
 	public int insertFaq(FAQBoardVO FAQBoardVO);

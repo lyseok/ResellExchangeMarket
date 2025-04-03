@@ -45,12 +45,12 @@
     justify-content: space-between;
     align-items: center;
 }
-.kcy_boardList li #noticeTitle{
+.kcy_boardList li #articleTitle{
 	font-size: 18px;
 	font-weight: bold;
 	color: #555555;
 }
-.kcy_boardList li #noticeAt{
+.kcy_boardList li #articleAt{
 	font-size: 15px;
 	
 }
@@ -98,4 +98,11 @@
     border-radius: 6px;
     font-size: 16px;
     background-color: #e3e3e3;
+}
+
+.kcy_boardTable{
+	width: 100%;
+}
+.kcy_boardTable tr,td{
+	vertical-align: middle;
 }

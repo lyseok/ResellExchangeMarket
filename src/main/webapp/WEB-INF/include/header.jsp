@@ -11,9 +11,12 @@
 <%
 	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 	String login = (String)session.getAttribute("login");
+	String infoJson = new Gson().toJson(loginInfo);
 %>
 <script>
 mypath = '<%=request.getContextPath() %>';
+loginState = '<%=login%>';
+headerInfo = <%=infoJson%>;
 </script>
 
 <link rel="icon" href="<%=request.getContextPath() %>/images/favicon.png">
@@ -33,6 +36,7 @@ mypath = '<%=request.getContextPath() %>';
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/category/category.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/modal/modal.js"></script>
 <script defer type="text/javascript" src="<%=request.getContextPath() %>/js/header/header.js"></script>
+<script defer type="text/javascript" src="<%=request.getContextPath() %>/js/notification/notification.js"></script>
 
 
 
@@ -62,10 +66,20 @@ mypath = '<%=request.getContextPath() %>';
 					
 				<div class="util_link">
 					<a href="<%=request.getContextPath()%>/main/notice.do">공지사항</a>
-					<a href="javascript:void(0)">1:1문의</a>
+					<a href="<%=request.getContextPath()%>/main/qna.do">1:1문의</a>
 				</div>
 				<div class="util_user">
-					<a href="javascript:void(0)">알림</a>
+					<div class="notification-starter">
+						<a href="javascript:void(0)">알림</a>
+						<div class="notification">
+							<div class="arrow"></div>
+
+							<ul>
+								<!-- 알림 내역이 들어가는 위치 -->
+							</ul>
+						</div>
+					</div>
+
 					<a href="javascript:void(0)">페이</a>
 					<!-- ↓ 회원정보 수정페이지로 링크 연결 -->
 					<a href="<%=request.getContextPath() %>/passwordCheckPage.do" class="user_name"><%=loginInfo.getMem_name() %></a>

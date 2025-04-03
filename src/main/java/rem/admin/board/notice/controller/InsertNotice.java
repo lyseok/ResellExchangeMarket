@@ -9,6 +9,10 @@ import rem.admin.board.notice.dao.NoticeBoardDaoImpl;
 import rem.admin.board.notice.service.INoticeBoardService;
 import rem.admin.board.notice.service.NoticeBoardServiceImpl;
 import rem.admin.board.notice.vo.NoticeBoardVO;
+import rem.notification.dao.NotificationDaoImpl;
+import rem.notification.service.INotificationService;
+import rem.notification.service.NotificationServiceImpl;
+import rem.notification.vo.NotificationVO;
 
 import java.io.IOException;
 
@@ -32,7 +36,15 @@ public class InsertNotice extends HttpServlet {
 		int res = service.insertNoticeBoard(vo);
 		
 		if(res > 0) {
-			response.sendRedirect(request.getContextPath() + "/admin/noticePage.do");
+			NotificationVO notifiVo = new NotificationVO();
+			notifiVo.setNotif_type(2);
+			notifiVo.setNotif_message("새로운 공지사항이 등록되었습니다.");
+			notifiVo.setNotif_url("/main/notice/view.do?noticeNo=");
+			INotificationService notifiservice = NotificationServiceImpl.getInstance(NotificationDaoImpl.getInstance());
+			if(notifiservice.insertNotification(notifiVo) > 0) {
+				response.sendRedirect(request.getContextPath() + "/admin/noticePage.do");			
+			}
+			
 		}
 	}
 

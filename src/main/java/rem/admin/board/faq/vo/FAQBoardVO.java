@@ -8,14 +8,6 @@ public class FAQBoardVO {
 	private String faq_at;
 	private int faq_type;
 	
-	public FAQBoardVO(int faq_no, String faq_title, String faq_cont, String faq_at, int faq_type) {
-	
-		this.faq_no = faq_no;
-		this.faq_title = faq_title;
-		this.faq_cont = faq_cont;
-		this.faq_at = faq_at;
-		this.faq_type = faq_type;
-	}
 
 	public int getFaq_no() {
 		return faq_no;

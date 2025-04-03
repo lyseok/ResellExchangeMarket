@@ -16,7 +16,7 @@
 			select MAX(txn_no)+1 from transaction
 		</selectKey>
 		insert into transaction
-		values(txn_no, #{prod_no}, #{mem_no}, 0, sysdate, null)
+		values(#{txn_no}, #{prod_no}, #{mem_no}, 0, sysdate, null)
 	</insert>
 	
 	<update id="deleteProd" parameterType="ProductVO">

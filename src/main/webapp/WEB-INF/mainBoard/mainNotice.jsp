@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/include/header.jsp" %>
 <%@include file="/WEB-INF/include/category.jsp" %>
-
+<%@ page isELIgnored="false" %>
+<script defer src="<%=request.getContextPath() %>/js/mainBoard/mainNewBoardNoticeList.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainBoard/mainBoard.css">
-
-<%
-	String searchText = (String)request.getAttribute("searchText");
-%>
+<!-- 
+	1. defer script 새로 만들어서 각 vo에 맞게 수정
+	2. 각 jsp에서 호출하는 서블릿 주소 수정
+	3. 
+ -->
 <!-- ■■■■■■■■■■■■■■■■■■■■ -->
 <div class="inner kcy_board">
 	<div class="kcy_boardHeader">
@@ -21,62 +23,41 @@
 	
 	<div class="kcy_boardSearch">
 		<div class="kcy_serch_box">
-			<input type="text" id="searchNoticeText" placeholder="제목/내용으로 검색" style="border:none; width:240px;"/>
-			<span class="material-symbols-outlined" id="searchNoticeBtn" style="font-size:27px;cursor:pointer;">search</span>
+			<input type="text" id="searchingWord" placeholder="제목/내용으로 검색" style="border:none; width:240px;"/>
+			<span class="material-symbols-outlined" id="searchingBtn" style="font-size:27px;cursor:pointer;">search</span>
 		</div>
 	</div>
 	<br><br><hr style="color:#cecece;">
+	
 	<div class="kcy_boardList_div">
+		<ul class="kcy_boardList">
+		</ul>
+	</div>
+	<div class="buttons">
 	</div>
 </div>
 <!-- ■■■■■■■■■■■■■■■■■■■■ -->
 
 
 <script>
+const board = "<%=request.getAttribute("board")%>";
+const urlContextPath = "<%=request.getContextPath()%>";
 
+articleList = <%=new Gson().toJson(request.getAttribute("searchedList")) %>;
+console.log(articleList);
+articleSearchText = "<%=request.getAttribute("searchText") %>";
+console.log(articleSearchText);
+urlView = `<%=request.getContextPath()%>/main/${board}/view.do?${board}No=`;
 /* 1)_ 검색기능 */
-$("#searchNoticeBtn").on("click", function(){
-	const search_text = $('#searchNoticeText').val();
+$("#searchingBtn").on("click", function(){
+	const search_text = $('#searchingWord').val();
 	if (search_text == "") {
-		$("#searchNoticeText").attr("placeholder", "검색어를 입력하세요..!");
+		$("#searchingWord").attr("placeholder", "검색어를 입력하세요..!");
 		return false;
 	} else {
-		location.href = "<%=request.getContextPath()%>/main/notice/search.do?sch="+search_text;
+		location.href = `/REMProject/main/${board}/search.do?sch=\${search_text}`;
 	}
 });
-
-/* 2)_ 비동기/ 공지글 리스트 */
-$(function(){
-	let memNo = <%=loginInfo.getMem_no() %>;
-	let access = "OK";
-	if(memNo==null)
-		access = "DENIED";
-	$.ajax({
-		url: "<%=request.getContextPath()%>/main/noticeList.do",
-		type: "POST",
-		data: {access: access},
-		dataType: "json",
-		success: function(data){
-			code = "<ul class='kcy_boardList'>";
-			let noticeView = "<%=request.getContextPath()%>/main/notice/view.do?noticeNo=";
-			data.forEach(vo => {
-				let noticeTitle = vo.notice_title;
-				let noticeAt = vo.notice_at;
-				let noticeNo = vo.notice_no;
-				let noticeView_url = noticeView + noticeNo;
-				code +="<li><span id='noticeTitle' style='float:left;'><a href='"+noticeView_url+"'>"+noticeTitle+"</a></span><span id='noticeAt' style='float:right;max-height:fit-content;'>"+noticeAt+"</span></li>";
-			});
-			
-			code +="</ul>";
-			$(".kcy_boardList_div").html(code);
-		},
-		error: function(xhr){
-			console.log("상태: " +xhr.status);
-		}
-			
-	});
-});
 </script>
-
 
 <%@include file="/WEB-INF/include/footer.jsp" %>

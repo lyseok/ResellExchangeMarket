@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/login/updateMember.css">
 
 <script type="text/javascript">
-  let member = JSON.parse('<%=jsonMemInfo %>');
+  let member = <%=jsonMemInfo %>;
 </script>
 <!-- 우편번호 daum api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

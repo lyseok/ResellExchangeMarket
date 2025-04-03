@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/include/header.jsp" %>
 <%@include file="/WEB-INF/include/category.jsp" %>
-
+<%@ page isELIgnored="false" %>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainBoard/mainBoard.css">
-<script src="<%=request.getContextPath() %>/js/mainBoard/mainBoardNotice.js"></script>
+<script defer src="<%=request.getContextPath() %>/js/mainBoard/mainBoardNoticeView.js"></script>
 
 <%
 	String noticeTitle = (String)request.getAttribute("noticeTitle");
@@ -26,8 +26,8 @@
 	
 	<div class="kcy_boardSearch">
 		<div class="kcy_serch_box">
-			<input type="text" id="searchNoticeText" placeholder="제목/내용으로 검색" style="border:none; width:240px;"/>
-			<span class="material-symbols-outlined" id="searchNoticeBtn" style="font-size:27px;cursor:pointer;">search</span>
+			<input type="text" id="searchingWord" placeholder="제목/내용으로 검색" style="border:none; width:240px;"/>
+			<span class="material-symbols-outlined" id="searchingBtn" style="font-size:27px;cursor:pointer;">search</span>
 		</div>
 	</div>
 	
@@ -56,21 +56,22 @@
 
 
 <script>
+const board = "<%=request.getAttribute("board")%>";
 
 /* 1)_ 검색기능 */
-$("#searchNoticeBtn").on("click", function(){
-	const search_text = $('#searchNoticeText').val();
+$("#searchingBtn").on("click", function(){
+	const search_text = $('#searchingWord').val();
 	if (search_text == "") {
-		$("#searchNoticeText").attr("placeholder", "검색어를 입력하세요..!");
+		$("#searchingWord").attr("placeholder", "검색어를 입력하세요..!");
 		return false;
 	} else {
-		location.href = "<%=request.getContextPath()%>/main/notice/search.do?sch="+search_text;
+		location.href = `/REMProject/main/${board}/search.do?sch=\${search_text}`;
 	}
 });
 
 /* 2)_ 글 조회 시 목록으로 돌아가는 버튼 */
 $("#listButton").on("click", function(){
-	location.href = "<%=request.getContextPath()%>/main/notice.do";
+	location.href = `/REMProject/main/${board}.do`;
 });
 
 </script>

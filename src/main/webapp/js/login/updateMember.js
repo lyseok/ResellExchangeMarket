@@ -1,5 +1,6 @@
 
 console.log(member);
+
 $.ajax({
   url: `${mypath}/selectUpdateMember.do`,
   type: 'post',
@@ -9,13 +10,13 @@ $.ajax({
     $('#mem_no').val(vo.mem_no);
     $('#email').val(vo.mem_email);
     $('#name').val(vo.mem_name);
-    if($('#phone').val() !== 'null'){
+    if(vo.mem_tel !== 'null'){
       $('#phone').val(vo.mem_tel);
     }
-    if($('#zipcode').val() > 0){
+    if(vo.zipcode > 0){
       $('#zipcode').val(vo.zipcode);
       $('#address').val(vo.add1);
-      $('#address_detail').val(vo.add2);
+      $('#detailAddress').val(vo.add2);
     }
   },
   error: function(xhr){
@@ -60,6 +61,7 @@ $(function(){
       success: function(data){
         if(data > 0){
           alert('계정 정보 수정 완료');
+		  location.href = `${mypath}/mainPage.do`;
         }
       },
       error: function(xhr){

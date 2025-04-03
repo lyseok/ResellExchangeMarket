@@ -24,20 +24,20 @@ public class ReviewModal extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=utf-8");
+		response.setContentType("text/json; charset=utf-8");
 		
 		IReviewService service =  ReviewServiceImpl.getInstence();
-		List<ReviewImgVO> list = new ArrayList<ReviewImgVO>();
+		ReviewImgVO vo = new ReviewImgVO();
 		
-		list = service.selectReviewList();
+		Integer txn = Integer.parseInt(request.getParameter("txn"));
 		
-		request.setAttribute("rvList", list);
+		System.out.println("ReviewModal 파라미터가 잘 넘어오는 지 확인" + txn);
 		
-		Gson gson = new Gson();
+		vo = service.selectReviewModal(Integer.parseInt(request.getParameter("txn")));
+		
 		PrintWriter out = response.getWriter();
-		out.print(gson.toJson(list));
+		out.print(new Gson().toJson(vo));
 		out.flush();
-		request.getRequestDispatcher("/WEB-INF/admin/product/review/reviewList.jsp").forward(request, response);
 	}
 
 }

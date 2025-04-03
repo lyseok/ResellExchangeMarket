@@ -10,4 +10,25 @@
   		  from wishlist
  		 where mem_no = #{mem_no}
 	</select>
+	
+	<select id="countProdWish" parameterType="int" resultType="int">
+		select count(*)
+  		  from wishlist
+ 		 where prod_no = #{prod_no}
+	</select>
+	
+	<insert id="insertWish" parameterType="WishlistVO">
+		insert into wishlist
+		values(#{mem_no}, #{prod_no}, sysdate)
+	</insert>
+	
+	<select id="distinctWish" parameterType="int">
+		select mem_no from wishlist
+		where prod_no = #{prod_no}
+	</select>
+	
+	<delete id="deleteWish" parameterType="WishlistVO">
+		delete from wishlist
+		where mem_no = #{mem_no} and prod_no= #{prod_no}
+	</delete>
 </mapper>

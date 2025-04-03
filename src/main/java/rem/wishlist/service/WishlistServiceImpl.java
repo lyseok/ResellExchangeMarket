@@ -4,6 +4,7 @@ import java.util.List;
 
 import rem.product.vo.ProductVO;
 import rem.wishlist.dao.IWishlistDao;
+import rem.wishlist.vo.WishlistVO;
 
 public class WishlistServiceImpl implements IWishlistService {
 	private static IWishlistService instance;
@@ -26,6 +27,30 @@ public class WishlistServiceImpl implements IWishlistService {
 	@Override
 	public List<ProductVO> getStoreWishList(int storeId) {
 		return dao.getStoreWishList(storeId);
+	}
+
+	@Override
+	public int insertWish(WishlistVO vo) {
+		// TODO Auto-generated method stub
+		return dao.insertWish(vo);
+	}
+
+	@Override
+	public int distinctWish(int prod_no) {
+		// TODO Auto-generated method stub
+		return dao.distinctWish(prod_no);
+	}
+
+	@Override
+	public int deleteWish(WishlistVO vo) {
+		// TODO Auto-generated method stub
+		return dao.deleteWish(vo);
+	}
+
+	@Override
+	public int countProdWish(int prod_no) {
+		// TODO Auto-generated method stub
+		return dao.countProdWish(prod_no);
 	}
 
 }

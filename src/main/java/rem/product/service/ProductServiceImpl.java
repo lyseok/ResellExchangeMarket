@@ -87,4 +87,10 @@ public List<ProdImgVO> selectAllMainPageProd() {
 	return dao.selectAllMainPageProd();
 }
 
+@Override
+public int updateProdStatus(int prod_no) {
+	// TODO Auto-generated method stub
+	return dao.updateProdStatus(prod_no);
+}
+
 }

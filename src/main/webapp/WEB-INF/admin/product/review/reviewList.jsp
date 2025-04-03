@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<%@ include file="/WEB-INF/admin/include/header_admin.jsp" %>	
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/modal/modal.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/modal/modal.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/admin/product/review.css">
 	
 	<script>
 		$(function(){
@@ -22,10 +23,10 @@
 								<td>\${v.review_timestamp}</td>
 								<td>
 								  <div class="modal-btn-box">
-								 	 <button type="button" class="modal-open">리뷰확인</button>  
+								 	 <button type="button" class="modal-open" data-idx="\${v.txn_no}">리뷰확인</button>  
 								  </div>
 								</td>
-								<td><button type="button" data-qnano='\${v.txn_no}' id="deleteBtn" class="adm_del_btn">삭제</button></td>
+								<td><button type="button" data-qnano='\${v.txn_no}' id="deleteBtn" class="adm_del_btn"  data-idx="\${v.txn_no}">삭제</button></td>
 							</tr>
 							`;
 						})
@@ -42,22 +43,124 @@
 		  });
 			
 		  $("#tBody").on("click", ".modal-open", function(){
-			$.ajax({
+			  const txn = $(this).data("idx");
+			  console.log(txn);
+			  $.ajax({
 				url: "<%=request.getContextPath()%>/admin/reviewModal.do",
 				type: "post",
-				contentType:"application/json;charset=utf-8",
+				data: {
+					"txn" : txn
+				},
 				success: res =>{
-					console.log(res);
-					 $(".popup-wrap").css('display','flex').hide().fadeIn();
+					$("#img_box img").attr({
+						src: res.file_path,
+						alt: res.prod_name + " 이미지"
+					});
+					$("#prod_name").text(res.prod_name);
+					// 평점 관련 스크립트
+					code = "";
+					const rating = res.review_rating;
+					for (let i = 0; i < 5; i++) {
+					    if (i < rating) {
+					        code += `<span class="material-symbols-outlined star able" data-const="${i}">star</span>`;
+					    } else {
+					        code += `<span class="material-symbols-outlined star disable" data-const="${i}">star</span>`;
+					    }
+					}
+
+					$(".review_rating").html(code);
+					$("#mem_name").text(res.mem_name);
+					$("#prod_price").text(res.prod_price.toLocaleString() + "원");
+					$("#review_cont").text(res.review_cont);
+					
+					
+					$(".popup-wrap").css('display','flex').hide().fadeIn();
 				},				
 				error: xhr => {
 					alert("오류: " + xhr.status) ;
 				},
 				dataType: "json"
-			})			  
-			  
-			  
-		  });
+			  })
+			});
+			
+			
+			$(document).on ("click", "#deleteBtn", function(){
+				const txn = $(this).data("idx");
+				if(confirm("삭제하시겠습니까?")) { 
+					$.ajax({
+						url: "<%=request.getContextPath()%>/admin/deleteReview.do",
+						type:"post",
+						data: {
+							"txn" : txn
+						},
+						success: res =>{
+							console.log(res);
+							alert("정상적으로 삭제되었습니다.");
+						},
+						error: xhr => {
+							alert(xhr.status);
+						},
+						dataType: "json"
+					})
+					
+				} else {
+					alert("삭제 취소.");
+				}
+			})
+			
+			$("#searchNoticeBtn").on ("click", function(){
+				const select = $("#searchSelect").val();
+				const value = $("#searchText").val();
+				console.log(value, select);
+				$.ajax({
+					url: "<%=request.getContextPath()%>/admin/searchReview.do",
+					type:"post",
+					data: {
+						"value" : value,
+						"select" : select
+					},
+					success: res =>{
+						console.log(res);
+						code = "";
+					    // 테이블 본문 초기화
+					    $("#tBody").html(""); 
+
+
+						if(res.length > 0){
+							$.each(res, function(i, v){
+								code += 
+									`
+									<tr>
+										<td>\${v.txn_no}</td>
+										<td>\${v.prod_name}</td>
+										<td>\${v.mem_name}</td>
+										<td>\${v.review_timestamp}</td>
+										<td>
+										  <div class="modal-btn-box">
+										 	 <button type="button" class="modal-open" data-idx="\${v.txn_no}">리뷰확인test</button>  
+										  </div>
+										</td>
+										<td><button type="button" data-qnano='\${v.txn_no}' id="deleteBtn" class="adm_del_btn"  data-idx="\${v.txn_no}">삭제</button></td>
+									</tr>
+								`;
+							})
+						} else{
+							code += 
+								`
+								<tr>
+									<td colspan="6">검색된 결과가 없습니다.</td>
+								</tr>
+								`;
+							
+						}
+						$("#tBody").html(code);
+					},
+					error: xhr => {
+						alert(xhr.status);
+					},
+					dataType: "json"
+				})
+			})
 		})
 	</script>
     <div id="wrapper">
@@ -71,8 +174,9 @@
                     <div class="local_desc local_desc03 jc_fe ">
                     	<form action="" class="search_form mt0">
 			              <select name="searchNotice" id="searchSelect">
-			                <option value="mem_no">작성자번호</option>
-			                <option value="qna_title">제목</option>
+			                <option value="txn_no">번호</option>
+			                <option value="prod_name">거래상품 이름</option>
+			                <option value="mem_name">작성자</option>
 			              </select>
 			              <div>
 			                <input type="text" id="searchText" placeholder="검색어를 입력하세요.">
@@ -121,22 +225,21 @@
       </div>
       <div class="popup-body">
       	  <div class="review_info">
-          	<div class="img_box">
-      	  	<img src="\${v.file_path}" alt="\${v.file_path}">
+          	<div id="img_box">
+      	  		<img src="" alt="\${v.file_path}">
       	  	</div>
       	  	<div class="txt_box">
-      	  		<span>\${v.prod_name}</span>
-      	  		<span>\${v.prod_price}</span>
+      	  		<span id="prod_name"></span>
+      	  		<span id="prod_price"></span>
       	  	</div>
       	  </div>
-      	  <div class="">
-      	  </div>
+      	  <div class="review_rating"></div>
       	  <div class="review_txt_box">
-      	  	<div class="">
+      	  	<div class="writer">
       	  		<span>작성자</span>
-      	  		<p>\${v.mem_name}</p>
+      	  		<p id="mem_name"></p>
       	  	</div>
-      	  	<div class="">\${v.review_cont}</div>
+      	  	<div id="review_cont"></div>
       	  </div>
       </div>
       <div class="popup-foot">

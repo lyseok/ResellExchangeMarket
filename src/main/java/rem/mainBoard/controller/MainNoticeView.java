@@ -25,6 +25,7 @@ public class MainNoticeView extends HttpServlet {
 		INoticeBoardService service = NoticeBoardServiceImpl.getInstance(NoticeBoardDaoImpl.getInstance());
 		NoticeBoardVO vo = service.selectNoticeBoard(notice_no);
 		
+		request.setAttribute("board", "notice");
 		request.setAttribute("noticeTitle", vo.getNotice_title());
 		request.setAttribute("noticeAt", vo.getNotice_at());
 		request.setAttribute("noticeCont", vo.getNotice_cont());

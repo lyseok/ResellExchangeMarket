@@ -25,6 +25,11 @@
 		
 	</insert>
 	
+	<update id="updateProdStatus" parameterType="int">
+		update product set prod_tr_status = 1
+		where prod_no = #{prod_no}
+	</update>
+	
 	<update id="updateProductView" parameterType ="int">
 		update product set prod_view = prod_view+1
 		where prod_no = #{prod_no}

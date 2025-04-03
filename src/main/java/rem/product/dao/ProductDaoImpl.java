@@ -177,4 +177,18 @@ public List<ProdImgVO> selectAllMainPageProd() {
 	return list;
 }
 
+@Override
+public int updateProdStatus(int prod_no) {
+	SqlSession session = null;
+    int rec = 0;
+    try {
+       session = MyBatisUtil.getSqlSession();
+       rec = session.update("product.updateProdStatus", prod_no);
+       if(rec>0) session.commit();
+    }
+    catch(Exception e) {e.printStackTrace();}
+    finally {if(session!=null) session.close();}
+    return rec;
+}
+
 }

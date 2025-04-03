@@ -99,7 +99,7 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li><a href="" class="gnb_2da  ">카테고리 수정</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/categoryPage.do" class="gnb_2da  ">카테고리 수정</a></li>
                             <li><a href="<%= request.getContextPath() %>/admin/reviewList.do" class="gnb_2da gnb_grp_style gnb_grp_div">후기 내역</a></li>
                             <li><a href="<%= request.getContextPath() %>/admin/wishlistPage.do" class="gnb_2da gnb_grp_style gnb_grp_div">찜내역</a></li>
                             <li><a href="<%= request.getContextPath() %>/admin/viewList.do" class="gnb_2da">조회내역</a></li>

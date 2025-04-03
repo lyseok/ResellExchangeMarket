@@ -1,6 +1,7 @@
 package rem.admin.product.review.service;
 
 import java.util.List;
+import java.util.Map;
 
 import rem.admin.product.review.dao.IReviewDao;
 import rem.admin.product.review.dao.ReviewDaoImpl;
@@ -22,6 +23,21 @@ public class ReviewServiceImpl implements IReviewService {
 	@Override
 	public List<ReviewImgVO> selectReviewList() {
 		return dao.selectReviewList();
+	}
+
+	@Override
+	public ReviewImgVO selectReviewModal(int txn) {
+		return dao.selectReviewModal(txn);
+	}
+
+	@Override
+	public int deleteReviewModal(int txn) {
+		return dao.deleteReviewModal(txn);
+	}
+
+	@Override
+	public List<ReviewImgVO> searchReview(Map<String, String> map) {
+		return dao.searchReview(map);
 	}
 
 }

@@ -6,21 +6,33 @@
 
 
 <mapper namespace="FAQBoard">
-	<select id="selectAllFAQBoard" resultType="FAQBoardVO">
+<select id="selectAllFAQBoard" resultType="FAQBoardVO">
 		select faq_no, faq_title, faq_cont, faq_at, faq_type
-  		  from faq_board 
+  		  from faq_board
+  		 
+  		  
+  		  
+	</select>
+
+	<select id="selectedFAQBoard" resultType="FAQBoardVO">
+		select faq_no, faq_title, faq_cont, faq_at, faq_type
+  		  from faq_board
+  		 where faq_type = #{faq_type}
+  		 order by faq_type DESC
+  		  
+  		  
 	</select>
 	
 	<select id="selectFAQBoard" parameterType="int" resultType="FAQBoardVO">
 		select faq_no, faq_title, faq_cont, faq_at, faq_type
-	      from report_board
-	       and rpt_no = #{rpt_no}
+	      from faq_board
+	       and faq_no = #{faq_no}
 	</select>
 	
 	<insert id="insertFAQBoard" parameterType="FAQBoardVO">
 		insert into faq_board(faq_no, faq_title, faq_cont, faq_at, faq_type)
 		       values (
-		        	faq_report_board.nextval,
+		        	seq_faq_board.nextval,
 		        	#{faq_title},
 		        	#{faq_cont},
 		        	sysdate,

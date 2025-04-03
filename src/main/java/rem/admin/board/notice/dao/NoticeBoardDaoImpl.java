@@ -59,7 +59,7 @@ public class NoticeBoardDaoImpl implements INoticeBoardDao {
 		try {
 			session = MyBatisUtil.getSqlSession();
 			res = session.insert("noticeBoard.insertNoticeBoard", vo);
-			
+			System.out.println("다오 작동확인 : " + vo);
 			if(res > 0) session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

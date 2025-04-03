@@ -26,10 +26,17 @@
 	}
 	
 	int price = pvo.getProd_price();
+	int result = mem_bal-price;
+	
+	String balWon = String.format("%,d", mem_bal);
+	String priceWon = String.format("%,d", price);
+	String resultWon = String.format("%,d", result);
 %>
 <script>
 $(function(){
 	pvoNo = <%=pvo.getProd_no()%>
+	resultWon = $('#bal').text();
+	console.log(resultWon);
 	
 	$('#allCheck').on('change', function(){
 		
@@ -47,7 +54,14 @@ $(function(){
 	
 	$('#order').on('click', function(){
 		
-		location.href = `${mypath}/product/insertTransaction.do?prod_no=${pvoNo}`;
+		if(!$('#checkbox1').is(':checked') || !$('#checkbox2').is(':checked') || !$('#checkbox3').is(':checked')){
+			alert('모든 약관에 동의해주세요.')
+		}else if(resultWon.startsWith('-')){
+			alert('페이 잔액이 부족합니다.')
+		}else{
+			
+			location.href = `${mypath}/product/insertTransaction.do?prod_no=${pvoNo}`;
+		}
 	})
 })
 </script>
@@ -139,7 +153,7 @@ $(function(){
 				</div>
 				<div class="innerCont item">
 					<div class="innerCont item price">
-						<span><%=price %> 원</span>
+						<span><%=priceWon %> 원</span>
 					</div>
 				</div>
 			</div> 
@@ -151,13 +165,13 @@ $(function(){
 							<input type="checkbox" id="allCheck" class="checkbox"> 아래 내용에 전체 동의해요<br>
 						</label>
 						<label>
-							<input type="checkbox" class="checkbox">띹장터 서비스 이용약관 동의(필수)<br>
+							<input type="checkbox" id="checkbox1" class="checkbox">띹장터 서비스 이용약관 동의(필수)<br>
 						</label>
 						<label>
-							<input type="checkbox" class="checkbox">개인정보 수집 및 이용 동의(필수)<br>
+							<input type="checkbox" id="checkbox2" class="checkbox">개인정보 수집 및 이용 동의(필수)<br>
 						</label>
 						<label>
-							<input type="checkbox" class="checkbox">개인정보 제3자 제공 동의(필수)<br>
+							<input type="checkbox" id="checkbox3" class="checkbox">개인정보 제3자 제공 동의(필수)<br>
 						</label>
 					</div>
 				</div>
@@ -173,7 +187,7 @@ $(function(){
 						 	<span>페이 잔액</span>
 						 </div>
 						 <div class="innerCont3 item3 pay balI">
-						 	<span class="bal"><%=mem_bal %> 원</span>
+						 	<span class="bal"><%=balWon %> 원</span>
 						 </div>
 					</div>
 					<div class="innerCont3 item3 pay">
@@ -181,7 +195,7 @@ $(function(){
 						 	<span>상품 금액</span>
 						 </div>
 						 <div class="innerCont3 item3 pay balI">
-						 	<span class="bal"><%=price %> 원</span>
+						 	<span class="bal"><%=priceWon %> 원</span>
 						 </div>
 					</div>
 					<div class="innerCont3 item3 pay">
@@ -189,7 +203,7 @@ $(function(){
 						 	<span>거래 후 페이</span>
 						 </div>
 						 <div class="innerCont3 item3 pay balI">
-						 	<span class="bal"><%=mem_bal-price %> 원</span>
+						 	<span id="bal"><%=resultWon %> 원</span>
 						 </div>
 					</div>
 				</div>

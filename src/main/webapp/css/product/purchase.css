@@ -71,6 +71,10 @@ input[type="checkbox"]{
 	position : absolute;
 	right : 50px;
 }
+#bal{
+	position : absolute;
+	right : 50px;
+}
 .innerGray{
 	background-color : #ccc;
 	height : 150px;

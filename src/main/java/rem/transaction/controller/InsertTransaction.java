@@ -35,18 +35,21 @@ public class InsertTransaction extends HttpServlet {
 		
 		ProductVO pvo = pservice.getProductDetail(prod_no);
 		
-		tvo.setProd_no(prod_no);
-		tvo.setMem_no(loginInfo.getMem_no());
-		int count = tservice.insertTransaction(tvo);
 		
-		if(count >0) {
-			int txn_no = tvo.getTxn_no();
-			
-			request.setAttribute("trans", txn_no);
-			request.setAttribute("pvo", pvo);
-			
-			request.getRequestDispatcher("/WEB-INF/product/transaction.jsp").forward(request, response);
+		tvo.setProd_no(prod_no); tvo.setMem_no(loginInfo.getMem_no()); 
+		int count =tservice.insertTransaction(tvo);
+		 
+		if(count >0) { 
+		
+		int txn_no = tvo.getTxn_no();
+		pservice.updateProdStatus(prod_no);
+		 
+		request.setAttribute("trans", txn_no);
+		request.setAttribute("pvo", pvo);
+		  
 		}
+		 
+		request.getRequestDispatcher("/WEB-INF/product/transaction.jsp").forward(request, response);
 	}
 
 	

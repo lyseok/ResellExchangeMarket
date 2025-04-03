@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import rem.file.service.FileServiceImpl;
 import rem.file.service.IFileService;
 import rem.file.vo.ImgFileVO;
@@ -24,6 +25,7 @@ import rem.wishlist.dao.IWishlistDao;
 import rem.wishlist.dao.WishlistDaoImpl;
 import rem.wishlist.service.IWishlistService;
 import rem.wishlist.service.WishlistServiceImpl;
+import rem.wishlist.vo.WishlistVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +39,15 @@ public class ProductDetail extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		String login = (String)session.getAttribute("login");
+		
+		System.out.println("login"+login);
+		if(login == null) {
+			response.sendRedirect(request.getContextPath() + "/accessCheck.do");
+		} else {
+		
 		IProductService service = ProductServiceImpl.getInstance();
 		IWishlistService wservice = WishlistServiceImpl.getInstance(WishlistDaoImpl.getInstance());
 		IFileService fservice = FileServiceImpl.getInstance();
@@ -54,7 +65,7 @@ public class ProductDetail extends HttpServlet {
 		if(updateView >0) {
 			vvo.setProd_no(prod_no);
 			vvo.setMem_no(pvo.getMem_no());
-			int insertViewCount = service.insertViewCount(vvo);
+			service.insertViewCount(vvo);
 		}
 		
 		int countProfile = fservice.countProfileImg(pvo.getMem_no());
@@ -68,7 +79,8 @@ public class ProductDetail extends HttpServlet {
 		
 		int countReview = service.getCountAllReview(pvo.getMem_no());
 		
-		int countWish = wservice.countWishlist(pvo.getMem_no());
+		int countWish = wservice.countProdWish(prod_no);
+		int mem_no = wservice.distinctWish(prod_no);
 		
 		int countProduct = sservice.getCountAllProducts(pvo.getMem_no());
 		
@@ -80,6 +92,7 @@ public class ProductDetail extends HttpServlet {
 		request.setAttribute("productDetail", pvo);
 		request.setAttribute("countReview", countReview);
 		request.setAttribute("countWish", countWish);
+		request.setAttribute("mem_no", mem_no);
 		request.setAttribute("countProduct", countProduct);
 		request.setAttribute("memInfo", memInfo);
 		request.setAttribute("svo", svo);
@@ -89,6 +102,7 @@ public class ProductDetail extends HttpServlet {
 		request.setAttribute("imgfile", list);
 		
 		request.getRequestDispatcher("/WEB-INF/product/prodDetail.jsp").forward(request, response);
+		}
 	}
 
 	

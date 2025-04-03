@@ -49,7 +49,9 @@
 		<typeAlias type="rem.review.vo.ReviewImgVO" alias="ReviewImgVO"/>
 		<typeAlias type="rem.transaction.vo.ReviewTransactionVO" alias="ReviewTransVO"/>
 		<typeAlias type="rem.admin.product.wishlist.vo.WishlistAllVO" alias="WishlistAllVO"/>
-		
+		<typeAlias type="rem.transaction.vo.TransactionImgVO" alias="TransImgVO"/>
+		<typeAlias type="rem.notification.vo.NotificationVO" alias="NotificationVO"/>
+		<typeAlias type="rem.admin.board.qna.vo.QnaSetVO" alias="QnaSetVO"/>
 		
 		
 	</typeAliases>
@@ -92,6 +94,7 @@
 		<mapper resource="myBatis/mappers/wishlistAll-mapper.xml"/>
 		<mapper resource="myBatis/mappers/view-mapper.xml"/>
 		<mapper resource="myBatis/mappers/faq-mapper.xml"/>
+		<mapper resource="myBatis/mappers/notification-mapper.xml"/>
 		
 	</mappers>
 	

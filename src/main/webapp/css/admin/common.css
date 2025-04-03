@@ -1,4 +1,8 @@
 @charset "UTF-8";
+
+.dp_f{
+	display:flex !important;
+}
 .jc_fe{
 	justify-content:flex-end !important;
 }
@@ -19,11 +23,18 @@
 	margin-top:0 !important;
 }
 
+.gap60{
+	gap:60px !important;
+}
 
 .local_desc02{height:16px;}
 
 
 /* 검색창 */ 
+.local_desc03{
+	display:flex;
+	margin-bottom:10px;	
+}
 .search_form {
     display: flex;
     margin-top: 10px;

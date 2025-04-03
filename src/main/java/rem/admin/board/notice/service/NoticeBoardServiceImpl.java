@@ -32,6 +32,7 @@ public class NoticeBoardServiceImpl implements INoticeBoardService {
 
 	@Override
 	public int insertNoticeBoard(NoticeBoardVO vo) {
+		System.out.println("서비스 작동확인 : " + vo);
 		return dao.insertNoticeBoard(vo);
 	}
 

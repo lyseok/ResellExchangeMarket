@@ -32,4 +32,6 @@ public interface IProductService {
    public int insertViewCount(ViewCountVO vo);
    
    public List<ProdImgVO> selectAllMainPageProd();
+   
+   public int updateProdStatus(int prod_no);
 }

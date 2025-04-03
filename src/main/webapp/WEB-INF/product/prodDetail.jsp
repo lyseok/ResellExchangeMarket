@@ -12,22 +12,35 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.7.1.js"></script>
 
 <% 
+	System.out.println("loginSession :" + login);
+	if(login == null) {
+		response.sendRedirect(request.getContextPath() + "/accessCheck.do");
+	}
+	
+	@SuppressWarnings("unchecked")
 	List<ImgFileVO> list = (List<ImgFileVO>)request.getAttribute("imgfile");
 	ProductVO pvo = (ProductVO)request.getAttribute("productDetail");
 	ImgFileVO filevo = (ImgFileVO)request.getAttribute("profileImg");
 	int countReview = (Integer)request.getAttribute("countReview");
 	int countWish = (Integer)request.getAttribute("countWish");
+	int mem_no = (Integer)request.getAttribute("mem_no");
 	int countProduct = (Integer)request.getAttribute("countProduct");
 	MemberVO memInfo = (MemberVO)request.getAttribute("memInfo");
 	CateNameVO svo = (CateNameVO)request.getAttribute("svo");
 	
 	String content = pvo.getProd_content().replaceAll("\\n", "<br>");
+	
 %>
 <script>
 $(function(){
 	pvoNo = <%=pvo.getProd_no()%>;
 	loginInfo = <%=loginInfo.getMem_no()%>
 	memNo = <%=pvo.getMem_no()%>
+	distinct = <%=mem_no%>
+	countWish = <%=countWish%>;
+	
+	$('#wbtn').text(countWish);
+	wish = parseInt($('#wbtn').text());
 	
 	$('#confirm').on('click', function(){
 		
@@ -39,6 +52,58 @@ $(function(){
 		$('#chat').prop('disabled', true);
 		$('#modal-open').prop('disabled', true);
 	}
+	
+	$('.proImg').on('click', function(){
+		
+		location.href = `${mypath}/store/storePage.do?param=mem_no&value=${memNo}`;
+	})
+	
+	if(distinct === loginInfo){
+		
+		$('#wish').on('click', function(){
+			
+			$.ajax({
+				
+				url:`${mypath}/wishlist/deletetWish.do`,
+				type : 'post',
+				data : {prod_no : pvoNo},
+				contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+				success : res=>{
+					code =`<button class="btn" id="wish">
+						<span class="material-symbols-outlined but">heart_plus<span class="btnText">찜</span>${wish-1}<span class="btnText" id="wbtn"></span></span>
+						</button>`;
+					
+						$('#wish').html(code);
+				},
+				error : xhr=>{
+					alert(xhr.status)
+				}
+			})
+		})
+	} else{
+	
+	$('#wish').on('click', function(){
+		
+		$.ajax({
+			
+			url:`${mypath}/wishlist/insertWish.do`,
+			type : 'post',
+			data : {prod_no : pvoNo},
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			success : res=>{
+				code =`<button class="btn" id="wish">
+					<span class="material-symbols-outlined heart">heart_plus<span class="btnText">찜</span>${wish+1}<span class="btnText" id="wbtn"></span></span>
+					</button>`;
+				
+					$('#wish').html(code);
+			},
+			error : xhr=>{
+				alert(xhr.status)
+			}
+		})
+	})
+	}
+	
 })
 </script>
 
@@ -100,15 +165,21 @@ $(function(){
 					</div>
 					<div class="innerCont item button">
 						<%if(pvo.getProd_tr_status()==0){ %>
+						<%if(loginInfo.getMem_no()==mem_no) {%>
 						<button class="btn" id="wish">
-							<span class="material-symbols-outlined but">heart_plus<span class="btnText" id="wbtn">찜<%=countWish %></span></span>
+							<span class="material-symbols-outlined heart">heart_plus<span class="btnText">찜</span><span class="btnText" id="wbtn"></span></span>
 						</button>
+						<%}else{ %>
+						<button class="btn" id="wish">
+							<span class="material-symbols-outlined but">heart_plus<span class="btnText">찜</span><span class="btnText" id="wbtn"></span></span>
+						</button>
+						<%} %>
 						<button class="btn" id="chat">
 							<span class="material-symbols-outlined but">chat_bubble<span class="btnText" id="cbtn">띹톡</span></span>
 						</button>
 						<button  class="btn" type="button" id="modal-open">구매하기
 						</button>  
-						<%}else{ %>
+						<%}else { %>
 						<%} %>
 					</div>
 				</div>		

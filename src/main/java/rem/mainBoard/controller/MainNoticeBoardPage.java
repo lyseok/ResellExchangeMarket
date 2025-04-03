@@ -6,9 +6,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import rem.admin.board.notice.vo.NoticeBoardVO;
 import rem.login.vo.MemberVO;
+import rem.search.dao.SearchDaoImpl;
+import rem.search.service.ISearchService;
+import rem.search.service.SearchServiceImpl;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @WebServlet("/main/notice.do")
@@ -27,6 +32,19 @@ public class MainNoticeBoardPage extends HttpServlet {
 		String searchText = request.getParameter("search");
 		if(searchText!=null)
 			request.setAttribute("searchText", searchText);
+		
+		ISearchService service = SearchServiceImpl.getInstance(SearchDaoImpl.getInstance());
+		List<NoticeBoardVO> list = service.searchNoticeBoard(searchText);
+		for(NoticeBoardVO vo : list) {
+			String noticeTitle = vo.getNotice_title();
+			System.out.println(noticeTitle+"■■■■");
+		}
+		request.setAttribute("board", "notice");
+		
+		request.setAttribute("searchedList", list);
+		System.out.println(list);
+		request.setAttribute("searchText", searchText);
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■   "+ searchText);
 		
 		request.getRequestDispatcher("/WEB-INF/mainBoard/mainNotice.jsp").forward(request, response);
 	}

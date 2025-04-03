@@ -20,4 +20,21 @@
 		    OR NOTICE_CONT LIKE '%'||#{searchText}||'%'
 		 ORDER BY NOTICE_NO DESC
 	</select>
+	<select id="searchQnaBoard" parameterType="String" resultType="QnaBoardVO">
+		SELECT QNA_NO, MEM_NO, QNA_TITLE, QNA_TYPE, TO_CHAR(QNA_AT, 'yyyy-mm-dd') as QNA_AT, QNA_CONT, QNA_STATUS, QNA_COM_STATUS
+		  FROM QNA_BOARD
+		 WHERE QNA_TITLE LIKE '%'||#{searchText}||'%'
+		    OR QNA_CONT LIKE '%'||#{searchText}||'%'
+		 ORDER BY QNA_NO DESC
+	</select>
+	<select id="getQnaBoardList" resultType="QnaBoardVO">
+		SELECT QNA_NO, MEM_NO, QNA_TITLE, QNA_TYPE, TO_CHAR(QNA_AT, 'yyyy-mm-dd') as QNA_AT, QNA_CONT, QNA_STATUS, QNA_COM_STATUS
+		  FROM QNA_BOARD
+		 ORDER BY QNA_NO DESC
+	</select>
+	<select id="getQnaBoardOne" parameterType="Integer" resultType="QnaSetVO">
+		SELECT QNA_NO, MEM_NO, QNA_TITLE, QNA_TYPE, TO_CHAR(QNA_AT, 'yyyy-mm-dd') as QNA_AT, QNA_CONT, QNA_STATUS, QNA_COM_STATUS
+		  FROM QNA_BOARD
+		 WHERE QNA_NO = #{qna_no}
+	</select>
 </mapper>
