@@ -36,7 +36,11 @@ headerInfo = <%=infoJson%>;
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/category/category.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/modal/modal.js"></script>
 <script defer type="text/javascript" src="<%=request.getContextPath() %>/js/header/header.js"></script>
+<<<<<<< HEAD
 <script defer type="text/javascript" src="<%=request.getContextPath() %>/js/header/notification.js"></script>
+=======
+<script defer type="text/javascript" src="<%=request.getContextPath() %>/js/notification/notification.js"></script>
+>>>>>>> refs/remotes/origin/main
 
 
 

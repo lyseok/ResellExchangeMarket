@@ -27,7 +27,7 @@ const makeContent = data => {
             ${data.notice_title}
 		  </a>
 		</span>
-		<span id="articleAt" style="float:right;max-height:fit-content;"
+		<span id="articleAt" style="float:right;max-height:fit-content;">
 		  ${data.notice_at}
         </span>
       </li>

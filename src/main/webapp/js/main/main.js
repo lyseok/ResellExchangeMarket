@@ -1,5 +1,9 @@
 let prodList; // 전체 상품 리스트
+<<<<<<< HEAD
 const maxContent = 15; // 한페이지에 보여줄 상품 갯수
+=======
+const maxContent = 10; // 한페이지에 보여줄 상품 갯수
+>>>>>>> refs/remotes/origin/main
 const maxButton = 5; // 한번에 보여질 페이지 버튼 갯수
 let numOfContent; // 전체 상품 갯수
 let maxPage; // 전체 페이지 수
