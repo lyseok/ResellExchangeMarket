@@ -2,12 +2,14 @@ if(loginState !== 'null'){
   const notificationStarterEl = document.querySelector('.notification-starter');
   const notificationEl = document.querySelector('.notification');
   const ulEl = $('.notification ul');
-		
+  const dipositSubEl = document.querySelector('.diposit');
+  
   notificationStarterEl.addEventListener('click', function (event) {
     event.stopPropagation();
 
     if(notificationEl.classList.contains('show')){
       hideNotification();
+
     }else{
       $.ajax({
         url:`${mypath}/selectAllNotification.do`,
@@ -33,6 +35,7 @@ if(loginState !== 'null'){
         dataType: 'json'
       })
       showNotification();
+	  dipositSubEl.classList.remove('show');
     }
   });
   notificationEl.addEventListener('click', function(event) {

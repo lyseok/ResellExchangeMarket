@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="getMemInfo" parameterType="int" resultType="MemberVO">
-		select mem_alias, mem_bal
+		select mem_alias, mem_bal, mem_no
 		 from member
 		 where mem_no = #{mem_no}
 	</select>
@@ -73,6 +73,29 @@
                add2 = #{add2}
          where mem_no = #{mem_no}
     </update>
+    
+    <select id="selectAllMemberList" resultType="MemberVO">
+    <![CDATA[
+    	select * from member
+    	where mem_no < 90000
+    	 order by MEM_NO desc
+    	  ]]>
+    </select>
+    
+    <update id="updateBanMember" parameterType="int">
+    	update member set mem_status = 2
+		 where mem_no = #{mem_no}
+    </update>
+    
+    <select id="selectAdminMainMember" resultType="MemberVO">
+    <![CDATA[
+	    select * from(
+		    select * from member
+		    where mem_no < 90000
+		     order by mem_no desc)
+		 where rownum <= 5
+    ]]>
+    </select>
 </mapper>
 
 

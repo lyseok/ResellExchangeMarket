@@ -91,4 +91,31 @@ public class QnaDaoImpl implements IQnaDao {
 		return qnaList;
 	}
 
+	@Override
+	public int insertQna(QnaBoardVO vo) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rec = session.insert("qna.insertQna", vo);
+			if(rec>0) session.commit();
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rec;
+	}
+
+	@Override
+	public int getQnaNoImmediately(int mem_no) {
+		SqlSession session = null;
+		int qna_no = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			qna_no = session.selectOne("qna.getQnaNoImmediately", mem_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return qna_no;
+	}
+
 }

@@ -75,6 +75,31 @@
 					},
 					success: res =>{
 						console.log(res);
+						$.ajax({
+							url: "<%=request.getContextPath() %>/admin/updateQnaComments.do",
+							type: "post",
+							data: {
+								qna_no: $("#qna_no").val(),
+								commentsText: $(".commentsText").val().replaceAll(/\n/g, "<br>")
+							},
+							success: res => {
+								console.log(res);
+								code = "";
+								code += 
+							        `<div id="commentsArea" class="admin_cont">	                    		
+				                    	<div class="admin_bd_view_cont">\${res.cmt_cont}</div>
+				                    	<div class="admin_cmt_box_rt">
+			                    			<b>\${res.cmt_at}</b>
+				                    		<b class="updateComments">수정</b>
+				                    	</div>
+			                    	</div>`;
+							      $("#commentsArea").html(code);
+							},
+							error: xhr => {
+								alert("오류: " + xhr.status);
+							}
+						})
+
 					}, 
 					error: xhr =>{
 						alert("오류: " + xhr.status);
@@ -151,15 +176,22 @@
 	                    	<div class="admin_bd_view_info">
 	                    		<div>
 	                    			<span>유형</span>
-	                    			<b>
-		                    			<%-- <%
-		                    				if(vo.getQna_type()== 0){
-		                    					System.out.println("상품문의");
-		                    				}
-		                    				 
-		                    			%> --%>
-		                    			여기 값 어떻게 바꿔?
-	                    			</b>
+                    				<%
+									    int qnaType = vo.getQna_type(); // 예제 변수
+									    if (qnaType == 0) {
+									%>
+									        <b>상품문의</b>
+									<%
+									    } else if (qnaType == 1) {
+									%>
+									        <b>1:1 문의</b>
+									<%
+									    } else {
+									%>
+									        <b>알 수 없는 유형입니다.</b>
+									<%
+									    }
+									%>
 	                    		</div>
 	                    		<div><span>작성자</span><b><%= vo.getMem_no() %></b></div>
 	                    	</div>

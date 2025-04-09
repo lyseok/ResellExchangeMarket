@@ -3,13 +3,15 @@
 <%@ include file="/WEB-INF/admin/include/header_admin.jsp" %>
 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/board/notice.css">
-<script src="<%=request.getContextPath() %>/js/admin/board/report.js"></script>
+<script src="<%=request.getContextPath() %>/js/admin/board/report.js" defer></script>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/admin_nav_botton.css">
 
 <script>
 mypath = '<%=request.getContextPath() %>';
 $(function() {
-  // 신고 게시글 목록 불러오기
-  allReportBoard();
+
+	// ajax로 공지사항 리스트를 받아온다.
+	allReportBoard();
 
   // 게시글 클릭시 상세 페이지로 이동
   $(document).on("click", ".reportBoard", function() {
@@ -69,6 +71,7 @@ $(function() {
             </table>
           </div>
         </section>
+        <div class="buttons"></div>
       </div>
     </div>
   </div>

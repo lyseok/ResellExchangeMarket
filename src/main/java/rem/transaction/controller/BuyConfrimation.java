@@ -9,6 +9,8 @@ import rem.transaction.service.ITransactionService;
 import rem.transaction.service.TransactionServiceImpl;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.JsonObject;
 
@@ -22,7 +24,10 @@ public class BuyConfrimation extends HttpServlet {
 		ITransactionService service = TransactionServiceImpl.getInstance();
 		
 		int count = 0;
-		count = service.updateConfrimProd(txnNo);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("txnNo", txnNo);
+		param.put("status", 2);
+		count = service.updateConfrimProd(param);
 		
 		
 		

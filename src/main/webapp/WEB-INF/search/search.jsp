@@ -5,14 +5,16 @@
 <%@include file="/WEB-INF/include/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/main/main.css">
 
-<script defer src="<%=request.getContextPath() %>/js/search/search.js"></script>
+<style>
 
+</style>
 <script>
-  list = <%=request.getAttribute("result")%>;
-	console.log(list);
+  let prodList = <%=request.getAttribute("result")%>;
+	
   seasrchText = '<%= request.getAttribute("seasrchText")%>';
 
 </script>
+<script defer src="<%=request.getContextPath() %>/js/search/search.js"></script>
 
 	<!-- 메인 컨텐츠 시작 -->
 	<div id="main">
@@ -31,6 +33,8 @@
 				<ul>
 					
 				</ul>
+				<div class="buttons">
+				</div>
 			</div>
 			
 		</div>

@@ -1,9 +1,5 @@
 let prodList; // 전체 상품 리스트
-<<<<<<< HEAD
 const maxContent = 15; // 한페이지에 보여줄 상품 갯수
-=======
-const maxContent = 10; // 한페이지에 보여줄 상품 갯수
->>>>>>> refs/remotes/origin/main
 const maxButton = 5; // 한번에 보여질 페이지 버튼 갯수
 let numOfContent; // 전체 상품 갯수
 let maxPage; // 전체 페이지 수
@@ -31,8 +27,16 @@ $.ajax({
 
 // 데이터로 만들 코드
 const makeContent = data => {
-  return /* html */`
+  if(data.prod_tr_status == 1){
+    code = /* html */`
+      <li class='sold_out'>
+    `;
+  } else {
+    code = /* html */`
       <li>
+    `;
+  }
+  code += /* html */`
         <a href="${mypath}/product/productDetail.do?prod_no=${data.prod_no}">
           <span class="img_box">
             <img src="${data.file_path}" alt="${data.file_org_name}" />
@@ -47,6 +51,8 @@ const makeContent = data => {
         </a>
       </li>
     `;
+
+  return code;
 }
 
 
@@ -104,7 +110,7 @@ $(document).on("click", ".button", function () {
 });
 
 
-var swiper = new Swiper(".mySwiper", {
+let mainSwiper = new Swiper(".promo .mySwiper", {
   cssMode: true,
   slidesPerView: 1,
   spaceBetween: 10,
@@ -114,11 +120,11 @@ var swiper = new Swiper(".mySwiper", {
   },
   loop: true,
   navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
+    nextEl: ".promo .swiper-button-next",
+    prevEl: ".promo .swiper-button-prev",
   },
   pagination: {
-    el: ".swiper-pagination",
+    el: ".promo .swiper-pagination",
     clickable: true
   },
   mousewheel: true,

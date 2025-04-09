@@ -102,16 +102,17 @@
 #prod_list.kcy_rev ul li{
 	all: unset;
 	flex-direction: row;
-	align-items:center;
-	/* border: 1px solid #e1e1e1; */
+	align-items:start;
 	border-bottom: 3px solid #c2c2c2;
 	margin-bottom: 30px;
 	box-sizing: border-box; /* 테두리를 포함한 너비 계산 */
 	/*flex-basis: calc((100% - 40px) / 5); /* kcy added */
 	width: 100%;
+    display: flex;
 }
 #prod_list.kcy_rev ul li a{
 	display: flex;
+    flex-direction: column;
 }
 #prod_list.kcy_rev li .img_box{
 	flex-shrink: 0; /* 이미지 크기 고정 */
@@ -128,6 +129,7 @@
 	aspect-ratio: 1 / 1;	/* kcy added */
 	object-fit: cover;		/* kcy added */
 	object-position: center;/* kcy added */
+	margin-top: 17px;
 }
 #prod_list.kcy_rev li .txt_box{
 	display: inline-flex;
@@ -141,7 +143,6 @@
 	margin-left:10px;
 	display: inline-flex;
 }
-
 #prod_list.kcy_rev li .txt_box #prodName{
 	border: 1px solid #e1e1e1;
 }

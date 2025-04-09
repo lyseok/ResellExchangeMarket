@@ -1,6 +1,7 @@
 package rem.admin.chat.message.service;
 
 import java.util.List;
+import java.util.Map;
 
 import rem.admin.chat.message.dao.IMessageDao;
 import rem.admin.chat.message.dao.MessageDaoImpl;
@@ -27,8 +28,8 @@ public class MessageServiceImpl implements IMessageService {
 	}
 
 	@Override
-	public List<MessageVO> searchMessageNo(int No) {
-		return dao.searchMessageNo(No);
+	public List<MessageVO> searchMessage(Map<String, String> map) {
+		return dao.searchMessage(map);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ public class ReviewImgVO {
 	private int file_no;
 	private int file_total;
 	private String prod_name;
+	private int mem_no;
 	private String mem_name;
 	private int prod_price;
 	private String mem_alias;
@@ -133,6 +134,12 @@ public class ReviewImgVO {
 	}
 	public void setProd_no(int prod_no) {
 		this.prod_no = prod_no;
+	}
+	public int getMem_no() {
+		return mem_no;
+	}
+	public void setMem_no(int mem_no) {
+		this.mem_no = mem_no;
 	}
 	
 	

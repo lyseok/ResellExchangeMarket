@@ -51,7 +51,7 @@ const login = () => {
 			if(data == 'member') {
 				location.href = `${mypath}/mainPage.do`;
 			} else if(data == 'admin'){
-				location.href = `${mypath}/admin/adminMainPage.do`;
+				location.href = `${mypath}/admin/selectAdminMain.do`;
 			} else if(data == 'false') {
 				alert('로그인 실패! 이메일과 비밀번호를 확인해주세요.');
 			}

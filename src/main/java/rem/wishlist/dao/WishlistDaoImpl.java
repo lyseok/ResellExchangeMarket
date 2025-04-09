@@ -69,13 +69,13 @@ public class WishlistDaoImpl implements IWishlistDao {
 	}
 
 	@Override
-	public int distinctWish(int prod_no) {
+	public int distinctWish(WishlistVO vo) {
 		SqlSession session = null;
 		int mem_no = 0;
 		
 		try {
 			session = MyBatisUtil.getSqlSession();
-			mem_no = session.selectOne("wishlist.distinctWish", prod_no);
+			mem_no = session.selectOne("wishlist.distinctWish", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

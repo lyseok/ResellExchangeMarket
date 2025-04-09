@@ -18,4 +18,5 @@ public interface IStoreDao {
 	public List<ProdImgVO> getStoreSoldoutList(int storeId);
 	public List<ProdImgVO> getStoreWishlist(int storeId);
 	public List<ReviewImgVO> getStoreReviewList(int storeId);
+	public double storeRatingAvg(int storeId);
 }

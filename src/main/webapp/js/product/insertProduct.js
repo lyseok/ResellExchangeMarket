@@ -1,7 +1,12 @@
 /**
  * 
  */
-const getMainCate = () =>{
+
+$(document).on('click', '.image',function(){
+		deletePhoto();
+	})
+
+const getMainCate = (type, m) =>{
 	
 
 		//contentType : 'application/json; charset=utf-8',
@@ -29,7 +34,7 @@ $.ajax({
 	})
 }
 
-const getSubCate = () =>{
+const getSubCate = (type, m, s) =>{
 	$('#cate_main_id').on('click','li', function(){
 			
 			$('#cate_main_id li').removeClass('active');
@@ -50,8 +55,12 @@ const getSubCate = () =>{
 					code='';
 					
 						$.each(res, function(i,v){
-							
-							code += `<li data-value="${v.cate_sub_id}">${v.cate_sub_name}</li>`
+							let active = '';
+							if(v.cate_sub_id===s){
+								active = "active";
+							}
+							code += `<li data-value="${v.cate_sub_id}" class="${active}">${v.cate_sub_name}</li>`
+					
 						})
 					$('#cate_sub_id').html(code);
 				},
@@ -72,10 +81,17 @@ const clickSubCate = () =>{
 		})
 }
 
+$('#photo').on('change', function(){
+		addPhoto();
+	})
+
 const addPhoto = () =>{
-	$('#photo').on('change', function(){
-		
 			const files = $('#photo')[0].files;
+			
+			if(files.length + selectedFiles.length > 5){
+				alert("최대 5개까지 업로드 할 수 있습니다.");
+				return;
+			}
 			
 			$.each(files, function(i,v){
 				
@@ -83,8 +99,13 @@ const addPhoto = () =>{
 				$('div[id="innerCont item"]').append(img);
 				
 				selectedFiles.push(v);
+				console.log(selectedFiles)
 			})
-		})
+			$('#imgCount').text(selectedFiles.length);
+	}
+	
+const deletePhoto = () =>{
+	
 }
 
 const insertProduct = () => {
@@ -128,7 +149,7 @@ const insertProduct = () => {
 				contentType : false,
 				processData : false,
 				success : res=>{
-					location.href = `${mypath}/mainPage.do`;
+					location.href = `${mypath}/product/productDetail.do?prod_no=${res}`;
 				},
 				error : xhr=>{
 					alert(xhr.status)

@@ -15,6 +15,7 @@
 		       QNA_STATUS,
 		       QNA_COM_STATUS
 		  from QNA_BOARD
+		  order by QNA_NO desc
 	</select>
 	
 	
@@ -61,5 +62,13 @@
   		 order by 1 desc
 	</select>
 	
+	<insert id="insertQna" parameterType="QnaBoardVO">
+		INSERT INTO QNA_BOARD
+		VALUES(seq_qna_board.nextval, #{mem_no}, #{qna_title}, #{qna_type}, systimestamp, #{qna_cont}, 0, 0)
+	</insert>
 	
+	<select id="getQnaNoImmediately" parameterType="Integer" resultType="Integer">
+		SELECT QNA_NO FROM QNA_BOARD WHERE MEM_NO = #{mem_no} AND ROWNUM = 1 ORDER BY QNA_NO desc
+	</select>
+
 </mapper>

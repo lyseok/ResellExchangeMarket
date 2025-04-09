@@ -16,6 +16,8 @@ import rem.notification.vo.NotificationVO;
 
 import java.io.IOException;
 
+import com.google.gson.Gson;
+
 @WebServlet("/admin/insertNotice.do")
 public class InsertNotice extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,7 +44,7 @@ public class InsertNotice extends HttpServlet {
 			notifiVo.setNotif_url("/main/notice/view.do?noticeNo=");
 			INotificationService notifiservice = NotificationServiceImpl.getInstance(NotificationDaoImpl.getInstance());
 			if(notifiservice.insertNotification(notifiVo) > 0) {
-				response.sendRedirect(request.getContextPath() + "/admin/noticePage.do");			
+				response.getWriter().write(new Gson().toJson(res));			
 			}
 			
 		}

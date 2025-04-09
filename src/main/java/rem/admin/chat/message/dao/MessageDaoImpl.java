@@ -1,6 +1,7 @@
 package rem.admin.chat.message.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -39,12 +40,12 @@ public class MessageDaoImpl implements IMessageDao {
 	}
 
 	@Override
-	public List<MessageVO> searchMessageNo(int No) {
+	public List<MessageVO> searchMessage(Map<String, String> map) {
 		SqlSession session = null;
 		List<MessageVO> msgList = null;
 		try {
 			session = MyBatisUtil.getSqlSession();
-			msgList = session.selectList("message.searchMessageNo", No);
+			msgList = session.selectList("message.searchMessage", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

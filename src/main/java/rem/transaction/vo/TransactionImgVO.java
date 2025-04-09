@@ -6,9 +6,14 @@ public class TransactionImgVO {
 	private String prod_name;
 	private int prod_price;
 	private String prod_newing;
+	private int prod_tr_status;
+	private int prod_tr_approch;
 	private int txn_no;
 	private int txn_status;
 	private String  txn_create_at;
+	
+	
+
 	private int file_id;
 	private String file_org_name;
 	private String file_save_name;
@@ -18,6 +23,8 @@ public class TransactionImgVO {
 	private int file_source;
 	private int file_no;
 	private int file_total;
+	
+	
 	public int getProd_no() {
 		return prod_no;
 	}
@@ -119,6 +126,18 @@ public class TransactionImgVO {
 	}
 	public void setFile_total(int file_total) {
 		this.file_total = file_total;
+	}
+	public int getProd_tr_status() {
+		return prod_tr_status;
+	}
+	public void setProd_tr_status(int prod_tr_status) {
+		this.prod_tr_status = prod_tr_status;
+	}
+	public int getProd_tr_approch() {
+		return prod_tr_approch;
+	}
+	public void setProd_tr_approch(int prod_tr_approch) {
+		this.prod_tr_approch = prod_tr_approch;
 	}
 	
 	

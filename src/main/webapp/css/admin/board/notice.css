@@ -23,7 +23,6 @@
 
 .search_form {
     display: flex;
-    margin-top: 10px;
     color: #c4c4c4;
 }
 
@@ -52,7 +51,6 @@
     outline: none;
     width: 140px;
     height: 100%;
-    font-size: 1rem;
     
 }
 .search_form div span {
@@ -61,6 +59,25 @@
 }
 
 #notice_cont,
-#noticeCont {
+#noticeCont,
+#noticeContent {
     min-height: 400px;
+}
+
+
+.notice_insert_wrap #noticeTitle{
+	width: 100%;
+    border: 1px solid #d5d5d5;
+    padding: 8px;
+}
+
+
+
+.btn_wrap{
+	text-align:right;
+}
+.btn-primary{
+	background:#ad49e1;
+	color:#fff;
+	font-weight:500;
 }

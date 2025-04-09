@@ -13,6 +13,7 @@ public class AdminMainPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("여기로 가면 안돼는데");
 		request.getRequestDispatcher("/WEB-INF/admin/admin_main.jsp").forward(request, response);
 	}
 

@@ -14,19 +14,33 @@
 		       MSG_CREATE_AT,
 		       MSG_IMGCK 
 		  FROM MESSAGE
+		 ORDER BY 1 DESC
 	</select>
 	
 	
-	<select id="searchMessageNo" resultType="MessageVO" parameterType="int">
+	<select id="searchMessage" resultType="MessageVO" parameterType="map">
 		SELECT *
 		  FROM MESSAGE
-		 where mem_no=#{mem_no}
+		 <include refid="dynamicsearch" />
+		 ORDER BY 1 DESC
 	</select>
+	
+	<sql id="dynamicsearch">
+		<where>
+			<if test="select == 'mem_no'">
+		 		mem_no = #{value}				
+			</if>
+			<if test="select == 'msg_cont'">
+		 		msg_cont like '%'|| #{value} ||'%'				
+			</if>
+		</where>
+	</sql>
 
 	<select id="searchMessageCont" resultType="MessageVO" parameterType="String">
 		SELECT *
 		  FROM MESSAGE
 		 where msg_cont=#{msg_cont}
+		 ORDER BY 1 DESC
 	</select>
 	
 	

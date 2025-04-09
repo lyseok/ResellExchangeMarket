@@ -36,9 +36,9 @@ public class WishlistServiceImpl implements IWishlistService {
 	}
 
 	@Override
-	public int distinctWish(int prod_no) {
+	public int distinctWish(WishlistVO vo) {
 		// TODO Auto-generated method stub
-		return dao.distinctWish(prod_no);
+		return dao.distinctWish(vo);
 	}
 
 	@Override

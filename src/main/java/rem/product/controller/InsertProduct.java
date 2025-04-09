@@ -17,6 +17,7 @@ import rem.product.vo.ProductVO;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -124,7 +125,12 @@ public class InsertProduct extends HttpServlet {
 					fservice.insertProductImg(fvo);
 				}
 				System.out.println("등록 성공");
+				Gson gson = new Gson();
+				String result = gson.toJson(prod_no);
 				
+				PrintWriter out = response.getWriter();
+				out.println(result);
+				out.flush();
 			}
 			
 		}

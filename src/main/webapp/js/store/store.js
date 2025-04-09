@@ -1,6 +1,139 @@
 /**
  * 
  */
+///////////**상품리스트 초기 변수 선언(feat.LYS) *///////////
+let maxContent = 10; // 한페이지에 보여줄 상품 갯수
+const maxButton = 5; // 한번에 보여질 페이지 버튼 갯수
+let numOfContent; // 전체 상품 갯수
+let maxPage; // 전체 페이지 수
+let page = 1; // 시작 페이지
+const buttonsEl = $(".buttons");
+const contentsEl = $('#prod_list');
+let tabName;
+let storeProdList;
+let tabList = "상품";
+//let tabCnt = 0; => numOfContent가 제 역할을 다 해줌.
+maxPage = Math.ceil(numOfContent / maxContent); // 페이지 수 계산
+
+// 데이터로 만들 코드
+const makeContent = vo => {
+	contentCode = "";
+	if(tabName!="tabReview"){
+		let dateAnnounce = timeAgo(vo.prod_newing);
+		if(vo.prod_tr_status==1)
+			contentCode+= `<li id='kcy_prodlist_li' class='sold_out' data-price='${vo.prod_price}' data-date='${vo.prod_newing}'>
+						<a href='${mypath}/product/productDetail.do?prod_no=${vo.prod_no}'>
+							<span class='img_box'>`;
+		else if(vo.prod_tr_status==0)
+			contentCode+= `<li data-price='${vo.prod_price}' data-date='${vo.prod_newing}'>
+						<a href='${mypath}/product/productDetail.do?prod_no=${vo.prod_no}'>
+							<span class='img_box'>`;
+		contentCode+= `				<img src='${vo.file_path}' alt='${vo.prod_name}'/>
+							</span>
+							<span class='txt_box'>
+								<span>${vo.prod_name}</span>
+								<span id='priceNdate'>
+									<span><b>${vo.prod_price.toLocaleString("ko-KR")}</b></span>
+									<span>${dateAnnounce}</span>
+								</span>
+							</span></a></li>`;
+	} else{
+		let dateAnnounce = timeAgo(vo.review_timestamp);
+		contentCode += `
+		<li id='rev${vo.txn_no}' data-price='${vo.prod_price}' data-date='${vo.review_timestamp}'>
+			<span class='img_box'>
+				<a href='${mypath}/store/storePage.do?param=mem_no&value=${vo.mem_no}'>
+				<img src='${vo.file_path}' alt='${vo.mem_alias}' class='thumb'/>
+				</a>
+			</span>
+			<span class='txt_box'>
+				<span id='memName'><b> <a href='${mypath}/store/storePage.do?param=mem_no&value=${vo.mem_no}'>${vo.mem_alias} </a></b></span>
+				<a href='${mypath}/product/productDetail.do?prod_no=${vo.prod_no}'>
+				<span class='kcy_reviewRating'>
+					<span class='material-symbols-outlined star' style='color:yellow;'>
+						star_half
+					</span>
+					<span>${vo.review_rating}</span>
+				</span>
+				
+					<input type='button' value='${vo.prod_name}' id='${vo.prod_name}' style='margin-botton: 10px;'>
+				
+				<span id='reviewCont'> ${vo.review_cont} </span>
+				</a>
+			</span>
+			<span class='date_box'>
+				<p>${dateAnnounce}</p>
+			</span>
+		</li>`;
+	}
+	return contentCode;
+}
+
+
+const renderContent = page => {
+	numOfContent = storeProdList.length;
+	maxPage = Math.ceil(numOfContent / maxContent);
+	code = '<ul>';//renderContent();
+  // 글의 최대 개수를 넘지 않는 선에서, 화면에 최대 20개의 글 생성
+  for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+    code += makeContent(storeProdList[id-1]);
+  }
+  code+=`</ul>`;
+  $('#prod_list').html(code);
+};
+
+const tabChanging = () => {
+	page = 1;
+	renderContent(page);
+	renderButton(page);
+	
+	$("#prod_list").removeClass("kcy_rev");
+	$("#prod_list").removeClass("kcy_prod");
+	$(".store_list_cnt").html(tabList+" <span>"+numOfContent+"</span>");
+}
+
+///////////**버튼 생성 함수(feat.LYS) *///////////
+const renderButton = (page) => {
+  // 버튼 리스트 초기화
+  $(".buttons").empty(); 
+  console.log("렌더링 버튼 실행..!");
+  // 화면에 최대 5개의 페이지 버튼 생성
+  if(page < 3){
+    for (let id = 1; id <= 5 && id <= maxPage; id++) {
+      $(".buttons").append(makeButton(id));
+    }
+  } else if(page > maxPage - 3){
+    for (let id = maxPage - 4; id <= maxPage && id <= maxPage; id++) {
+      if(id < 1) id = 1;
+      $(".buttons").append(makeButton(id));
+    }
+  } else {
+    for(let id = page - 2; id <= page + 2 && id <= maxPage; id++){
+      $(".buttons").append(makeButton(id));
+    }
+  } 
+
+$.each($('.button'), function(_i, v){
+    if($(v).text() == page){
+      $(v).addClass("active");
+    }
+  });
+}
+const makeButton = (id) => {
+  let code = /*html*/`
+    <div class="button" id="${id}">${id}</div>
+  `;
+  return code;
+}
+$(document).on("click", ".button", function () {
+  page = parseInt($(this).text());
+
+  renderContent(page);
+  renderButton(page);
+});
+
+
+
 function timeAgo(dateString) {
     const now = new Date(); // 현재 시간
     const targetDate = new Date(dateString); // 입력된 날짜 문자열을 Date 객체로 변환
@@ -31,7 +164,7 @@ const loadTabContent = () => {
 		$(this).addClass("on");
 	
 	    // 데이터 속성으로부터 탭 이름 가져오기
-		const tabName = $(this).data("tab");
+		tabName = $(this).data("tab");
 		
 		const formData = new FormData();
 		formData.append("storeId", storeId);
@@ -45,105 +178,57 @@ const loadTabContent = () => {
 			contentType: false,
 			processData: false,
 			success: function(data){
-				let tabList = "상품";
-				let tabCnt = 0;
-				let htmlCode = `<ul>`;
-				console.log(mypath);
+				let tabList;	
+				storeProdList = data;
+				console.log("■AJAX data === , ",storeProdList);
 				switch(tabName){
 				case "tabProd":
-					data.forEach(vo => {
-						$("#prod_list").removeClass("kcy_rev");
-						let dateAnnounce = timeAgo(vo.prod_newing);
-						if(vo.prod_tr_status==1)
-							htmlCode +="<li class='sold_out' data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-						else if(vo.prod_tr_status==0)
-							htmlCode +="<li data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-						htmlCode +="<img src='"+vo.file_path+"' alt='" +vo.prod_name+  "'/>";
-						htmlCode +="</span><span class='txt_box'><span>" +vo.prod_name+ "</span>";
-						htmlCode +="<span id='priceNdate'><span><b>" +vo.prod_price.toLocaleString("ko-KR")+ "</b></span><span>"+ dateAnnounce+ "</span></span>";
-						htmlCode +="</span></a></li>";
-						tabCnt++;
-					});
+					maxContent = 10;
+					tabList = "상품";
+					tabChanging();
+					$("#prod_list").addClass("kcy_prod");
+					
+					$(".store_list_filter #sort_date").removeClass("on");
+					$(".store_list_filter #sort_price_desc").removeClass("on");
+					$(".store_list_filter #sort_price_asc").removeClass("on");
+					$(".store_list_filter #sort_date").addClass("on");
 					break;
 				case "tabReview":
+					maxContent = 2;
 					tabList = "상점후기";
-					data.forEach(vo => {
-						$("#prod_list").addClass("kcy_rev");
-						let prodName = vo.prod_name;
-						let memAlias = vo.mem_alias;
-						console.log(memAlias);
-						let filePath = vo.file_path;
-						let reviewRating = vo.review_rating;
-						let reviewCont = vo.review_cont
-						let prodPrice = vo.prod_price.toLocaleString("ko-KR");
-						let reviewTimestamp = vo.review_timestamp;
-						let dateAnnounce = timeAgo(reviewTimestamp);
-						let txnNo = vo.txn_no;
-						htmlCode +="<li id='rev"+txnNo+"' data-price='"+prodPrice+"' data-date='"+reviewTimestamp+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'>";
-						htmlCode +="<span class='img_box'>";
-						htmlCode +="<img src='"+filePath+"' alt='" +memAlias+ "' class='thumb'/></span>";
-						htmlCode +="<span class='txt_box'>"
-						htmlCode +="<span id='memName'><b>" +memAlias+ "</b></span>";
-						htmlCode +="<span class='kcy_reviewRating'>";
-						htmlCode +="<span class='material-symbols-outlined star' style='color:yellow;'>star_half</span><span>"+reviewRating+"</span>";
-/*						htmlCode +="<span class='material-symbols-outlined star' data-const='1' data-rating='"+reviewRating+"'>star</span>";
-						htmlCode +="<span class='material-symbols-outlined star' data-const='2' data-rating='"+reviewRating+"'>star</span>";
-						htmlCode +="<span class='material-symbols-outlined star' data-const='3' data-rating='"+reviewRating+"'>star</span>";
-						htmlCode +="<span class='material-symbols-outlined star' data-const='4' data-rating='"+reviewRating+"'>star</span>";
-						htmlCode +="<span class='material-symbols-outlined star' data-const='5' data-rating='"+reviewRating+"'>star</span>";
-*/						htmlCode +="</span>";
-						//htmlCode +="<span id='prodName'><b>" +prodName+ "</b></span>";
-						htmlCode +="<input type='button' value='" +prodName+ "' id='"+prodName+"' style='margin-botton: 10px;'>";
-						htmlCode +="<span id='reviewCont'>" +reviewCont+ "</span>"
-						htmlCode +="</span>"
-						htmlCode +="<span class='date_box'>";
-						htmlCode +="<p>"+dateAnnounce+"</p>";
-						htmlCode +="</span>";
-						htmlCode +="</a></li>";
-						tabCnt++;
-					});
-					reviewRatingScore();
+					tabChanging();
+					$("#prod_list").addClass("kcy_rev");
+					
+					$(".store_list_filter #sort_date").removeClass("on");
+					$(".store_list_filter #sort_price_desc").removeClass("on");
+					$(".store_list_filter #sort_price_asc").removeClass("on");
+					$(".store_list_filter #sort_date").addClass("on");
 					break;
 				case "tabSoldout":
-					data.forEach(vo => {
-						$("#prod_list").removeClass("kcy_rev");
+					maxContent = 10;
+					tabList = "판매완료";
+					tabChanging();
 
-						let dateAnnounce = timeAgo(vo.prod_newing);
-						if(vo.prod_tr_status==1)
-							htmlCode +="<li class='sold_out' data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-						else if(vo.prod_tr_status==0)
-							htmlCode +="<li data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-						htmlCode +="<img src='"+vo.file_path+"' alt='" +vo.prod_name+  "'/>";
-						htmlCode +="</span><span class='txt_box'><span>" +vo.prod_name+ "</span>";
-						htmlCode +="<span id='priceNdate'><span><b>" +vo.prod_price.toLocaleString("ko-KR")+ "</b></span><span>"+ dateAnnounce+ "</span></span>";
-						htmlCode +="</span></a></li>";
-						tabCnt++;
-					});
+					$("#prod_list").addClass("kcy_prod");
+					
+					$(".store_list_filter #sort_date").removeClass("on");
+					$(".store_list_filter #sort_price_desc").removeClass("on");
+					$(".store_list_filter #sort_price_asc").removeClass("on");
+					$(".store_list_filter #sort_date").addClass("on");
 					break;
 				case "tabWishlist":
+					maxContent = 10;
 					tabList = "찜 목록";
-					data.forEach(vo => {
-						$("#prod_list").removeClass("kcy_rev");
+					tabChanging();
 
-						let dateAnnounce = timeAgo(vo.prod_newing);
-						if(vo.prod_tr_status==1)
-							htmlCode +="<li class='sold_out' data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-						else if(vo.prod_tr_status==0)
-							htmlCode +="<li data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-						htmlCode +="<img src='"+vo.file_path+"' alt='" +vo.prod_name+  "'/>";
-						htmlCode +="</span><span class='txt_box'><span>" +vo.prod_name+ "</span>";
-						htmlCode +="<span id='priceNdate'><span><b>" +vo.prod_price.toLocaleString("ko-KR")+ "</b></span><span>"+ dateAnnounce+ "</span></span>";
-						htmlCode +="</span></a></li>";
-						tabCnt++;
-					});
+					$("#prod_list").addClass("kcy_prod");
+					
+					$(".store_list_filter #sort_date").removeClass("on");
+					$(".store_list_filter #sort_price_desc").removeClass("on");
+					$(".store_list_filter #sort_price_asc").removeClass("on");
+					$(".store_list_filter #sort_date").addClass("on");
 					break;
 				}
-				
-				htmlCode+=`</ul>`;
-				
-				$(".store_list_cnt").html(tabList+" <span>"+tabCnt+"</span>");
-				$("#prod_list").empty();
-				$("#prod_list").append(htmlCode);
 			},
 			error: function(xhr){
 				console.log("상태:: " + xhr.status);
@@ -165,27 +250,8 @@ const loadProdTabAtFirst = () => {
 		contentType: false,
 		processData: false,
 		success: function(data){
-			let tabList = "상품";
-			let tabCnt = 0;
-			let htmlCode = `<ul>`;
-			data.forEach(vo => {
-				let dateAnnounce = timeAgo(vo.prod_newing);
-				console.log(vo.prod_name, vo.prod_price);
-				if(vo.prod_tr_status==1)
-					htmlCode +="<li class='sold_out' data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-				else if(vo.prod_tr_status==0)
-					htmlCode +="<li data-price='"+vo.prod_price+"' data-date='"+vo.prod_newing+"'><a href='"+mypath+"/product/productDetail.do?prod_no="+vo.prod_no+"'><span class='img_box'>";
-				htmlCode +="<img src='"+vo.file_path+"' alt='" +vo.prod_name+  "'/>";
-				htmlCode +="</span><span class='txt_box'><span>" +vo.prod_name+ "</span>";
-				htmlCode +="<span id='priceNdate'><span><b>" +vo.prod_price.toLocaleString("ko-KR")+ "</b></span><span>"+ dateAnnounce+ "</span></span>";
-				htmlCode +="</span></a></li>";
-				tabCnt++;
-			});
-			htmlCode+=`</ul>`;
-			
-			$(".store_list_cnt").html(tabList+" <span>"+tabCnt+"</span>");
-			$("#prod_list").empty();
-			$("#prod_list").append(htmlCode);
+			storeProdList = data;
+			tabChanging();
 		},
 		error: function(xhr){
 			console.log("상태:: " + xhr.status);
@@ -240,11 +306,12 @@ function sortList(criteria, order) {
 
 const viewRatingScore = () => {
 	$(".ratingView .star").each(function(){
-		const rating = parseInt($(this).data('const'));
+		let rating = parseInt($(this).data('const'));
 		console.log(rating);
+		console.log(avgRating);
 		if(rating>avgRating)
 			$(this).addClass('disable');
-		else
+		else if(rating<avgRating || avgRating - rating>=0.55)
 			$(this).addClass('able');
 	});
 }
@@ -252,8 +319,8 @@ const viewRatingScore = () => {
 const reviewRatingScore = () => {
 	$(".kcy_reviewRating .star").each(function(){
 		var rating = parseInt($(this).data('const'));
-		var revRat = $(this).data('rating');
-		if(rating>revRat)
+		var revRat = avgRating;
+		if(rating>revRat || revRat-rating<=0.55)
 			$(this).addClass('revDisable');
 		else
 			$(this).addClass('revAble');
@@ -305,9 +372,7 @@ const editProfileForm = () => {
 	let memAlias = $("#kcy_storename").text();
 	let storename = $("<input>", {type:"text", value:memAlias, id:"kcy_editAlias", style:"font-size:20px; color:#898989; font-weight:bold;"});
 	let storenameAfterDiv = $("<div>", {class: "mem_ck"});
-		//`
-		//<input type="text" value="${memAlias}" id="kcy_editAlias">
-		//<div class="mem_ck">`;
+
 	storenameDiv.empty();
 	storenameDiv.append(storename);
 	storenameDiv.append(storenameAfterDiv);
@@ -320,26 +385,19 @@ const editProfileForm = () => {
 	storeintroductPtag.before(storeintroduct.text(prInfo));
 	storeintroductPtag.remove();
 
-	
-	/*let sirenDiv = $("<div>", {class: "siren"});
-	let sirenChildSpan_i = $("<span>",  {class:"material-symbols-outlined"}).text("siren");
-	let sirenChildSpan_ii= $("<span>").text("신고하기");
-	sirenDiv.append(sirenChildSpan_i);
-	sirenDiv.append(sirenChildSpan_ii);*/
+
 	
 	let completeEdit = $("<div>", {class: "completeEdit"});
-	let completeEditChild_i = $("<span>", {class:"material-symbols-outlined"}).text("save");
-	let completeEditChild_ii= $("<span>").text("저장하기");
+	let completeEditChild_i = $("<span>", {class:"material-symbols-outlined", style: "color: #9da1e0;", id: "fuckingducking"}).text("save");
+	let completeEditChild_ii= $("<span>", {id: "compleNsave"}).text("저장하기");
 	completeEdit.append(completeEditChild_i); 
 	completeEdit.append(completeEditChild_ii); 
 	
-	/*editclickDiv.before(sirenDiv);*/
+
+	
 	editclickDiv.before(completeEdit);
 	editclickDiv.remove();
 };
-
-
-
 
 
 

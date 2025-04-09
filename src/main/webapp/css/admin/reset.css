@@ -91,8 +91,6 @@ a.btn_submit{background:#ff4081;color:#fff}
 .btn_list02 a:focus {background:#555}
 
 .btn_list03 {text-align:right}
-.btn_list03 a,
-.btn_list03 button {display:inline-block;padding:0 15px;height:28px;background:#ad49e1;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle;border:none;}
 .btn_list03 a:focus {background:#555}
 
 
@@ -121,10 +119,12 @@ textarea:focus-visible {
 legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent:-9999em;border:0;overflow:hidden}
 .code_input{font:bold 15px Consolas}
 
-/* 외부서비스 사이트코드 */
-.sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
-.sitecode.title {width:80px}
-
+/* 페이지 내 안내문 */
+.local_desc {display:flex; gap:20px; margin-bottom:10px;justify-content:space-between;}
+.local_desc p{color:#a7a7a7; font-size:1.15em;}
+.local_desc p span{color:#333;}
+.local_wr{margin:0 0 10px }
+.local_wr:after{display:block}
 .readonly {}
 
 /*color*/

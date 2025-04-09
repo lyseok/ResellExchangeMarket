@@ -4,6 +4,7 @@ public class ProductVO {
 	
 	private int prod_no;
 	private int mem_no;
+	private int cate_main_id;
 	private int cate_sub_id;
 	private String prod_name;
 	private int prod_condition;
@@ -16,6 +17,7 @@ public class ProductVO {
 	private int prod_tr_status;
 	private int prod_tr_approch;
 	private int prod_view;
+	private int wish_count;
 	
 	
 	public int getProd_no() {
@@ -102,7 +104,18 @@ public class ProductVO {
 	public void setProd_view(int prod_view) {
 		this.prod_view = prod_view;
 	}
-	
+	public int getWish_count() {
+		return wish_count;
+	}
+	public void setWish_count(int wish_count) {
+		this.wish_count = wish_count;
+	}
+	public int getCate_main_id() {
+		return cate_main_id;
+	}
+	public void setCate_main_id(int cate_main_id) {
+		this.cate_main_id = cate_main_id;
+	}
 	@Override
 	public String toString() {
 		return "ProductVO [prod_no=" + prod_no + ", mem_no=" + mem_no + ", cate_sub_id=" + cate_sub_id + ", prod_name="

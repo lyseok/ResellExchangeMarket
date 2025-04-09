@@ -51,7 +51,7 @@ $(function(){
 	
 	<div id="wrapper">
 		<div id="container">
-			<h1 id="container_title">글관리 > 문의</h1>
+			<h1 id="container_title">글관리 > 공지사항</h1>
 			<div class="container_wr">
 				<section>
 				<div class="local_desc local_desc02"></div>
@@ -62,8 +62,8 @@ $(function(){
 							<b id="noticeAt"></b>
 						</div>
 						<div class="admin_bd_view_cont" id="noticeCont"></div></div>
-						<div class="btn_list03 btn_list">
-							<button id="updateBtn">수정</button>
+						<div class="btn_list03 btn_list btn_wrap">
+							<button id="updateBtn" class="">수정</button>
 							<button id="deleteBtn">삭제</button>
 						</div>
 					</div>

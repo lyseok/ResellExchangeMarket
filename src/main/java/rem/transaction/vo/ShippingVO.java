@@ -6,6 +6,10 @@ public class ShippingVO {
 	private String ship_porv;
 	private String track_num;
 	
+	private String prod_name;
+	private int prod_price;
+	private int mem_no;
+	
 	
 	public int getShip_id() {
 		return ship_id;
@@ -31,6 +35,8 @@ public class ShippingVO {
 	public void setTrack_num(String track_num) {
 		this.track_num = track_num;
 	}
+	
+	
 	
 	
 	

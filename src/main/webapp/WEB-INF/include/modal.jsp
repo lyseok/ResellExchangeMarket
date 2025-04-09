@@ -16,7 +16,7 @@
 <!-- 모달 참고: https://muzi-muzi.tistory.com/6 -->
 <div class="container">
   <div class="modal-btn-box">
- 	 <button type="button" id="modal-open">모달창 열기</button>  
+    <button type="button" id="modal-open">모달창 열기</button>  
   </div>
   
   <div class="popup-wrap" id="popup">
@@ -27,16 +27,16 @@
           </span>
       </div>
       <div class="popup-body">
-      	<p>
-      		해당상품을<br> 구매 확정하시겠습니까?
-      	</p>
+        <p>
+          해당상품을<br> 구매 확정하시겠습니까?
+        </p>
       </div>
       <div class="popup-foot">
         <span class="pop-btn confirm" id="confirm">확인</span>
         <span class="pop-btn close" id="close">취소</span>
       </div>
     </div>
-</div>
+  </div>
 </div>
 
 

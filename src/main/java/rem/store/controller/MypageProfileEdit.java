@@ -18,14 +18,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 
 @WebServlet("/store/mypageProfileEdit.do")
@@ -34,19 +31,16 @@ public class MypageProfileEdit extends HttpServlet {
 	private static final String UPLOAD_DIR = "remImg"; // 업로드 디렉터리 설정
        
 
+	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//1) session객체로부터 로그인 정보 꺼냄
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		int storeId = loginInfo.getMem_no();
 		
-		// 이미지 업로드 경로 설정 (서버 실행 경로 기준)
         String uploadPath = "d:" + File.separator + UPLOAD_DIR;
         System.out.println("Upload Path: " + uploadPath);
         File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdirs(); // 폴더 없으면 생성
-		
-		///System.out.println("MypageAccess->loginInfo : " + loginInfo);
+        if (!uploadDir.exists()) uploadDir.mkdirs();
 		
 		if(loginInfo==null) {
 			request.getRequestDispatcher("/WEB-INF/login/login.jsp").forward(request, response);
@@ -60,7 +54,7 @@ public class MypageProfileEdit extends HttpServlet {
 			if(editedPrInfo==null)
 				editedPrInfo = "자기소개 기본값입니다...^0^";
 			
-			//2-3) 변경될 이미지■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+			//2-3) 변경될 이미지
 			String checkNewImg = (String)request.getParameter("checkNewImg");
 			if(checkNewImg.equals("NEW-IMG")) {
 				ImgFileVO imgVO = new ImgFileVO();
@@ -70,7 +64,6 @@ public class MypageProfileEdit extends HttpServlet {
 					
 					String imgOriginalName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
 		            String imgUUIDName = UUID.randomUUID().toString() + "_" + imgOriginalName;
-	///	            String savingFilePath = "/" + uploadPath.substring(3) + File.separator + imgUUIDName;
 		            String savingFilePath = uploadPath + File.separator + imgUUIDName;
 		            String scriptFilePath = "/" + uploadPath.substring(3) + File.separator + imgUUIDName;
 		            String imgExtension = "";
@@ -88,14 +81,10 @@ public class MypageProfileEdit extends HttpServlet {
 		            imgVO.setFile_no(loginInfo.getMem_no());
 		            imgVO.setFile_total(1);
 		            
-		            
-		            // 파일 저장
 		            imgPart.write(savingFilePath);
-		        } catch (Exception e) {
-		        	e.printStackTrace();
-					/* response.getWriter().write("{\"error\": \"파일 업로드 실패\"}"); */
 		        }
-				//■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				catch (Exception e) { e.printStackTrace(); }
+				
 				IFileService fservice = FileServiceImpl.getInstance(); 
 				int recDel  = fservice.deleteProfileImg(storeId);
 				int recFile = fservice.insertProfileImg(imgVO);
@@ -105,9 +94,6 @@ public class MypageProfileEdit extends HttpServlet {
 			else {}
 			
 			
-
-			
-			
 			Map<String, Object> editedMap = new HashMap<>();
 			editedMap.put("mem_no", loginInfo.getMem_no());//불변(기본키)
 			editedMap.put("mem_alias", editedAlias);
@@ -115,30 +101,14 @@ public class MypageProfileEdit extends HttpServlet {
 			
 			IStoreService service = StoreServiceImpl.getInstance();
 			int rec = service.updateMypageProfile(editedMap);
-			//MypageAccess->rec : 1
-			System.out.println("MypageAccess->rec : " + rec);
-			
-			
-			
-			
-			
-			if(rec>0) {//update 성공
-//				IMemberService mservice = MemberServiceImpl.getInstance(MemberDaoImpl.getInstance());
-//				Map<String, String> loginMap = new HashMap<>();
-//				String memId = loginInfo.getMem_email();
-//				String memPw = loginInfo.getMem_pw();
-//				loginMap.put("mem_email", memId);
-//				loginMap.put("mem_pw", memPw);
-//				MemberVO memberVO = mservice.login(loginMap);
+//			//MypageAccess->rec : 1
+//			System.out.println("MypageAccess->rec : " + rec);
+
+			if(rec>0) {
 				
 				//3) session객체에 변경 정보 반영
 				loginInfo.setMem_alias(editedAlias);
 				loginInfo.setPr_info(editedPrInfo);
-				
-//				session.setAttribute("loginInfo", loginInfo);
-//				request.setAttribute("editProcess", "OK");
-//				request.getRequestDispatcher("/WEB-INF/store/mypage.jsp").forward(request, response);
-//				response.sendRedirect(request.getContextPath() + "/REMProject/store/mypage.do");
 				
 				Gson gson = new Gson();
 				
@@ -150,10 +120,7 @@ public class MypageProfileEdit extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.print(json);
 				out.flush();
-			} else {//update 실패
-//				request.setAttribute("editProcess", "NO");
-//				request.getRequestDispatcher("/WEB-INF/store/mypage.jsp").forward(request, response);
-				
+			} else {
 				Gson gson = new Gson();
 				
 				Map<String,Object> map = new HashMap<String, Object>();
@@ -165,43 +132,6 @@ public class MypageProfileEdit extends HttpServlet {
 				out.print(json);
 				out.flush();
 			}
-		
 		}
-		
 	}
-	
-	/**	
-	- Part 구조
-	1) 파일이 아닌 일반 데이터일 경우
-	--------------------------------------sldfjwroiu23409sadf ==>각 Part를 구분하는 구분선
-	content-disposition: form-data; name="username"		  ==>파라미터명
-															  ==> 빈 줄
-	hong gil dong											  ==>파라미터값
-	
-	*/
-	
-	/**
-	2) 파일일 경우
-	--------------------------------------sldfjwroiu23409sadf ==>각 Part를 구분하는 구분선
-	content-disposition: name="upFile1"; filename="test.txt"  ==> 파일 정보
-	content-type: text/plain								  ==> 파일의 종류
-															  ==> 빈 줄
-	abcde1234안녕											  ==> 파일 내용
-	*/
-	
-	///■ Part 구조 안에서 '파일명'을 찾는 메서드
-	private String extractFileName(Part part) {
-		String fileName = "";		//<-찾은 파일명이 저장도리 변수(반환값)
-		
-		String dispositionValue = part.getHeader("content-disposition");
-		String[] items = dispositionValue.split(";");
-		for(String item: items) {	//<-배열 개수만큼 반복
-			if(item.trim().startsWith("filename")) {
-				fileName = item.substring(item.indexOf("=") + 2, item.length()-1);
-			}
-		}
-		
-		return fileName;
-	}
-
 }

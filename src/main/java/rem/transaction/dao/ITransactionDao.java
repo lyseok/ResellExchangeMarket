@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import rem.product.vo.ProductVO;
+import rem.review.vo.ReviewImgVO;
 import rem.review.vo.ReviewVO;
 import rem.transaction.vo.ProdTransactionVO;
 import rem.transaction.vo.ReviewTransactionVO;
 import rem.transaction.vo.ShippingVO;
+import rem.transaction.vo.TransactionImgVO;
 import rem.transaction.vo.TransactionVO;
 
 public interface ITransactionDao {
@@ -34,8 +36,41 @@ public interface ITransactionDao {
 	
 	public ShippingVO getTrackInfo(int txnNo);
 	
-	public int updateConfrimProd(int txnNo);
+	public int updateConfrimProd(Map<String, Object> param);
 	
-	public int insertReview(ReviewVO reviewVo);
+	public int insertReview(ReviewImgVO rvo);
 	
+	
+	
+	//상품관리 분리
+	public List<TransactionImgVO> getStatusAllProd(TransactionImgVO tvo);
+	
+	public List<TransactionImgVO> getStatusBuyProd(TransactionImgVO tvo);
+		
+		
+	public List<TransactionImgVO> getStatusSellProd(TransactionImgVO tvo);
+	
+	
+	
+	public List<TransactionImgVO> getProdImg(int memberId);
+	public List<TransactionImgVO> getBuyImg(int memberId);
+	public List<TransactionImgVO> getSellImg(int memberId);
+	
+	
+	
+	
+	
+	public ReviewImgVO getReviewInfo(int txnNo);
+	
+	public TransactionImgVO getProdInfo(int txnNo);
+	
+	
+	
+	public int updateProdStatus(Map<String, Object> param);
+	
+	
+	public List<TransactionImgVO> getProdTrStatus(TransactionImgVO tvo2);
+	
+	
+	public int isThereReview(int txnNo);
 }

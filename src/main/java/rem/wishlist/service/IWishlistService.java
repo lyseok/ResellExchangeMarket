@@ -9,7 +9,7 @@ public interface IWishlistService {
 	public int countWishlist(int mem_no);
 	public List<ProductVO> getStoreWishList(int storeId);
 	public int insertWish(WishlistVO vo);
-	public int distinctWish(int prod_no);
+	public int distinctWish(WishlistVO vo);
 	public int deleteWish(WishlistVO vo);
 	public int countProdWish(int prod_no);
 }

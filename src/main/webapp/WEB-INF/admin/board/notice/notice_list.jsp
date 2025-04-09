@@ -3,13 +3,12 @@
 	<%@ include file="/WEB-INF/admin/include/header_admin.jsp" %>
 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/board/notice.css">
-<script src="<%=request.getContextPath() %>/js/admin/board/notice.js"></script>
+	<script src="<%=request.getContextPath() %>/js/admin/board/notice.js" defer></script>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/admin_nav_botton.css">
 <script>
 mypath = '<%=request.getContextPath() %>';
 
 $(function() {
-  // ajax로 공지사항 리스트를 받아온다.
-  allNoticeBoard();
   
   // 공지사항 리스트를 클릭하면 공지사항 상세보기 페이지로 이동한다.
   $(document).on("click", ".noticeBoard", function() {
@@ -61,10 +60,11 @@ $(function() {
               </tbody>
             </table>
           </div>
-          <div class="btn_list03 btn_list">
-              <a href="<%=request.getContextPath() %>/admin/insertNoticePage.do">공지 글쓰기</a>
+          <div class="btn_list03 btn_list btn_wrap">
+              <a href="<%=request.getContextPath() %>/admin/insertNoticePage.do" class="boardInsertBtn">공지 글쓰기</a>
           </div>
         </section>
+        <div class="buttons"></div>
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@
 	<%@ include file="/WEB-INF/admin/include/header_admin.jsp" %>
 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/admin/board/notice.css">
-<script src="<%=request.getContextPath() %>/js/admin/board/notice.js"></script>
+	<script src="<%=request.getContextPath() %>/js/admin/board/notice.js"></script>
 
 
 <%
@@ -48,7 +48,7 @@ $(function() {
               </div>
             </form>
           </div>
-          <div class="tbl_head01 tbl_wrap">
+          <div class="tbl_head01 tbl_wrap over_scroll_cont">
             <table>
               <colgroup>
                 <col width="10%">

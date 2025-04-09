@@ -30,7 +30,10 @@
 	if(login == null) {
 		response.sendRedirect(request.getContextPath() + "/accessCheck.do");
 	}
-
+	
+	if(adminInfo != null && adminInfo.getMem_lv() == 0){
+		response.sendRedirect(request.getContextPath() + "/mainPage.do");
+	}
 %>
 
 <script>
@@ -42,7 +45,7 @@
 <header id="hd">
     <h1>띹장터</h1>
     <div id="hd_top">
-        <div id="logo"><a href=""><img src="https://demo.sir.kr/gnuboard5/adm/img/logo.png" alt="그누보드5(영카트5) 관리자" title=""></a></div>
+        <div id="logo"><a href="<%= request.getContextPath() %>/admin/selectAdminMain.do"><img src="https://demo.sir.kr/gnuboard5/adm/img/logo.png" alt="그누보드5(영카트5) 관리자" title=""></a></div>
 
         <div id="tnb">
             <ul>
@@ -63,13 +66,13 @@
         <h2>관리자 주메뉴</h2>
         <ul class="gnb_ul">
             <li class="gnb_li on">
-                <a href="<%= request.getContextPath() %>/admin/adminMainPage.do" class="btn_op menu-100" title="메인">
+                <a href="<%= request.getContextPath() %>/admin/selectAdminMain.do" class="btn_op menu-100" title="메인">
 					<span class="material-symbols-outlined">home</span>
 					메인
                 </a>
             </li>
             <li class="gnb_li">
-                <a href="javascript:void(0)" class="btn_op menu-200" title="회원관리">
+                <a href="<%= request.getContextPath() %>/admin/selectAllMemberList.do" class="btn_op menu-200" title="회원관리">
 					<span class="material-symbols-outlined">person</span>
 					회원관리
                 </a>
@@ -82,11 +85,11 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li><a href="" class="gnb_2da">상품 게시판</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/prodListPage.do" class="gnb_2da">상품 게시판</a></li>
                             <li><a href="<%= request.getContextPath() %>/admin/noticePage.do" class="gnb_2da">공지시항</a></li>
                             <li><a href="<%= request.getContextPath() %>/admin/qnaPage.do" class="gnb_2da gnb_grp_style gnb_grp_div">문의</a></li>
-                            <li><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">FAQ</a></li>
-                            <li><a href="<%=request.getContextPath() %>/admin/reportBoardPage.do" class="gnb_2da  ">신고</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/faqBoardView.do" class="gnb_2da gnb_grp_style gnb_grp_div">FAQ</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/reportBoardPage.do" class="gnb_2da  ">신고</a></li>
                         </ul>
                     </div>
                 </div>
@@ -115,8 +118,8 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li><a href="" class="gnb_2da  ">거래관리</a></li>
-                            <li><a href="" class="gnb_2da  ">안심 거래 관리</a></li>
+                            <li><a href="<%=request.getContextPath() %>/admin/transPage.do" class="gnb_2da  ">거래관리</a></li>
+                            <li><a href="<%=request.getContextPath() %>/admin/safeTXNBoardPage.do" class="gnb_2da  ">안심 거래 관리</a></li>
                             <li><a href="" class="gnb_2da gnb_grp_style gnb_grp_div">페이관리</a></li>
                         </ul>
                     </div>
@@ -130,22 +133,8 @@
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <ul>
-                            <li><a href="" class="gnb_2da  ">채팅방관리</a></li>
+                            <li><a href="<%=request.getContextPath() %>/admin/chatRoomPage.do" class="">채팅방관리</a></li>
                             <li><a href="<%=request.getContextPath() %>/admin/messageList.do" class="gnb_2da  ">메세지 관리</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-            <li class="gnb_li">
-                <a href="javascript:void(0)" class="btn_op menu-900 menu-order-6" title="뱃지관리">
-					<span class="material-symbols-outlined">military_tech</span>
-					뱃지관리
-                </a>
-                <div class="gnb_oparea_wr">
-                    <div class="gnb_oparea">
-                        <ul>
-                            <li><a href="<%=request.getContextPath() %>/admin/achievementsPage.do" class="gnb_2da  ">뱃지관리</a></li>
-                            <li><a href="" class="gnb_2da  ">획득 뱃지 관리</a></li>
                         </ul>
                     </div>
                 </div>

@@ -66,4 +66,29 @@ public class FileServiceImpl implements IFileService {
 		// TODO Auto-generated method stub
 		return dao.getProductfileImg(prod_no);
 	}
+	@Override
+	public int deleteProductImg(int prod_no) {
+		// TODO Auto-generated method stub
+		return dao.deleteProductImg(prod_no);
+	}
+	@Override
+	public int insertQnaImg(ImgFileVO imgVO) {
+		return dao.insertQnaImg(imgVO);
+	}
+	@Override
+	public ImgFileVO getQnaImg(int qna_no) {
+		return dao.getQnaImg(qna_no);
+	}
+	@Override
+	public int insertQnaCommentImg(ImgFileVO imgVO) {
+		return dao.insertQnaCommentImg(imgVO);
+	}
+	@Override
+	public ImgFileVO getQnaCommentImg(int qna_no) {
+		return dao.getQnaCommentImg(qna_no);
+	}
+	@Override
+	public int insertReportImg(ImgFileVO imgVO) {
+		return dao.insertReportImg(imgVO);
+	}
 }

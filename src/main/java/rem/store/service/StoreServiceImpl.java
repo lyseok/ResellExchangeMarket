@@ -59,6 +59,10 @@ public class StoreServiceImpl implements IStoreService {
 	public List<ReviewImgVO> getStoreReviewList(int storeId) {
 		return dao.getStoreReviewList(storeId);
 	}
+	@Override
+	public double storeRatingAvg(int storeId) {
+		return dao.storeRatingAvg(storeId);
+	}
 	
 	
 }

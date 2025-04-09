@@ -85,6 +85,19 @@ public class ReportBoardDaoImpl implements IReportBoardDao {
 				
 		return res;
 	}
+
+	@Override
+	public int getReportNoImmediately(int mem_no) {
+		SqlSession session = null;
+		int rpt_no = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rpt_no = session.selectOne("reportBoard.getReportNoImmediately", mem_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rpt_no;
+	}
 	
 
 }

@@ -31,7 +31,6 @@
   margin-right: 50px;
   letter-spacing: 1px;
   font-size:16px;
-  margin-bottom: 30px;
 }
 .dataInput label:nth-child(2) b {
   letter-spacing: 6px;
@@ -43,15 +42,16 @@
 	font-size:12px;
 }
 
-.dataInput label:nth-child(4) span{
+/* .dataInput label:nth-child(4) span{
 	font-size:19px;
 } 
-
+ */
 #addressBtn {
     background: #AD49E1;
     color: #fff;
     height: 28px;
     width: 52px;
+   	border:none;
 }
 #user_btn_wrap{
   display: flex;
@@ -64,6 +64,10 @@
   padding: 10px 25px;
   text-align:center;
   width: 100px;
+}
+#user_btn_wrap span{
+	border:1px solid #666;
+	color:#666;
 }
 #addressLabel {
   display: flex;

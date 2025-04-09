@@ -15,6 +15,8 @@ import rem.transaction.service.TransactionServiceImpl;
 import rem.transaction.vo.TransactionVO;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @WebServlet("/product/insertTransaction.do")
@@ -33,7 +35,11 @@ public class InsertTransaction extends HttpServlet {
 		TransactionVO tvo = new TransactionVO();
 		int prod_no = Integer.parseInt(request.getParameter("prod_no"));
 		
-		ProductVO pvo = pservice.getProductDetail(prod_no);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("mem_no", loginInfo.getMem_no());
+		param.put("prod_no", prod_no);
+		
+		ProductVO pvo = pservice.getProductDetail(param);
 		
 		
 		tvo.setProd_no(prod_no); tvo.setMem_no(loginInfo.getMem_no()); 

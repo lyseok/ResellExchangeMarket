@@ -57,14 +57,16 @@ if(noticeVO.rpt_com_status == 0){ // 아직 답변 전인 경우
 // '답변하기' 버튼 클릭 시 동작
 $('#status_ck').on('click', '#addComments', function(){
   // 댓글 입력 폼 HTML 생성
-  code = /* html */`
-    <form action='${mypath}/admin/insertReportComments.do' id="report_comments" method="post">
-      <input type="hidden" name="rpt_mem_no" id="rpt_mem_no" value=${noticeVO.rpt_no}>
-      <div id="rpt_comments_form">
-		<textarea name="commentsText" class="commentsText" cols="120" rows="7"></textarea>
-        <button type="button" id="insertReportCommentsBtn">등록하기</button>
-      </div>
-    </form>`;
+  code = /* html */	
+	`
+	<form action='${mypath}/admin/insertReportComments.do' id="report_comments" method="post">
+		<input type="hidden" name="rpt_mem_no" id="rpt_mem_no" value=${noticeVO.rpt_no}>
+		<div id="rpt_comments_form" class="admin_comments_form">
+			<textarea name="commentsText" class="commentsText" cols="120" rows="7"></textarea>
+			<button type="button" id="insertReportCommentsBtn">등록하기</button>
+		</div>
+	</form>
+	`;
 
   // 댓글 입력 폼을 댓글 영역에 삽입
   $('#commentsArea').html(code);

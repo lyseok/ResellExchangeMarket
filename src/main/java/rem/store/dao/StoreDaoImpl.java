@@ -139,6 +139,18 @@ public class StoreDaoImpl implements IStoreDao{
 		finally {if(session!=null) session.close();}
 		return list;
 	}
+	@Override
+	public double storeRatingAvg(int storeId) {
+		SqlSession session = null;
+		double rating = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rating = session.selectOne("store.storeRatingAvg", storeId);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rating;
+	}
 	
 	
 }

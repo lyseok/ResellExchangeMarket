@@ -30,6 +30,7 @@ public class SearchNoticeBoard extends HttpServlet {
 		map.put("select", select);
 		map.put("value", value);
 		
+		
 		INoticeBoardService service = NoticeBoardServiceImpl.getInstance(NoticeBoardDaoImpl.getInstance());
 		
 		List<NoticeBoardVO> list = service.searchNoticeBoard(map);

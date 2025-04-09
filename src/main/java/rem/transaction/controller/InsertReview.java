@@ -5,6 +5,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import rem.review.dao.ReviewDaoImpl;
+import rem.review.service.IReviewService;
+import rem.review.service.ReviewServiceImpl;
+import rem.review.vo.ReviewImgVO;
 import rem.review.vo.ReviewVO;
 import rem.transaction.service.ITransactionService;
 import rem.transaction.service.TransactionServiceImpl;
@@ -12,6 +16,8 @@ import rem.transaction.vo.ReviewTransactionVO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 
@@ -33,9 +39,8 @@ public class InsertReview extends HttpServlet {
 		
 		ITransactionService service = TransactionServiceImpl.getInstance();
 		
-		
-		ReviewVO rvo = new ReviewVO();
-		
+		ReviewImgVO rvo = new ReviewImgVO();
+
 		Gson gson = new Gson();
 		
 		rvo.setReview_cont(reviewCont);
@@ -46,6 +51,11 @@ public class InsertReview extends HttpServlet {
 		int count = 0;
 		
 		count = service.insertReview(rvo);
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("txnNo", txnNo);
+		param.put("status", 2);
+		service.updateConfrimProd(param);
 		
 		String result = gson.toJson(rvo);
 		   

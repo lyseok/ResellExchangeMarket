@@ -19,7 +19,9 @@ import rem.product.vo.CateNameVO;
 import rem.product.vo.ProductVO;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @WebServlet("/product/purchase.do")
@@ -37,7 +39,11 @@ public class Purchase extends HttpServlet {
 		int prod_no = Integer.parseInt(request.getParameter("prod_no"));
 		int mem_bal = loginInfo.getMem_bal();
 		
-		ProductVO pvo = pservice.getProductDetail(prod_no);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("mem_no", loginInfo.getMem_no());
+		param.put("prod_no", prod_no);
+		
+		ProductVO pvo = pservice.getProductDetail(param);
 		CateNameVO cvo = pservice.getCateName(prod_no);
 		List<ImgFileVO> list = fservice.getProductfileImg(prod_no);
 		

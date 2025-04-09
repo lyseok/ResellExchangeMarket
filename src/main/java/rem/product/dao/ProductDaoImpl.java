@@ -2,19 +2,15 @@ package rem.product.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import rem.product.vo.CateMainVO;
 import rem.product.vo.CateNameVO;
 import rem.product.vo.CateSubVO;
+import rem.product.vo.NewViewVO;
 import rem.product.vo.ProdImgVO;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
-
 
 import rem.product.vo.ProductVO;
 import rem.product.vo.ViewCountVO;
@@ -82,113 +78,158 @@ public class ProductDaoImpl implements IProductDao {
       return list;
    }
 
-@Override
-public ProductVO getProductDetail(int prod_no) {
-	SqlSession session = null;
-	ProductVO pvo = null;
-	
-	try {
-		session = MyBatisUtil.getSqlSession();
+	@Override
+	public ProductVO getProductDetail(Map<String, Object> param) {
+		SqlSession session = null;
+		ProductVO pvo = null;
 		
-		pvo = session.selectOne("product.getProductDetail", prod_no);
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		if(session!=null) session.close();
+		try {
+			session = MyBatisUtil.getSqlSession();
+			
+			pvo = session.selectOne("product.getProductDetail", param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		return pvo;
 	}
-	return pvo;
-}
-
-@Override
-public int getCountAllReview(int mem_no) {
-	SqlSession session = null;
-	int cnt = 0;
 	
-	try {
-		session = MyBatisUtil.getSqlSession();
+	@Override
+	public int getCountAllReview(int mem_no) {
+		SqlSession session = null;
+		int cnt = 0;
 		
-		cnt = session.selectOne("product.getCountAllReview", mem_no);
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		if(session!=null) session.close();
+		try {
+			session = MyBatisUtil.getSqlSession();
+			
+			cnt = session.selectOne("product.getCountAllReview", mem_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		return cnt;
 	}
-	return cnt;
-}
-
-@Override
-public CateNameVO getCateName(int prod_no) {
-	SqlSession session = null;
-	CateNameVO nvo = null;
 	
-	try {
-		session = MyBatisUtil.getSqlSession();
-		nvo = session.selectOne("product.getCateName", prod_no);
+	@Override
+	public CateNameVO getCateName(int prod_no) {
+		SqlSession session = null;
+		CateNameVO nvo = null;
 		
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		if(session!=null) session.close();
+		try {
+			session = MyBatisUtil.getSqlSession();
+			nvo = session.selectOne("product.getCateName", prod_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		return nvo;
 	}
-	return nvo;
-}
-
-@Override
-public int updateProductView(int prod_no) {
-	 SqlSession session = null;
-     int rec = 0;
-     try {
-        session = MyBatisUtil.getSqlSession();
-        rec = session.update("product.updateProductView", prod_no);
-        if(rec>0) session.commit();
-     }
-     catch(Exception e) {e.printStackTrace();}
-     finally {if(session!=null) session.close();}
-     return rec;
-}
-
-@Override
-public int insertViewCount(ViewCountVO vo) {
-	 SqlSession session = null;
-     int rec = 0;
-     try {
-        session = MyBatisUtil.getSqlSession();
-        rec = session.insert("product.insertViewCount", vo);
-        if(rec>0) session.commit();
-     }
-     catch(Exception e) {e.printStackTrace();}
-     finally {if(session!=null) session.close();}
-     return rec;
-}
-
-@Override
-public List<ProdImgVO> selectAllMainPageProd() {
-	SqlSession session = null;
-	List<ProdImgVO> list = null;
 	
-	try {
-		session = MyBatisUtil.getSqlSession();
-		list = session.selectList("product.selectAllMainPageProd");
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		if(session != null) session.close();
+	@Override
+	public int updateProductView(int prod_no) {
+		 SqlSession session = null;
+	     int rec = 0;
+	     try {
+	        session = MyBatisUtil.getSqlSession();
+	        rec = session.update("product.updateProductView", prod_no);
+	        if(rec>0) session.commit();
+	     }
+	     catch(Exception e) {e.printStackTrace();}
+	     finally {if(session!=null) session.close();}
+	     return rec;
 	}
-	return list;
-}
-
-@Override
-public int updateProdStatus(int prod_no) {
-	SqlSession session = null;
-    int rec = 0;
-    try {
-       session = MyBatisUtil.getSqlSession();
-       rec = session.update("product.updateProdStatus", prod_no);
-       if(rec>0) session.commit();
-    }
-    catch(Exception e) {e.printStackTrace();}
-    finally {if(session!=null) session.close();}
-    return rec;
-}
+	
+	@Override
+	public int insertViewCount(ViewCountVO vo) {
+		 SqlSession session = null;
+	     int rec = 0;
+	     try {
+	        session = MyBatisUtil.getSqlSession();
+	        rec = session.insert("product.insertViewCount", vo);
+	        if(rec>0) session.commit();
+	     }
+	     catch(Exception e) {e.printStackTrace();}
+	     finally {if(session!=null) session.close();}
+	     return rec;
+	}
+	
+	@Override
+	public List<ProdImgVO> selectAllMainPageProd() {
+		SqlSession session = null;
+		List<ProdImgVO> list = null;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("product.selectAllMainPageProd");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		return list;
+	}
+	
+	@Override
+	public int updateProdStatus(int prod_no) {
+		SqlSession session = null;
+	    int rec = 0;
+	    try {
+	       session = MyBatisUtil.getSqlSession();
+	       rec = session.update("product.updateProdStatus", prod_no);
+	       if(rec>0) session.commit();
+	    }
+	    catch(Exception e) {e.printStackTrace();}
+	    finally {if(session!=null) session.close();}
+	    return rec;
+	}
+	
+	@Override
+	public int updateProduct(ProductVO vo) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+		       session = MyBatisUtil.getSqlSession();
+		       rec = session.update("product.updateProduct", vo);
+		       if(rec>0) session.commit();
+		    }
+		    catch(Exception e) {e.printStackTrace();}
+		    finally {if(session!=null) session.close();}
+		    return rec;
+	}
+	
+	@Override
+	public List<ProdImgVO> selectProdRecommend(ProductVO vo) {
+		SqlSession session = null;
+		List<ProdImgVO> list = null;
+		
+		try {
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("product.selectProdRecommend", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	
+	@Override
+	public List<NewViewVO> selectNewView(int no) {
+		SqlSession session = null;
+		List<NewViewVO> list = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("product.selectNewViewList", no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session != null) session.close();
+		}
+		return list;
+	}
 
 }

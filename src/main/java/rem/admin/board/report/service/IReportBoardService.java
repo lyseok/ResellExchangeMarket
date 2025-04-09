@@ -9,4 +9,6 @@ public interface IReportBoardService {
 	public ReportBoardVO selectReportBoard(int no);
 	public int insertReportBoard(ReportBoardVO vo);
 	public int deleteReportBoard(int no);
+	
+	public int getReportNoImmediately(int mem_no);
 }

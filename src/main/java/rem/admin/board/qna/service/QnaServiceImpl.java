@@ -3,9 +3,12 @@ package rem.admin.board.qna.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+
 import rem.admin.board.qna.dao.IQnaDao;
 import rem.admin.board.qna.dao.QnaDaoImpl;
 import rem.admin.board.qna.vo.QnaBoardVO;
+import utill.MyBatisUtil;
 
 public class QnaServiceImpl implements IQnaService {
 	// dao 가져오기
@@ -62,6 +65,22 @@ public class QnaServiceImpl implements IQnaService {
 	@Override
 	public List<QnaBoardVO> searchQna(Map<String, String> map) {
 		return dao.searchQna(map);
+	}
+
+	/**
+	 *  회원 문의게시글 작성
+	 *  @param QanBoardVO - qna_status && qna_com_status default 0, qna_at default sysdate
+	 *  @return 0ㅣ 실패, 1ㅣ 성공
+	 *  @author KCY
+	 */
+	@Override
+	public int insertQna(QnaBoardVO vo) {
+		return dao.insertQna(vo);
+	}
+
+	@Override
+	public int getQnaNoImmediately(int mem_no) {
+		return dao.getQnaNoImmediately(mem_no);
 	}
 
 }

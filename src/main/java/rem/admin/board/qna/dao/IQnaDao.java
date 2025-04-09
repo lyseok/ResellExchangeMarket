@@ -13,4 +13,7 @@ public interface IQnaDao {
 	public int deleteQna(int qna_no);
 	
 	public List<QnaBoardVO> searchQna(Map<String, String> map);
+	
+	public int insertQna(QnaBoardVO vo);
+	public int getQnaNoImmediately(int mem_no);
 }

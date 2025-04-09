@@ -1,13 +1,17 @@
 package rem.search.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import rem.admin.board.faq.vo.FAQBoardVO;
 import rem.admin.board.notice.vo.NoticeBoardVO;
 import rem.admin.board.qna.vo.QnaBoardVO;
 import rem.admin.board.qna.vo.QnaSetVO;
-import rem.search.vo.SearchVO;
+import rem.admin.board.report.vo.ReportBoardVO;
+import rem.admin.board.report.vo.ReportSetVO;
+import rem.product.vo.ProdImgVO;
 import utill.MyBatisUtil;
 
 public class SearchDaoImpl implements ISearchDao {
@@ -21,9 +25,9 @@ public class SearchDaoImpl implements ISearchDao {
 	}
 	
 	@Override
-	public List<SearchVO> selectSearchProduct(String searchText) {
+	public List<ProdImgVO> selectSearchProduct(String searchText) {
 		SqlSession session = null;
-		List<SearchVO> list = null;
+		List<ProdImgVO> list = null;
 		
 		try {
 			session = MyBatisUtil.getSqlSession();
@@ -63,12 +67,12 @@ public class SearchDaoImpl implements ISearchDao {
 	}
 
 	@Override
-	public QnaSetVO getQnaBoard(int qna_no) {
+	public QnaSetVO getQnaBoard(Map<String, Integer> map) {
 		SqlSession session = null;
 		QnaSetVO vo = null;
 		try {
 			session = MyBatisUtil.getSqlSession();
-			vo = session.selectOne("search.getQnaBoardOne", qna_no);
+			vo = session.selectOne("search.getQnaBoardOne", map);
 		}
 		catch(Exception e) {e.printStackTrace();}
 		finally {if(session!=null) session.close();}
@@ -76,15 +80,94 @@ public class SearchDaoImpl implements ISearchDao {
 	}
 
 	@Override
-	public List<QnaBoardVO> searchQnaBoard(String searchText) {
+	public List<QnaBoardVO> searchQnaBoard(Map<String, Object> map) {
 		SqlSession session = null;
 		List<QnaBoardVO> list = null;
 		try {
 			session = MyBatisUtil.getSqlSession();
-			list = session.selectList("search.searchQnaBoard", searchText);
+			list = session.selectList("search.searchQnaBoard", map);
 		}
 		catch(Exception e) {e.printStackTrace();}
 		finally {if(session!=null) session.close();}
+		return list;
+	}
+
+	@Override
+	public QnaSetVO getQnaComments(int qna_no) {
+		SqlSession session = null;
+		QnaSetVO vo = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			vo = session.selectOne("search.getQnaComments", qna_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return vo;
+	}
+
+	@Override
+	public List<FAQBoardVO> getFAQBoardList() {
+		SqlSession session = null;
+		List<FAQBoardVO> list = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("search.getFAQBoardList");
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return list;
+	}
+
+	@Override
+	public List<ReportBoardVO> searchReportBoard(String searchText) {
+		SqlSession session = null;
+		List<ReportBoardVO> list = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("search.searchReportBoard", searchText);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return list;
+	}
+
+	@Override
+	public ReportSetVO getReportBoardOne(int rptNo) {
+		SqlSession session = null;
+		ReportSetVO vo = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			vo = session.selectOne("search.getReportBoardOne", rptNo);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return vo;
+	}
+
+	@Override
+	public ReportSetVO getReportComments(int rpt_mem_no) {
+		SqlSession session = null;
+		ReportSetVO vo = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			vo = session.selectOne("search.getReportComments", rpt_mem_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return vo;
+	}
+
+	@Override
+	public  List<ReportSetVO> getReportBoardList() {
+		SqlSession session = null;
+		List<ReportSetVO> list = null;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			list = session.selectList("search.getReportBoardList");
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		
 		return list;
 	}
 

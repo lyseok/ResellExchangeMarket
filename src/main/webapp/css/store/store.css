@@ -40,6 +40,7 @@
 	background:url("../../images/shop/shop_info_img.png") no-repeat center / cover;
 	filter:blur(2px);
 	z-index:-1;
+	object-fit:cover;
 }
 .store_info_box #kcy_previewBackground{
 	width:100%;
@@ -245,4 +246,51 @@ textarea{
 }
 .store_list_filter li.on a{
 	color:#AD49E1;
+}
+#tabContent{
+	min-height: 302px;
+    max-height: 634px;
+}
+#prod_list #kcy_prodlist_li{
+	height: 302px;
+}
+.kcy_viewFooter{
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 51.21px;
+}
+.kcy_viewFooter .null{
+	width: 30%;
+}
+.kcy_viewFooter .buttons{
+	width: 40%;
+}
+.kcy_viewFooter .GeulSsooGi{
+	width: 30%;
+    display: flex;
+    justify-content: right;
+}
+.edit:hover #edit{
+	color: #3a3a3a;
+	transition: color 0.2s ease-in-out;
+}
+.siren:hover .report{
+	color: #3a3a3a;
+	transition: color 0.2s ease-in-out;
+}
+.completeEdit{
+	margin-top: 14px;
+	display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.completeEdit:hover #compleNsave{
+	color: #3a3a3a;
+	transition: color 0.2s ease-in-out;
+}
+.completeEdit:hover #fuckingducking{
+	color: #7177d8;
+	transition: color 0.2s ease-in-out;
 }

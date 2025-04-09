@@ -31,9 +31,6 @@ public class StorePage extends HttpServlet {
 			return;
 		}
 		
-		
-		int memId = loginInfo.getMem_no();
-		
 		String param = request.getParameter("param"); 
 		int value =	Integer.parseInt(request.getParameter("value"));
 		
@@ -55,6 +52,8 @@ public class StorePage extends HttpServlet {
 		int countAllProducts     = service.getCountAllProducts(storeId);
 		int countSoldoutProducts = service.getCountSoldoutProducts(storeId);
 		int countProfileImg = fservice.countProfileImg(storeId);
+		double storeRatingAvg		 = service.storeRatingAvg(storeId);
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■리뷰평점 ==+> " +storeRatingAvg);
 		
 		
 		ImgFileVO profileImg = new ImgFileVO();
@@ -66,6 +65,7 @@ public class StorePage extends HttpServlet {
 		
 		request.setAttribute("countAllProducts"	   , countAllProducts);
 		request.setAttribute("countSoldoutProducts", countSoldoutProducts);
+		request.setAttribute("storeRatingAvg", storeRatingAvg);
 		request.setAttribute("profileImg", profileImg);
 		request.setAttribute("storeVO", storeVO);
 		request.setAttribute("storeId", storeId);

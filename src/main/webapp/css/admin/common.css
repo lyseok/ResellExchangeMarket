@@ -26,8 +26,26 @@
 .gap60{
 	gap:60px !important;
 }
+.gap20{
+	gap:20px !important;
+}
+.fd_c{
+	flex-direction: column !important;
+}
 
 .local_desc02{height:16px;}
+
+
+input[type="text"]{
+	width:100%;
+	border:1px solid #ccc;
+	padding:8px;
+	border-radius:5px;
+}
+select{
+	border-radius:5px;
+	padding:8px;
+}
 
 
 /* 검색창 */ 
@@ -37,7 +55,6 @@
 }
 .search_form {
     display: flex;
-    margin-top: 10px;
     color: #c4c4c4;
 }
 
@@ -103,16 +120,85 @@
 	color:#ad49e1;
 }
 
-/* 게시글 리스트 삭제 버튼 */
-.adm_del_btn,
-button.adm_del_btn{
-	color: #ad49e1;
+
+
+
+/* 게시글 보기 - 답변하기버튼 */
+#addComments{
+    background: #ad49e1;
+    padding: 0 50px;
+    height: 40px;
+    color: #fff;
+    border: 0;	
+}
+/* 게시글보기 -  글작성, 수정버튼 */
+.btn_wrap {
+	text-align:right;
+}
+.btn_wrap button,
+.btn_wrap input[type="button"],
+.btn_wrap input[type="submit"]{
+	display: inline-block;
+    padding: 0 30px;
+    height: 35px;
+    background: #fff;
+    text-decoration: none;
+    line-height: 35px;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    color: #333;
+    border-radius: 4px;
+    cursor:pointer;
+}
+
+.btn_wrap .btn-primary {
+    background: #ad49e1 !important;
+    color: #fff !important;
+    font-weight: 500;
+}
+/* FAQ - 삭제버튼 */
+.btn_wrap #deleteBtn{
+	background: #ad49e1;
+    color: #fff;
+    font-weight: 500;
     cursor: pointer;
-    border:none;
-    background:none;
 }
 
 
+/* 게시글 리스트 - 글자 색만 변경하는 삭제버튼 */
+#deleteBtn,
+.adm_del_btn{
+	background: none;
+    border: none;
+    color: #ad49e1;
+}
+/* 게시글 리스트 - 게시글 등록 버튼 */
+.boardInsertBtn {
+	display: inline-block;
+    padding: 0 30px;
+    height: 35px;
+    background: #ad49e1;
+    text-decoration: none;
+    line-height: 35px;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px;
+    color: #333;
+    border-radius: 4px;
+    cursor:pointer;
+}
+
+
+
+/* 게시글 리스트 - 마우스 오버 시 스타일 */
+.board_name{
+	cursor:pointer;
+}
+.board_name:hover{
+	font-weight:bold;
+}
 
 /* 게시글 보기 답변 전 style */
 #status_ck{
@@ -176,3 +262,31 @@ button.adm_del_btn{
 	
 }
 
+
+
+/* 테이블 영역 넘겼을 시 스크롤 */
+.over_scroll_cont{
+	padding: 0;
+    height: calc(100vh - 217px);
+    overflow: auto;
+    margin-bottom: 0;
+    border:1px solid #ccc;
+}
+.over_scroll_cont th{
+	position:sticky;
+	top:0;
+}
+
+.over_scroll_cont tbody tr:last-child td{
+	border-bottom:0;
+}
+
+/* 채팅방관리전용 css */
+.over_scroll_cont2{
+	height:264px;
+}
+
+/* FAQ전용 css */
+.over_scroll_cont3{
+	height:calc(100vh - 246px);
+}

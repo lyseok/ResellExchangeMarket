@@ -28,6 +28,7 @@
 		<typeAlias type="rem.admin.board.report.vo.ReportCommentsVO" alias="ReportCommentsVO"/>	
 		<typeAlias type="rem.admin.board.qna.vo.QnaBoardVO" alias="QnaBoardVO"/>
 		<typeAlias type="rem.admin.board.faq.vo.FAQBoardVO" alias="FAQBoardVO"/>
+		<typeAlias type="rem.admin.transaction.safetransaction.vo.SafeTXNVO" alias="SafeTXNVO"/>
 		<typeAlias type="rem.admin.badge.vo.AchievementsVO" alias="AchievementsVO"/>
 		<typeAlias type="rem.login.vo.MemberVO" alias="MemberVO"/>		
 		<typeAlias type="rem.login.vo.UpdateMemberVO" alias="UpdateMemberVO"/>		
@@ -37,6 +38,7 @@
 		<typeAlias type="rem.product.vo.CateSubVO" alias="CateSubVO"/>	
 		<typeAlias type="rem.product.vo.CateNameVO" alias="CateNameVO"/>	
 		<typeAlias type="rem.product.vo.ViewCountVO" alias="ViewCountVO"/>	
+		<typeAlias type="rem.product.vo.NewViewVO" alias="NewViewVO"/>	
 		<typeAlias type="rem.store.vo.MemberProgressVO" alias="MemberProgressVO"/>	
 		<typeAlias type="rem.file.vo.ImgFileVO" alias="ImgFileVO"/>		
 		<typeAlias type="rem.chat.vo.MessageVO" alias="MessageVO"/>	
@@ -51,8 +53,16 @@
 		<typeAlias type="rem.admin.product.wishlist.vo.WishlistAllVO" alias="WishlistAllVO"/>
 		<typeAlias type="rem.transaction.vo.TransactionImgVO" alias="TransImgVO"/>
 		<typeAlias type="rem.notification.vo.NotificationVO" alias="NotificationVO"/>
+		<typeAlias type="rem.deposit.vo.DepositVO" alias="DepositVO"/>
 		<typeAlias type="rem.admin.board.qna.vo.QnaSetVO" alias="QnaSetVO"/>
-		
+		<typeAlias type="rem.chat.vo.ChatRoomVO" alias="ChatRoomVO"/>
+		<typeAlias type="rem.chat.vo.ChatVO" alias="ChatVO"/>
+		<typeAlias type="rem.chat.vo.ChatMemberVO" alias="ChatMemberVO"/>
+		<typeAlias type="rem.admin.board.report.vo.ReportSetVO" alias="ReportSetVO"/>
+		<typeAlias type="rem.admin.main.vo.AdminTransVO" alias="AdminTransVO"/>
+		<typeAlias type="rem.category.vo.CategoryMainVO" alias="CategoryMainVO"/>
+		<typeAlias type="rem.category.vo.CategorySubVO" alias="CategorySubVO"/>
+
 		
 	</typeAliases>
 	
@@ -95,7 +105,12 @@
 		<mapper resource="myBatis/mappers/view-mapper.xml"/>
 		<mapper resource="myBatis/mappers/faq-mapper.xml"/>
 		<mapper resource="myBatis/mappers/notification-mapper.xml"/>
-		
+		<mapper resource="myBatis/mappers/deposit-mapper.xml"/>
+		<mapper resource="myBatis/mappers/adminCategory-mapper.xml"/>
+		<mapper resource="myBatis/mappers/adminChatRoom-mapper.xml"/>
+		<mapper resource="myBatis/mappers/safeTXNBoard-mapper.xml"/>
+		<mapper resource="myBatis/mappers/chat-mapper.xml"/>
+		<mapper resource="myBatis/mappers/cate-mapper.xml"/>
 	</mappers>
 	
 </configuration>

@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import rem.product.vo.ProductVO;
+import rem.review.vo.ReviewImgVO;
 import rem.review.vo.ReviewVO;
 import rem.transaction.dao.ITransactionDao;
 import rem.transaction.dao.TransactionDaoImpl;
 import rem.transaction.vo.ProdTransactionVO;
 import rem.transaction.vo.ReviewTransactionVO;
 import rem.transaction.vo.ShippingVO;
+import rem.transaction.vo.TransactionImgVO;
 import rem.transaction.vo.TransactionVO;
 
 public class TransactionServiceImpl implements ITransactionService{
@@ -72,13 +74,13 @@ public class TransactionServiceImpl implements ITransactionService{
 	}
 
 	@Override
-	public int updateConfrimProd(int txnNo) {
-		return dao.updateConfrimProd(txnNo);
+	public int updateConfrimProd(Map<String, Object> param) {
+		return dao.updateConfrimProd(param);
 	}
 
 	@Override
-	public int insertReview(ReviewVO reviewVo) {
-		return dao.insertReview(reviewVo);
+	public int insertReview(ReviewImgVO rvo) {
+		return dao.insertReview(rvo);
 	}
 
 	@Override
@@ -86,6 +88,63 @@ public class TransactionServiceImpl implements ITransactionService{
 		// TODO Auto-generated method stub
 		return dao.insertTransaction(vo);
 	}
+
+	@Override
+	public List<TransactionImgVO> getStatusAllProd(TransactionImgVO tvo) {
+		return dao.getStatusAllProd(tvo);
+	}
+	
+	@Override
+	public List<TransactionImgVO> getStatusBuyProd(TransactionImgVO tvo) {
+		return dao.getStatusBuyProd(tvo);
+	}
+
+	@Override
+	public List<TransactionImgVO> getStatusSellProd(TransactionImgVO tvo) {
+		return dao.getStatusSellProd(tvo);
+	}
+
+	@Override
+	public List<TransactionImgVO> getProdImg(int memberId) {
+		return dao.getProdImg(memberId);
+	}
+
+	@Override
+	public List<TransactionImgVO> getBuyImg(int memberId) {
+		return dao.getBuyImg(memberId);
+	}
+
+	@Override
+	public List<TransactionImgVO> getSellImg(int memberId) {
+		return dao.getSellImg(memberId);
+	}
+
+	@Override
+	public ReviewImgVO getReviewInfo(int txnNo) {
+		return dao.getReviewInfo(txnNo);
+	}
+
+	@Override
+	public TransactionImgVO getProdInfo(int txnNo) {
+		return dao.getProdInfo(txnNo);
+	}
+
+	@Override
+	public int updateProdStatus(Map<String, Object> param) {
+		return dao.updateProdStatus(param);
+	}
+
+	@Override
+	public List<TransactionImgVO> getProdTrStatus(TransactionImgVO tvo2) {
+		return dao.getProdTrStatus(tvo2);
+	}
+
+	@Override
+	public int isThereReview(int txnNo) {
+		return dao.isThereReview(txnNo);
+	}
+
+	
 	
 	
 	

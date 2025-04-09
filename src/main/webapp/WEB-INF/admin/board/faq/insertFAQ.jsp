@@ -1,3 +1,4 @@
+<%@page import="rem.admin.board.faq.vo.FAQBoardVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -27,8 +28,8 @@
           <form action="<%=request.getContextPath() %>/admin/faqInsert.do" method="post">
             <table>
               <colgroup>
-                <col width="20%">
-                <col width="80%">
+                <col width="10%">
+                <col width="90%">
               </colgroup>
               <tbody>
                 <tr>
@@ -55,8 +56,10 @@
                 
               </tbody>
             </table>
-            <input type="submit" id="insertBtn" value="등록" class="btn btn-primary">
-            <input type="button" id="cancelBtn" value="취소" class="btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/admin/faqBoardView.do'">
+            <div class="btn_list">
+	            <input type="submit" id="insertBtn" value="등록" class="btn btn-primary">
+	            <input type="button" id="cancelBtn" value="취소" class="btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/admin/faqBoardView.do'">
+            </div>
           </form>
         </section>
       </div>

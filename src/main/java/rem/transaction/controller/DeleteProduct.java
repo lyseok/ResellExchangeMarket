@@ -48,6 +48,7 @@ public class DeleteProduct extends HttpServlet {
 		prodVo.setProd_no(prodNo);
 		int result = service.deleteProd(prodVo);
 		
+		System.out.println("result: " + result);
 		
 		
 		

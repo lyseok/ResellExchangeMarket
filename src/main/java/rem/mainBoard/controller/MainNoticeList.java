@@ -5,17 +5,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import rem.admin.board.notice.dao.NoticeBoardDaoImpl;
 import rem.admin.board.notice.service.INoticeBoardService;
 import rem.admin.board.notice.service.NoticeBoardServiceImpl;
 import rem.admin.board.notice.vo.NoticeBoardVO;
-import rem.search.dao.SearchDaoImpl;
-import rem.search.service.ISearchService;
-import rem.search.service.SearchServiceImpl;
+import rem.login.vo.MemberVO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -27,6 +25,12 @@ public class MainNoticeList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		if(loginInfo==null) {
+			request.getRequestDispatcher("/WEB-INF/login/login.jsp").forward(request, response);
+			return;
+		}
 		request.setCharacterEncoding("utf-8");
 		String access = request.getParameter("access");
 		

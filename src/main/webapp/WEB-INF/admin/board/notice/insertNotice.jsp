@@ -2,24 +2,28 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="/WEB-INF/admin/include/header_admin.jsp" %>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin/board/notice.css">
 
 
 <script>
 $(function() {
   $('#insertBtn').on('click', function() {
-    var title = $('#noticeTitle').val().trim();
-    var content = $('#noticeContent').val().trim();
-    if (title == "") {
-      alert("제목을 입력하세요.");
-      $('#noticeTitle').focus();
-      return false;
-    } else if (content == "") {
-      alert("내용을 입력하세요.");
-      $('#noticeContent').focus();
-      return false;
-    } else {
-      $('form').submit();
-    }
+    var title = $('#noticeTitle').val().trim();  
+    var cont = $('#noticeContent').val().replaceAll(/\n/g, "<br>");
+    $.ajax({
+      url: `${mypath}/admin/insertNotice.do`,
+      type: "post",
+      data: {noticeTitle: title, noticeContent: cont},
+      success: function(data){
+        console.log(data);
+        location.href = "<%=request.getContextPath()%>/admin/noticePage.do";
+      },
+      error: function(xhr){
+        location.href = "<%=request.getContextPath()%>/admin/noticePage.do";
+        console.log(xhr.status);
+      },
+      dataType: "json"
+    });
   });
 
   $('#cancelBtn').on('click', function() {
@@ -36,14 +40,14 @@ $(function() {
       <h1 id="container_title">글관리>공지사항</h1>
       <h1 id="container_title">공지사항 작성</h1>
       <div class="container_wr">
-        <section>
+        <section class="notice_wrap notice_insert_wrap">
 
 
           <form action="<%=request.getContextPath() %>/admin/insertNotice.do" method="post">
             <table>
               <colgroup>
-                <col width="20%">
-                <col width="80%">
+                <col width="10%">
+                <col width="90%">
               </colgroup>
               <tbody>
                 <tr>
@@ -67,8 +71,10 @@ $(function() {
             
               </tbody>
             </table>
-            <input type="button" id="insertBtn" value="등록" class="btn btn-primary">
-            <input type="button" id="cancelBtn" value="취소" class="btn btn-secondary">
+            <div class="btn_wrap">
+	            <input type="button" id="insertBtn" value="등록" class="btn btn-primary">
+	            <input type="button" id="cancelBtn" value="취소" class="btn btn-secondary">
+            </div>
           </form>
         </section>
       </div>

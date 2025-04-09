@@ -167,5 +167,82 @@ public class FileDaoImpl implements IFileDao {
 		
 		return list;
 	}
+	@Override
+	public int deleteProductImg(int prod_no) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rec = session.delete("imgfile.deleteProductImg", prod_no);
+			if(rec>0) session.commit();
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rec;
+	}
+	@Override
+	public int insertQnaImg(ImgFileVO imgVO) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rec = session.insert("imgfile.insertQnaImg", imgVO);
+			if(rec>0) session.commit();
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rec;
+	}
+	@Override
+	public ImgFileVO getQnaImg(int qna_no) {
+		SqlSession session = null;
+		ImgFileVO vo = null;
+		try{
+			session = MyBatisUtil.getSqlSession();
+			vo = session.selectOne("imgfile.getQnaImg", qna_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return vo;
+	}
+	@Override
+	public int insertQnaCommentImg(ImgFileVO imgVO) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rec = session.insert("imgfile.insertQnaCommentImg", imgVO);
+			if(rec>0) session.commit();
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rec;
+	}
+	@Override
+	public ImgFileVO getQnaCommentImg(int qna_no) {
+		SqlSession session = null;
+		ImgFileVO vo = null;
+		try{
+			session = MyBatisUtil.getSqlSession();
+			vo = session.selectOne("imgfile.getQnaCommentImg", qna_no);
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return vo;
+	}
+	
+	@Override
+	public int insertReportImg(ImgFileVO imgVO) {
+		SqlSession session = null;
+		int rec = 0;
+		try {
+			session = MyBatisUtil.getSqlSession();
+			rec = session.insert("imgfile.insertReportImg", imgVO);
+			if(rec>0) session.commit();
+		}
+		catch(Exception e) {e.printStackTrace();}
+		finally {if(session!=null) session.close();}
+		return rec;
+	}
 
 }

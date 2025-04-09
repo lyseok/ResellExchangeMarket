@@ -7,13 +7,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import rem.login.vo.MemberVO;
-import rem.wishlist.dao.IWishlistDao;
 import rem.wishlist.dao.WishlistDaoImpl;
 import rem.wishlist.service.IWishlistService;
 import rem.wishlist.service.WishlistServiceImpl;
 import rem.wishlist.vo.WishlistVO;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
 
 
 @WebServlet("/wishlist/insertWish.do")
@@ -35,7 +39,28 @@ public class InsertWishlist extends HttpServlet {
 		
 		IWishlistService service = WishlistServiceImpl.getInstance(WishlistDaoImpl.getInstance());
 		
-		service.insertWish(wvo);
+		int distinct = service.distinctWish(wvo);
+		
+		if(distinct == 0) {
+			
+			service.insertWish(wvo);
+		} else {
+			service.deleteWish(wvo);
+		}
+		
+		int countWish = service.countProdWish(prod_no);
+		int distinct2 = service.distinctWish(wvo);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("countWish", countWish);
+		map.put("distinct", distinct2);
+		
+		Gson gson = new Gson();
+		
+		String result = gson.toJson(map);
+		
+		PrintWriter out = response.getWriter();
+		out.println(result);
+		out.flush();
 	}
 
 	

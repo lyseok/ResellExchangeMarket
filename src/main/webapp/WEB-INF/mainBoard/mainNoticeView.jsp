@@ -4,7 +4,6 @@
 <%@include file="/WEB-INF/include/category.jsp" %>
 <%@ page isELIgnored="false" %>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainBoard/mainBoard.css">
-<script defer src="<%=request.getContextPath() %>/js/mainBoard/mainBoardNoticeView.js"></script>
 
 <%
 	String noticeTitle = (String)request.getAttribute("noticeTitle");
@@ -45,7 +44,7 @@
 		<div class="kcy_viewContent">
 			<p><%=noticeCont %></p>
 		</div>
-		<br><hr style="color:#cecece;"><br>
+		<br><hr style="color:#cecece; width:100%;"><br>
 	</div>
 	
 	<div class="kcy_boardBackToList">
@@ -65,13 +64,13 @@ $("#searchingBtn").on("click", function(){
 		$("#searchingWord").attr("placeholder", "검색어를 입력하세요..!");
 		return false;
 	} else {
-		location.href = `/REMProject/main/${board}/search.do?sch=\${search_text}`;
+		location.href = `<%=request.getContextPath() %>/main/${board}/search.do?sch=\${search_text}`;
 	}
 });
 
 /* 2)_ 글 조회 시 목록으로 돌아가는 버튼 */
 $("#listButton").on("click", function(){
-	location.href = `/REMProject/main/${board}.do`;
+	location.href = `<%=request.getContextPath() %>/main/${board}.do`;
 });
 
 </script>

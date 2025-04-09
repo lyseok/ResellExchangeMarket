@@ -13,6 +13,7 @@ import rem.product.vo.ProductVO;
 import rem.transaction.service.ITransactionService;
 import rem.transaction.service.TransactionServiceImpl;
 import rem.transaction.vo.ProdTransactionVO;
+import rem.transaction.vo.TransactionImgVO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,9 +31,11 @@ public class GetTransactionData extends HttpServlet {
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String category = request.getParameter("category");
-		  // category 값이 null이거나 비어있는 경우 처리
+		int status = Integer.parseInt(request.getParameter("status"));
+				
+		
         if (category == null) {
-           System.out.println("값이 비었");
+           System.out.println("category값이 비어있습니다");
         }
 
 		
@@ -46,75 +49,72 @@ public class GetTransactionData extends HttpServlet {
 	    int memberNo = loginInfo.getMem_no(); 
 		
 	    System.out.println("memberNo:  " + memberNo);
+	    
 	    ITransactionService service = TransactionServiceImpl.getInstance();
-	    List<ProductVO> prodList = null;
-	    List<ProdTransactionVO> prodTransList = null;
-	    
-	    
-	   
-	    
-	    IFileService fileService = FileServiceImpl.getInstance();
-	    List<ImgFileVO> imgList = new ArrayList<ImgFileVO>();
-	    List<ImgFileVO> productImgList =  new ArrayList<ImgFileVO>();
+	 
 	    Gson gson = new Gson();
-	    JsonObject resObject = new JsonObject();
-	    
 	    String result = null;
-	    int prodNo = 0;
+	    
+	    List<TransactionImgVO> imgList = null;
+	    
+	    TransactionImgVO tvo = new TransactionImgVO();
+	    tvo.setMem_no(memberNo);
+	    tvo.setTxn_status(status);
+	    
+	    
+	 
+	    
 	    
 	
-	    if (category.equals("상품관리")) {
-			prodList = service.getProd(memberNo);
-			 System.out.println("Product List: " + prodList);
-			 
-			for (ProductVO pVO : prodList) {
-				imgList = fileService.getProductfileImg(prodNo);
-				productImgList.addAll(imgList);
-			}
-			 
-			 //result = gson.toJson(prodList); 
-			
-			resObject.add("prodList", gson.toJsonTree(prodList));
-			resObject.add("imgList", gson.toJsonTree(imgList));
-			
-			
-			for (ImgFileVO list : imgList) {
-				System.out.println("이미지 리스틑" + list);
-			}
-			
-			 
-		}
-	    else if (category.equals("구매관리")) {
-	    	prodTransList = service.getBuyProd(memberNo);
-			 System.out.println("Product List: " + prodTransList);
-			 result = gson.toJson(prodTransList); 
-		}
-	    else if (category.equals("판매관리")) {
-	    	prodTransList = service.getSellProd(memberNo);
-			 System.out.println("Product List: " + prodTransList);
-			 result = gson.toJson(prodTransList); 
+	    if(status == 4) {
+	    	 if (category.equals("상품관리")) {
+	    		 imgList = service.getProdImg(memberNo);
+	    		 result = gson.toJson(imgList); 
+	 		}
+	 	    else if (category.equals("구매관리")) {
+
+	 	    	 imgList = service.getBuyImg(memberNo);
+	 	    	 result = gson.toJson(imgList); 
+	 		}
+	 	    else if (category.equals("판매관리")) {
+	 	    	
+	 	    	imgList = service.getSellImg(memberNo);
+	 	    	 result = gson.toJson(imgList); 
+	 	    }
+	    }
+	    
+	    else {
+	    	if (category.equals("상품관리")) {
+	 			imgList = service.getStatusAllProd(tvo);
+	 			 System.out.println("imgList: " + imgList);
+	 			 result = gson.toJson(imgList); 
+	 			 
+	 		}
+	 	    else if (category.equals("구매관리")) {
+	 	    	imgList = service.getStatusBuyProd(tvo);
+	 			 System.out.println("imgList: " + imgList);
+	 			 result = gson.toJson(imgList); 
+	 		}
+	 	    else if (category.equals("판매관리")) {
+	 	    	 imgList = service.getStatusSellProd(tvo);
+	 			 System.out.println("imgList: " + imgList);
+	 			 result = gson.toJson(imgList); 
+	 	    }
+	    	
 	    }
 	    
 	    
+	  
 	    System.out.println("result: " + result);
 	   
 	    
 	   
 	    
 	    response.setContentType("application/json;charset=UTF-8");
-		/*
-		 * PrintWriter out = response.getWriter(); 
-		 * out.print(result);
-		 *  out.flush();
-		 */
-	
-	    
-		response.getWriter().write(resObject.toString());
-	    
-	    
-	    
-	    
-	    
+	    PrintWriter out = response.getWriter();
+	    out.print(result); 
+	    out.flush();
+
 	    
 	}
 
@@ -123,5 +123,6 @@ public class GetTransactionData extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 
 }

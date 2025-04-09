@@ -1,12 +1,16 @@
 package rem.search.service;
 
 import java.util.List;
+import java.util.Map;
 
+import rem.admin.board.faq.vo.FAQBoardVO;
 import rem.admin.board.notice.vo.NoticeBoardVO;
 import rem.admin.board.qna.vo.QnaBoardVO;
 import rem.admin.board.qna.vo.QnaSetVO;
+import rem.admin.board.report.vo.ReportBoardVO;
+import rem.admin.board.report.vo.ReportSetVO;
+import rem.product.vo.ProdImgVO;
 import rem.search.dao.ISearchDao;
-import rem.search.vo.SearchVO;
 
 public class SearchServiceImpl implements ISearchService {
 	private static ISearchService instance;
@@ -22,7 +26,7 @@ public class SearchServiceImpl implements ISearchService {
 	}
 	
 	@Override
-	public List<SearchVO> selectSearchProduct(String searchText) {
+	public List<ProdImgVO> selectSearchProduct(String searchText) {
 		return dao.selectSearchProduct(searchText);
 	}
 
@@ -37,13 +41,44 @@ public class SearchServiceImpl implements ISearchService {
 	}
 
 	@Override
-	public QnaSetVO getQnaBoard(int qna_no) {
-		return dao.getQnaBoard(qna_no);
+	public QnaSetVO getQnaBoard(Map<String, Integer> map) {
+		return dao.getQnaBoard(map);
 	}
 
 	@Override
-	public List<QnaBoardVO> searchQnaBoard(String searchText) {
-		return dao.searchQnaBoard(searchText);
+	public List<QnaBoardVO> searchQnaBoard(Map<String, Object> map) {
+		return dao.searchQnaBoard(map);
 	}
+
+	@Override
+	public QnaSetVO getQnaComments(int qna_no) {
+		return dao.getQnaComments(qna_no);
+	}
+
+	@Override
+	public List<FAQBoardVO> getFAQBoardList() {
+		return dao.getFAQBoardList();
+	}
+
+	@Override
+	public List<ReportBoardVO> searchReportBoard(String searchText) {
+		return dao.searchReportBoard(searchText);
+	}
+
+	@Override
+	public ReportSetVO getReportBoardOne(int rptNo) {
+		return dao.getReportBoardOne(rptNo);
+	}
+
+	@Override
+	public ReportSetVO getReportComments(int rpt_mem_no) {
+		return dao.getReportComments(rpt_mem_no);
+	}
+
+	@Override
+	public List<ReportSetVO> getReportBoardList() {
+		return dao.getReportBoardList();
+	}
+
 
 }

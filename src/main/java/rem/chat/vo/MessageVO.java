@@ -7,8 +7,21 @@ public class MessageVO {
 	private String msg_cont;
 	private String msg_create_at;
 	private int msg_imgck;
+	private String file_path;
+	private String mem_alias;
 	
-	
+	public String getMem_alias() {
+		return mem_alias;
+	}
+	public void setMem_alias(String mem_alias) {
+		this.mem_alias = mem_alias;
+	}
+	public String getFile_path() {
+		return file_path;
+	}
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
+	}
 	public int getMsg_no() {
 		return msg_no;
 	}

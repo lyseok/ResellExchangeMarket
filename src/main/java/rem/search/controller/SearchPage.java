@@ -1,19 +1,19 @@
 package rem.search.controller;
 
+import java.io.IOException;
+import java.util.List;
+
+import com.google.gson.Gson;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import rem.product.vo.ProdImgVO;
 import rem.search.dao.SearchDaoImpl;
 import rem.search.service.ISearchService;
 import rem.search.service.SearchServiceImpl;
-import rem.search.vo.SearchVO;
-
-import java.io.IOException;
-import java.util.List;
-
-import com.google.gson.Gson;
 
 @WebServlet("/searchPage.do")
 public class SearchPage extends HttpServlet {
@@ -26,7 +26,7 @@ public class SearchPage extends HttpServlet {
 		String searchText = request.getParameter("searchText");
 		
 		ISearchService service = SearchServiceImpl.getInstance(SearchDaoImpl.getInstance());
-		List<SearchVO> list = service.selectSearchProduct(searchText);
+		List<ProdImgVO> list = service.selectSearchProduct(searchText);
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(list);

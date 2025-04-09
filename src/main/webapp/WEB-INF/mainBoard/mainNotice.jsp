@@ -33,6 +33,8 @@
 		<ul class="kcy_boardList">
 		</ul>
 	</div>
+	
+	<hr style="color:#cecece;"><br>
 	<div class="buttons">
 	</div>
 </div>
@@ -55,7 +57,7 @@ $("#searchingBtn").on("click", function(){
 		$("#searchingWord").attr("placeholder", "검색어를 입력하세요..!");
 		return false;
 	} else {
-		location.href = `/REMProject/main/${board}/search.do?sch=\${search_text}`;
+		location.href = `<%=request.getContextPath()%>/main/${board}/search.do?sch=\${search_text}`;
 	}
 });
 </script>

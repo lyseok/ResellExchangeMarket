@@ -22,9 +22,9 @@
 		values(#{mem_no}, #{prod_no}, sysdate)
 	</insert>
 	
-	<select id="distinctWish" parameterType="int">
-		select mem_no from wishlist
-		where prod_no = #{prod_no}
+	<select id="distinctWish" parameterType="WishlistVO" resultType="int">
+		select count(*) from wishlist
+		where prod_no = #{prod_no} and mem_no = #{mem_no}
 	</select>
 	
 	<delete id="deleteWish" parameterType="WishlistVO">

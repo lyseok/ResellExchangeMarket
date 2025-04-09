@@ -2,12 +2,14 @@ package rem.product.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import rem.product.dao.IProductDao;
 import rem.product.dao.ProductDaoImpl;
 import rem.product.vo.CateMainVO;
 import rem.product.vo.CateNameVO;
 import rem.product.vo.CateSubVO;
+import rem.product.vo.NewViewVO;
 import rem.product.vo.ProdImgVO;
 
 import java.util.List;
@@ -52,9 +54,9 @@ public class ProductServiceImpl implements IProductService {
    }
 
 @Override
-public ProductVO getProductDetail(int prod_no) {
+public ProductVO getProductDetail(Map<String, Object> param) {
 	// TODO Auto-generated method stub
-	return dao.getProductDetail(prod_no);
+	return dao.getProductDetail(param);
 }
 
 @Override
@@ -91,6 +93,23 @@ public List<ProdImgVO> selectAllMainPageProd() {
 public int updateProdStatus(int prod_no) {
 	// TODO Auto-generated method stub
 	return dao.updateProdStatus(prod_no);
+}
+
+@Override
+public int updateProduct(ProductVO vo) {
+	// TODO Auto-generated method stub
+	return dao.updateProduct(vo);
+}
+
+@Override
+public List<ProdImgVO> selectProdRecommend(ProductVO vo) {
+	// TODO Auto-generated method stub
+	return dao.selectProdRecommend(vo);
+}
+
+@Override
+public List<NewViewVO> selectNewView(int no) {
+	return dao.selectNewView(no);
 }
 
 }

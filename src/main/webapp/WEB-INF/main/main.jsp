@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <script defer src="<%=request.getContextPath() %>/js/main/main.js"></script>
 	<%@include file="/WEB-INF/include/header.jsp" %>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/main/main.css">
@@ -18,37 +17,41 @@
     <div class="main_slide">
       
       <div class="inner">
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <a href="javascript:void(0)" class="btn">
-              <img src="\remImg\promo(1).webp" alt="사진" />
-              </a>
+
+        <div class="promo">
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <a href="javascript:void(0)" class="btn">
+                <img src="\remImg\promo(1).webp" alt="사진" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)" class="btn">
+                <img src="\remImg\promo(2).webp" alt="사진" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)" class="btn">
+                <img src="\remImg\promo(3).webp" alt="사진" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a href="javascript:void(0)" class="btn">
+                <img src="\remImg\promo(4).webp" alt="사진" />
+                </a>
+              </div>
             </div>
-            <div class="swiper-slide">
-              <a href="javascript:void(0)" class="btn">
-              <img src="\remImg\promo(2).webp" alt="사진" />
-              </a>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev arrow">
+              <span class="material-symbols-outlined">arrow_back</span>
             </div>
-            <div class="swiper-slide">
-              <a href="javascript:void(0)" class="btn">
-              <img src="\remImg\promo(3).webp" alt="사진" />
-              </a>
+            <div class="swiper-button-next arrow">
+              <span class="material-symbols-outlined">arrow_forward</span>
             </div>
-            <div class="swiper-slide">
-              <a href="javascript:void(0)" class="btn">
-              <img src="\remImg\promo(4).webp" alt="사진" />
-              </a>
-            </div>
-          </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev arrow">
-            <span class="material-symbols-outlined">arrow_back</span>
-          </div>
-          <div class="swiper-button-next arrow">
-            <span class="material-symbols-outlined">arrow_forward</span>
           </div>
         </div>
+
       </div>
       
 

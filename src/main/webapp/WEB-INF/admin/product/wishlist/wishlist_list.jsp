@@ -48,7 +48,7 @@ $(function() {
               </div>
             </form>
           </div>
-          <div class="tbl_head01 tbl_wrap">
+          <div class="tbl_head01 tbl_wrap over_scroll_cont">
             <table>
               <colgroup>
                 <col width="10%">

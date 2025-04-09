@@ -38,6 +38,11 @@ public class ReportBoardServiceImpl implements IReportBoardService {
 		return dao.deleteReportBoard(no);
 	}
 
+	@Override
+	public int getReportNoImmediately(int mem_no) {
+		return dao.getReportNoImmediately(mem_no);
+	}
+
 
 
 }

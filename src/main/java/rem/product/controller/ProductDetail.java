@@ -17,6 +17,7 @@ import rem.product.service.IProductService;
 import rem.product.service.ProductServiceImpl;
 import rem.product.vo.CateNameVO;
 import rem.product.vo.CateSubVO;
+import rem.product.vo.ProdImgVO;
 import rem.product.vo.ProductVO;
 import rem.product.vo.ViewCountVO;
 import rem.store.service.IStoreService;
@@ -29,7 +30,9 @@ import rem.wishlist.vo.WishlistVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @WebServlet("/product/productDetail.do")
@@ -56,15 +59,20 @@ public class ProductDetail extends HttpServlet {
 		List<ImgFileVO> list = new ArrayList<ImgFileVO>();
 		ImgFileVO fvo = new ImgFileVO();
 		ViewCountVO vvo = new ViewCountVO();
+		ProductVO pvo2 = new ProductVO();
 		
 		int prod_no = Integer.parseInt(request.getParameter("prod_no"));
 		
-		ProductVO pvo = service.getProductDetail(prod_no);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("mem_no", loginInfo.getMem_no());
+		param.put("prod_no", prod_no);
+		
+		ProductVO pvo = service.getProductDetail(param);
 		
 		int updateView = service.updateProductView(prod_no);
 		if(updateView >0) {
 			vvo.setProd_no(prod_no);
-			vvo.setMem_no(pvo.getMem_no());
+			vvo.setMem_no(loginInfo.getMem_no());
 			service.insertViewCount(vvo);
 		}
 		
@@ -77,22 +85,24 @@ public class ProductDetail extends HttpServlet {
 			fvo = fservice.getProfileImg(pvo.getMem_no());
 		}
 		
+		int countWish = wservice.countProdWish(prod_no);
 		int countReview = service.getCountAllReview(pvo.getMem_no());
 		
-		int countWish = wservice.countProdWish(prod_no);
-		int mem_no = wservice.distinctWish(prod_no);
-		
 		int countProduct = sservice.getCountAllProducts(pvo.getMem_no());
+		
 		
 		MemberVO memInfo = mservice.getMemInfo(pvo.getMem_no());
 		
 		CateNameVO svo = service.getCateName(pvo.getProd_no());
 		
+		pvo2.setCate_main_id(pvo.getCate_main_id());
+		pvo2.setProd_no(prod_no);
+		List<ProdImgVO> clist = service.selectProdRecommend(pvo2);
+		
 		request.setAttribute("profileImg", fvo);
 		request.setAttribute("productDetail", pvo);
-		request.setAttribute("countReview", countReview);
 		request.setAttribute("countWish", countWish);
-		request.setAttribute("mem_no", mem_no);
+		request.setAttribute("countReview", countReview);
 		request.setAttribute("countProduct", countProduct);
 		request.setAttribute("memInfo", memInfo);
 		request.setAttribute("svo", svo);
@@ -100,6 +110,7 @@ public class ProductDetail extends HttpServlet {
 		list = fservice.getProductfileImg(prod_no);
 		
 		request.setAttribute("imgfile", list);
+		request.setAttribute("clist", clist);
 		
 		request.getRequestDispatcher("/WEB-INF/product/prodDetail.jsp").forward(request, response);
 		}
